@@ -1,0 +1,117 @@
+[
+  {
+    "id": "pop",
+    "name": "Pop",
+    "tagline": "Vocal na frente, brilho e impacto.",
+    "bpm": "90–130",
+    "mixTargets": {
+      "track_peak_dbfs": "-12 a -6 dBFS (picos)",
+      "mixbus_shortterm_lufs": "-18 a -14 LUFS (ST)",
+      "premaster_integrated_lufs": "-18 a -14 LUFS (I)"
+    },
+    "masterTargets": {
+      "streaming_integrated_lufs": "-14 a -10 LUFS (I)",
+      "true_peak_dbtp": "-1.0 dBTP (recomendado)",
+      "dynamic_range": "DR 6–10 (contexto depende)"
+    },
+    "vibe": [
+      "brilho",
+      "clareza",
+      "punch",
+      "vocal upfront"
+    ],
+    "accent": "aurora"
+  },
+  {
+    "id": "rock",
+    "name": "Rock",
+    "tagline": "Energia, médios presentes e bateria sólida.",
+    "bpm": "80–170",
+    "mixTargets": {
+      "track_peak_dbfs": "-12 a -6 dBFS (picos)",
+      "mixbus_shortterm_lufs": "-20 a -14 LUFS (ST)",
+      "premaster_integrated_lufs": "-18 a -14 LUFS (I)"
+    },
+    "masterTargets": {
+      "streaming_integrated_lufs": "-14 a -9 LUFS (I)",
+      "true_peak_dbtp": "-1.0 dBTP (recomendado)",
+      "dynamic_range": "DR 7–12 (contexto depende)"
+    },
+    "vibe": [
+      "guitarras",
+      "médios",
+      "energia",
+      "bateria"
+    ],
+    "accent": "ember"
+  },
+  {
+    "id": "hiphop",
+    "name": "Hip‑Hop / Trap",
+    "tagline": "Grave controlado, kick 808 e vocal definido.",
+    "bpm": "60–160",
+    "mixTargets": {
+      "track_peak_dbfs": "-12 a -6 dBFS (picos)",
+      "mixbus_shortterm_lufs": "-18 a -12 LUFS (ST)",
+      "premaster_integrated_lufs": "-16 a -12 LUFS (I)"
+    },
+    "masterTargets": {
+      "streaming_integrated_lufs": "-14 a -8 LUFS (I)",
+      "true_peak_dbtp": "-1.0 a -0.8 dBTP",
+      "dynamic_range": "DR 5–9 (contexto depende)"
+    },
+    "vibe": [
+      "sub",
+      "808",
+      "vocal na cara",
+      "snap"
+    ],
+    "accent": "neon"
+  },
+  {
+    "id": "edm",
+    "name": "EDM",
+    "tagline": "Loud, transientes limpos e energia constante.",
+    "bpm": "120–150",
+    "mixTargets": {
+      "track_peak_dbfs": "-12 a -6 dBFS (picos)",
+      "mixbus_shortterm_lufs": "-16 a -10 LUFS (ST)",
+      "premaster_integrated_lufs": "-14 a -10 LUFS (I)"
+    },
+    "masterTargets": {
+      "streaming_integrated_lufs": "-14 a -7 LUFS (I)",
+      "true_peak_dbtp": "-1.0 a -0.5 dBTP",
+      "dynamic_range": "DR 4–8 (contexto depende)"
+    },
+    "vibe": [
+      "loudness",
+      "sidechain",
+      "brilho",
+      "impacto"
+    ],
+    "accent": "pulse"
+  },
+  {
+    "id": "acoustic",
+    "name": "Acoustic / Singer‑Songwriter",
+    "tagline": "Naturalidade, dinâmica e espaço.",
+    "bpm": "60–130",
+    "mixTargets": {
+      "track_peak_dbfs": "-18 a -10 dBFS (picos)",
+      "mixbus_shortterm_lufs": "-23 a -16 LUFS (ST)",
+      "premaster_integrated_lufs": "-20 a -16 LUFS (I)"
+    },
+    "masterTargets": {
+      "streaming_integrated_lufs": "-16 a -12 LUFS (I)",
+      "true_peak_dbtp": "-1.0 dBTP",
+      "dynamic_range": "DR 8–14 (contexto depende)"
+    },
+    "vibe": [
+      "natural",
+      "dinâmica",
+      "respiro",
+      "calor"
+    ],
+    "accent": "mist"
+  }
+]

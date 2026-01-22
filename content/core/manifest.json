@@ -1,0 +1,11 @@
+{
+  "id": "core",
+  "type": "core",
+  "name": "MixBlueprint Core",
+  "version": "1.0.0",
+  "description": "Conteúdo principal: gêneros base, instrumentos e cadeias.",
+  "entrypoints": {
+    "genres": "data/genres.json",
+    "chains": "data/chains.json"
+  }
+}

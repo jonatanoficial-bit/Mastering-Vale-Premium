@@ -1,0 +1,25 @@
+[
+  {
+    "id": "lofi",
+    "name": "Lo‑Fi / Chill",
+    "tagline": "Textura, suavidade e vibe vintage.",
+    "bpm": "70–110",
+    "mixTargets": {
+      "track_peak_dbfs": "-18 a -8 dBFS (picos)",
+      "mixbus_shortterm_lufs": "-22 a -14 LUFS (ST)",
+      "premaster_integrated_lufs": "-20 a -14 LUFS (I)"
+    },
+    "masterTargets": {
+      "streaming_integrated_lufs": "-16 a -10 LUFS (I)",
+      "true_peak_dbtp": "-1.0 dBTP",
+      "dynamic_range": "DR 7–12 (contexto depende)"
+    },
+    "vibe": [
+      "calor",
+      "ruído",
+      "tape",
+      "suave"
+    ],
+    "accent": "noir"
+  }
+]

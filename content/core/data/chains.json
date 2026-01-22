@@ -1,0 +1,5164 @@
+{
+  "schemaVersion": "1.0",
+  "instruments": [
+    {
+      "id": "vocal_lead",
+      "name": "Vocal (Lead)",
+      "icon": "mic",
+      "group": "Voz"
+    },
+    {
+      "id": "drums_bus",
+      "name": "Drums Bus",
+      "icon": "drums",
+      "group": "Ritmo"
+    },
+    {
+      "id": "bass",
+      "name": "Bass / 808",
+      "icon": "bass",
+      "group": "Ritmo"
+    },
+    {
+      "id": "guitar",
+      "name": "Guitar",
+      "icon": "guitar",
+      "group": "Harmonia"
+    },
+    {
+      "id": "keys_synth",
+      "name": "Keys / Synth",
+      "icon": "synth",
+      "group": "Harmonia"
+    },
+    {
+      "id": "mix_bus",
+      "name": "Mix Bus",
+      "icon": "bus",
+      "group": "Buses"
+    },
+    {
+      "id": "master",
+      "name": "Master",
+      "icon": "crown",
+      "group": "Final"
+    }
+  ],
+  "baseChains": {
+    "vocal_lead": {
+      "beginner": {
+        "goal": "Vocal limpo, consistente e na frente sem soar ‘processado’.",
+        "targets": {
+          "track_peak_dbfs": "~ -12 a -6 dBFS (picos)",
+          "comp_gr": "3–6 dB (médio)",
+          "deess_gr": "2–6 dB (picos)"
+        },
+        "checklist": [
+          "Checar ruído/room (pausas).",
+          "Ajustar clip gain por seção (verso/refrão).",
+          "Ouvir em mono e em volume baixo."
+        ],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Clip Gain & Ganho de entrada",
+            "purpose": "Deixe o sinal no ‘sweet spot’ para os próximos plugins sem clipar.",
+            "pluginExamples": [
+              "Clip Gain (DAW)",
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (track)",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de plugins pesados"
+              },
+              {
+                "label": "RMS / VU (médio)",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "varia por performance"
+              }
+            ],
+            "meters": [
+              {
+                "label": "True Peak / Peak",
+                "target": "sem clip na entrada"
+              },
+              {
+                "label": "VU (se tiver)",
+                "target": "0 VU ≈ -18 dBFS"
+              }
+            ],
+            "tips": [
+              "Ajuste por seção: versos, refrão, ad-libs podem precisar de ganhos diferentes."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "hp",
+            "type": "EQ",
+            "title": "High‑Pass (HPF) + limpeza",
+            "purpose": "Remove rumble e energia inútil que atrapalha compressor e reverb.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "FabFilter Pro‑Q 3",
+              "TDR Nova"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "70–110 Hz (12–24 dB/oitava)",
+                "note": "suba até limpar sem emagrecer"
+              },
+              {
+                "label": "Rumble",
+                "value": "< 40 Hz geralmente pode sair",
+                "note": "cuidado em vozes muito graves"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o vocal perder corpo, baixe o corte ou reduza a inclinação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_sub",
+            "type": "EQ",
+            "title": "EQ cirúrgico (ressonâncias)",
+            "purpose": "Corta ‘caixas’ e ressonâncias que cansam e embaçam.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Dynamic EQ (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "‘Mud’",
+                "value": "200–500 Hz (‑1 a ‑4 dB)",
+                "note": "procure picos estreitos"
+              },
+              {
+                "label": "‘Nasal’",
+                "value": "800 Hz – 1.5 kHz (‑1 a ‑3 dB)",
+                "note": "se necessário"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se você estiver cortando muito, volte no ganho/ambiente de captação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "deess",
+            "type": "Dynamics",
+            "title": "De‑Esser",
+            "purpose": "Controla sibilância mantendo brilho.",
+            "pluginExamples": [
+              "De‑Esser",
+              "Dynamic EQ",
+              "FabFilter Pro‑DS"
+            ],
+            "settings": [
+              {
+                "label": "Faixa típica",
+                "value": "5–8 kHz (feminino pode ir mais alto)",
+                "note": "ache o ‘SSS’"
+              },
+              {
+                "label": "Redução",
+                "value": "2–6 dB (picos)",
+                "note": "mais que isso pode ‘lispar’"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "picos 2–6 dB"
+              }
+            ],
+            "tips": [
+              "Se perder ar, use split-band ou ataque mais lento."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressor (principal)",
+            "purpose": "Estabiliza o vocal e traz para frente na mix.",
+            "pluginExamples": [
+              "Compressor (DAW)",
+              "LA‑2A style",
+              "1176 style"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "comece suave"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms (ou médio)",
+                "note": "preserva transiente"
+              },
+              {
+                "label": "Release",
+                "value": "60–150 ms (ou auto)",
+                "note": "no tempo da música"
+              },
+              {
+                "label": "GR",
+                "value": "3–6 dB (médio)",
+                "note": "picos podem ir mais"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "3–6 dB"
+              }
+            ],
+            "tips": [
+              "Ouça no contexto com beat/banda; sozinho engana."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_tone",
+            "type": "EQ",
+            "title": "EQ de tom (presença/air)",
+            "purpose": "Dá clareza e brilho sem agressividade.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pultec‑style",
+              "Shelf EQ"
+            ],
+            "settings": [
+              {
+                "label": "Presença",
+                "value": "2–5 kHz (+0.5 a +2 dB)",
+                "note": "cuidado com aspereza"
+              },
+              {
+                "label": "Air",
+                "value": "10–16 kHz (+0.5 a +2 dB)",
+                "note": "depois do de‑esser"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se ficar duro, em vez de subir 3 kHz, tente 12 kHz + de‑esser bem ajustado."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Harmônicos (leve)",
+            "purpose": "Ajuda o vocal a ‘colar’ e aparecer em caixas pequenas.",
+            "pluginExamples": [
+              "Saturation",
+              "Tape",
+              "Console emulation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve (1–3 dB de aumento harmônico)",
+                "note": "evite distorção óbvia"
+              },
+              {
+                "label": "Mix",
+                "value": "10–40%",
+                "note": "paralelo é mais seguro"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se a voz perder definição, reduza drive e compense com EQ."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Utility",
+            "title": "Limiter de segurança",
+            "purpose": "Evita picos inesperados (especialmente antes de sends).",
+            "pluginExamples": [
+              "Limiter",
+              "Clipper (leve)"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 a -2 dBFS",
+                "note": "apenas segurança"
+              },
+              {
+                "label": "GR",
+                "value": "0–2 dB (picos)",
+                "note": "não é para ‘amassar’ aqui"
+              }
+            ],
+            "meters": [
+              {
+                "label": "True Peak",
+                "target": "sem clip"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [
+          {
+            "id": "plate",
+            "title": "Plate Reverb (Aux)",
+            "purpose": "Profundidade sem ‘empurrar’ o vocal para trás.",
+            "settings": [
+              {
+                "label": "Decay",
+                "value": "1.0–2.2 s",
+                "note": "Pop tende a mais curto; Rock pode ser mais longo"
+              },
+              {
+                "label": "Pre‑delay",
+                "value": "20–60 ms",
+                "note": "mantém inteligibilidade"
+              },
+              {
+                "label": "HPF/LPF",
+                "value": "HPF 150–250 Hz / LPF 6–10 kHz",
+                "note": "evita lama e hiss"
+              }
+            ],
+            "tips": [
+              "Comprima o reverb (leve) para manter estável.",
+              "Use ducking no reverb com sidechain do vocal para clareza."
+            ]
+          },
+          {
+            "id": "slap",
+            "title": "Slap Delay (Aux)",
+            "purpose": "Espessura e presença sem reverb grande.",
+            "settings": [
+              {
+                "label": "Time",
+                "value": "80–140 ms",
+                "note": "sincronize ao groove"
+              },
+              {
+                "label": "Feedback",
+                "value": "0–15%",
+                "note": "1 repetição"
+              },
+              {
+                "label": "LPF",
+                "value": "3–6 kHz",
+                "note": "mais vintage"
+              }
+            ],
+            "tips": [
+              "Excelente para Pop/Hip‑Hop para vocal ‘na cara’."
+            ]
+          },
+          {
+            "id": "delay",
+            "title": "Delay Tempo‑Sync (Aux)",
+            "purpose": "Espaço rítmico e energia em refrões.",
+            "settings": [
+              {
+                "label": "Divisão",
+                "value": "1/4 ou 1/8 pontuado",
+                "note": "teste no contexto"
+              },
+              {
+                "label": "Feedback",
+                "value": "15–35%",
+                "note": "controle por automação"
+              },
+              {
+                "label": "Ducking",
+                "value": "forte",
+                "note": "delay aparece nos espaços"
+              }
+            ],
+            "tips": [
+              "Automatize sends: mais no refrão, menos no verso."
+            ]
+          }
+        ],
+        "notes": [
+          "Valores são ponto de partida; ajuste conforme a voz e o arranjo."
+        ]
+      },
+      "intermediate": {
+        "goal": "Mais controle e ‘polimento’ com menos artefatos.",
+        "targets": {
+          "track_peak_dbfs": "~ -12 a -6 dBFS (picos)",
+          "total_gr": "4–10 dB (soma de estágios)",
+          "deess_gr": "2–7 dB (picos)"
+        },
+        "checklist": [
+          "De‑esser antes e/ou depois de compressão (teste).",
+          "Automatizar sends (delay/reverb).",
+          "Checar sibilância em fones e caixas pequenas."
+        ],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Clip Gain & Ganho de entrada",
+            "purpose": "Deixe o sinal no ‘sweet spot’ para os próximos plugins sem clipar.",
+            "pluginExamples": [
+              "Clip Gain (DAW)",
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (track)",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de plugins pesados"
+              },
+              {
+                "label": "RMS / VU (médio)",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "varia por performance"
+              }
+            ],
+            "meters": [
+              {
+                "label": "True Peak / Peak",
+                "target": "sem clip na entrada"
+              },
+              {
+                "label": "VU (se tiver)",
+                "target": "0 VU ≈ -18 dBFS"
+              }
+            ],
+            "tips": [
+              "Ajuste por seção: versos, refrão, ad-libs podem precisar de ganhos diferentes."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "pitch",
+            "type": "Pitch",
+            "title": "Pitch Correction (opcional)",
+            "purpose": "Corrige afinação e estabiliza notas longas (quando o estilo pede).",
+            "pluginExamples": [
+              "Auto‑Tune",
+              "Melodyne",
+              "Pitch Correct (DAW)"
+            ],
+            "settings": [
+              {
+                "label": "Retune/Speed",
+                "value": "rápido (Trap) / médio (Pop) / lento (Natural)",
+                "note": "estilo manda"
+              },
+              {
+                "label": "Humanize",
+                "value": "10–50%",
+                "note": "evita robótico"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se a afinação já é boa, use muito pouco ou pule."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "hp",
+            "type": "EQ",
+            "title": "High‑Pass (HPF) + limpeza",
+            "purpose": "Remove rumble e energia inútil que atrapalha compressor e reverb.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "FabFilter Pro‑Q 3",
+              "TDR Nova"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "70–110 Hz (12–24 dB/oitava)",
+                "note": "suba até limpar sem emagrecer"
+              },
+              {
+                "label": "Rumble",
+                "value": "< 40 Hz geralmente pode sair",
+                "note": "cuidado em vozes muito graves"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o vocal perder corpo, baixe o corte ou reduza a inclinação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn_eq",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (mud/harsh)",
+            "purpose": "Controla ressonâncias só quando aparecem.",
+            "pluginExamples": [
+              "Dynamic EQ"
+            ],
+            "settings": [
+              {
+                "label": "Mud",
+                "value": "200–500 Hz (‑1 a ‑4 dB quando ativa)",
+                "note": "Q médio"
+              },
+              {
+                "label": "Harsh",
+                "value": "2–5 kHz (‑1 a ‑3 dB quando ativa)",
+                "note": "se necessário"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp_fast",
+            "type": "Dynamics",
+            "title": "Compressor 1 (rápido)",
+            "purpose": "Segura picos/consoantes para o segundo estágio trabalhar melhor.",
+            "pluginExamples": [
+              "1176‑style",
+              "VCA"
+            ],
+            "settings": [
+              {
+                "label": "Attack",
+                "value": "rápido a médio",
+                "note": "não mate transiente"
+              },
+              {
+                "label": "Release",
+                "value": "rápido",
+                "note": "no tempo"
+              },
+              {
+                "label": "GR",
+                "value": "1–4 dB",
+                "note": "picos"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp_slow",
+            "type": "Dynamics",
+            "title": "Compressor 2 (lento)",
+            "purpose": "Nivelamento musical e estabilidade.",
+            "pluginExamples": [
+              "LA‑2A‑style",
+              "Opto"
+            ],
+            "settings": [
+              {
+                "label": "GR",
+                "value": "2–6 dB",
+                "note": "médio"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "deess",
+            "type": "Dynamics",
+            "title": "De‑Esser",
+            "purpose": "Controla sibilância mantendo brilho.",
+            "pluginExamples": [
+              "De‑Esser",
+              "Dynamic EQ",
+              "FabFilter Pro‑DS"
+            ],
+            "settings": [
+              {
+                "label": "Faixa típica",
+                "value": "5–8 kHz (feminino pode ir mais alto)",
+                "note": "ache o ‘SSS’"
+              },
+              {
+                "label": "Redução",
+                "value": "2–6 dB (picos)",
+                "note": "mais que isso pode ‘lispar’"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "picos 2–6 dB"
+              }
+            ],
+            "tips": [
+              "Se perder ar, use split-band ou ataque mais lento."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressor (principal)",
+            "purpose": "Estabiliza o vocal e traz para frente na mix.",
+            "pluginExamples": [
+              "Compressor (DAW)",
+              "LA‑2A style",
+              "1176 style"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "comece suave"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms (ou médio)",
+                "note": "preserva transiente"
+              },
+              {
+                "label": "Release",
+                "value": "60–150 ms (ou auto)",
+                "note": "no tempo da música"
+              },
+              {
+                "label": "GR",
+                "value": "3–6 dB (médio)",
+                "note": "picos podem ir mais"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "3–6 dB"
+              }
+            ],
+            "tips": [
+              "Ouça no contexto com beat/banda; sozinho engana."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_tone",
+            "type": "EQ",
+            "title": "EQ de tom (presença/air)",
+            "purpose": "Dá clareza e brilho sem agressividade.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pultec‑style",
+              "Shelf EQ"
+            ],
+            "settings": [
+              {
+                "label": "Presença",
+                "value": "2–5 kHz (+0.5 a +2 dB)",
+                "note": "cuidado com aspereza"
+              },
+              {
+                "label": "Air",
+                "value": "10–16 kHz (+0.5 a +2 dB)",
+                "note": "depois do de‑esser"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se ficar duro, em vez de subir 3 kHz, tente 12 kHz + de‑esser bem ajustado."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "rider",
+            "type": "Workflow",
+            "title": "Vocal Rider / Automação",
+            "purpose": "Ajusta presença frase a frase com naturalidade.",
+            "pluginExamples": [
+              "Volume automation",
+              "Vocal rider"
+            ],
+            "settings": [
+              {
+                "label": "Meta",
+                "value": "vocal sempre legível sem esmagar",
+                "note": "mais ‘pro’ que comp"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Utility",
+            "title": "Limiter de segurança",
+            "purpose": "Evita picos inesperados (especialmente antes de sends).",
+            "pluginExamples": [
+              "Limiter",
+              "Clipper (leve)"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 a -2 dBFS",
+                "note": "apenas segurança"
+              },
+              {
+                "label": "GR",
+                "value": "0–2 dB (picos)",
+                "note": "não é para ‘amassar’ aqui"
+              }
+            ],
+            "meters": [
+              {
+                "label": "True Peak",
+                "target": "sem clip"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [
+          {
+            "id": "plate",
+            "title": "Plate Reverb (Aux)",
+            "purpose": "Profundidade sem ‘empurrar’ o vocal para trás.",
+            "settings": [
+              {
+                "label": "Decay",
+                "value": "1.0–2.2 s",
+                "note": "Pop tende a mais curto; Rock pode ser mais longo"
+              },
+              {
+                "label": "Pre‑delay",
+                "value": "20–60 ms",
+                "note": "mantém inteligibilidade"
+              },
+              {
+                "label": "HPF/LPF",
+                "value": "HPF 150–250 Hz / LPF 6–10 kHz",
+                "note": "evita lama e hiss"
+              }
+            ],
+            "tips": [
+              "Comprima o reverb (leve) para manter estável.",
+              "Use ducking no reverb com sidechain do vocal para clareza."
+            ]
+          },
+          {
+            "id": "slap",
+            "title": "Slap Delay (Aux)",
+            "purpose": "Espessura e presença sem reverb grande.",
+            "settings": [
+              {
+                "label": "Time",
+                "value": "80–140 ms",
+                "note": "sincronize ao groove"
+              },
+              {
+                "label": "Feedback",
+                "value": "0–15%",
+                "note": "1 repetição"
+              },
+              {
+                "label": "LPF",
+                "value": "3–6 kHz",
+                "note": "mais vintage"
+              }
+            ],
+            "tips": [
+              "Excelente para Pop/Hip‑Hop para vocal ‘na cara’."
+            ]
+          },
+          {
+            "id": "delay",
+            "title": "Delay Tempo‑Sync (Aux)",
+            "purpose": "Espaço rítmico e energia em refrões.",
+            "settings": [
+              {
+                "label": "Divisão",
+                "value": "1/4 ou 1/8 pontuado",
+                "note": "teste no contexto"
+              },
+              {
+                "label": "Feedback",
+                "value": "15–35%",
+                "note": "controle por automação"
+              },
+              {
+                "label": "Ducking",
+                "value": "forte",
+                "note": "delay aparece nos espaços"
+              }
+            ],
+            "tips": [
+              "Automatize sends: mais no refrão, menos no verso."
+            ]
+          }
+        ],
+        "notes": []
+      },
+      "advanced": {
+        "goal": "Controle máximo, textura e presença ‘AAA’ com flexibilidade.",
+        "targets": {
+          "track_peak_dbfs": "~ -12 a -6 dBFS (picos)",
+          "total_gr": "6–12 dB (soma de estágios, sem soar esmagado)",
+          "sibilance": "controlada sem perder air"
+        },
+        "checklist": [
+          "Automação antes de esmagar com comp.",
+          "Checar intelligibility em volume baixo.",
+          "Referência A/B com loudness match."
+        ],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Clip Gain & Ganho de entrada",
+            "purpose": "Deixe o sinal no ‘sweet spot’ para os próximos plugins sem clipar.",
+            "pluginExamples": [
+              "Clip Gain (DAW)",
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (track)",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de plugins pesados"
+              },
+              {
+                "label": "RMS / VU (médio)",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "varia por performance"
+              }
+            ],
+            "meters": [
+              {
+                "label": "True Peak / Peak",
+                "target": "sem clip na entrada"
+              },
+              {
+                "label": "VU (se tiver)",
+                "target": "0 VU ≈ -18 dBFS"
+              }
+            ],
+            "tips": [
+              "Ajuste por seção: versos, refrão, ad-libs podem precisar de ganhos diferentes."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "cleanup",
+            "type": "Restoration",
+            "title": "Cleanup (de‑noise/de‑click) — se preciso",
+            "purpose": "Remove ruído/estalos antes da cadeia.",
+            "pluginExamples": [
+              "De‑Noise",
+              "De‑Click",
+              "RX‑style tools"
+            ],
+            "settings": [
+              {
+                "label": "Regra",
+                "value": "mínimo necessário",
+                "note": "evite artefatos"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se ruído é muito alto, revise captação primeiro."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "pitch",
+            "type": "Pitch",
+            "title": "Pitch Correction (estilo‑dependente)",
+            "purpose": "Ajuste fino de afinação e formaantes (quando aplicável).",
+            "pluginExamples": [
+              "Melodyne",
+              "Auto‑Tune"
+            ],
+            "settings": [
+              {
+                "label": "Dica",
+                "value": "faça antes de comp/FX",
+                "note": "mais previsível"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "hp",
+            "type": "EQ",
+            "title": "High‑Pass (HPF) + limpeza",
+            "purpose": "Remove rumble e energia inútil que atrapalha compressor e reverb.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "FabFilter Pro‑Q 3",
+              "TDR Nova"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "70–110 Hz (12–24 dB/oitava)",
+                "note": "suba até limpar sem emagrecer"
+              },
+              {
+                "label": "Rumble",
+                "value": "< 40 Hz geralmente pode sair",
+                "note": "cuidado em vozes muito graves"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o vocal perder corpo, baixe o corte ou reduza a inclinação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_sub",
+            "type": "EQ",
+            "title": "EQ cirúrgico (ressonâncias)",
+            "purpose": "Corta ‘caixas’ e ressonâncias que cansam e embaçam.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Dynamic EQ (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "‘Mud’",
+                "value": "200–500 Hz (‑1 a ‑4 dB)",
+                "note": "procure picos estreitos"
+              },
+              {
+                "label": "‘Nasal’",
+                "value": "800 Hz – 1.5 kHz (‑1 a ‑3 dB)",
+                "note": "se necessário"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se você estiver cortando muito, volte no ganho/ambiente de captação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "deess_mb",
+            "type": "Dynamics",
+            "title": "De‑Esser Multibanda (refino)",
+            "purpose": "Segura sibilância e ‘ess’ duros sem apagar o brilho.",
+            "pluginExamples": [
+              "Multiband De‑Esser",
+              "Dynamic EQ"
+            ],
+            "settings": [
+              {
+                "label": "GR",
+                "value": "1–4 dB (picos)",
+                "note": "refino"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "serial",
+            "type": "Dynamics",
+            "title": "Serial Compression (2–3 estágios)",
+            "purpose": "Som mais estável sem um compressor ‘sofrendo’ sozinho.",
+            "pluginExamples": [
+              "1176 → LA‑2A → (opcional) VCA"
+            ],
+            "settings": [
+              {
+                "label": "GR total",
+                "value": "6–12 dB (soma)",
+                "note": "divida em estágios"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se ficar ‘pequeno’, reduza GR e faça mais automação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "harmonics",
+            "type": "Color",
+            "title": "Harmônicos controlados (paralelo)",
+            "purpose": "Cria presença e ‘luxo’ sem distorção evidente.",
+            "pluginExamples": [
+              "Parallel saturation",
+              "Exciter (leve)"
+            ],
+            "settings": [
+              {
+                "label": "Blend",
+                "value": "5–25%",
+                "note": "só até aparecer"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressor (principal)",
+            "purpose": "Estabiliza o vocal e traz para frente na mix.",
+            "pluginExamples": [
+              "Compressor (DAW)",
+              "LA‑2A style",
+              "1176 style"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "comece suave"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms (ou médio)",
+                "note": "preserva transiente"
+              },
+              {
+                "label": "Release",
+                "value": "60–150 ms (ou auto)",
+                "note": "no tempo da música"
+              },
+              {
+                "label": "GR",
+                "value": "3–6 dB (médio)",
+                "note": "picos podem ir mais"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "3–6 dB"
+              }
+            ],
+            "tips": [
+              "Ouça no contexto com beat/banda; sozinho engana."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "fx_control",
+            "type": "FX",
+            "title": "FX control (ducking/sidechain)",
+            "purpose": "Reverb/delay aparece nos espaços sem embolar o vocal.",
+            "pluginExamples": [
+              "Ducker",
+              "Sidechain on reverb/delay"
+            ],
+            "settings": [
+              {
+                "label": "Ducking",
+                "value": "3–8 dB",
+                "note": "ajuste por gênero"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Utility",
+            "title": "Limiter de segurança",
+            "purpose": "Evita picos inesperados (especialmente antes de sends).",
+            "pluginExamples": [
+              "Limiter",
+              "Clipper (leve)"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 a -2 dBFS",
+                "note": "apenas segurança"
+              },
+              {
+                "label": "GR",
+                "value": "0–2 dB (picos)",
+                "note": "não é para ‘amassar’ aqui"
+              }
+            ],
+            "meters": [
+              {
+                "label": "True Peak",
+                "target": "sem clip"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [
+          {
+            "id": "plate",
+            "title": "Plate Reverb (Aux)",
+            "purpose": "Profundidade sem ‘empurrar’ o vocal para trás.",
+            "settings": [
+              {
+                "label": "Decay",
+                "value": "1.0–2.2 s",
+                "note": "Pop tende a mais curto; Rock pode ser mais longo"
+              },
+              {
+                "label": "Pre‑delay",
+                "value": "20–60 ms",
+                "note": "mantém inteligibilidade"
+              },
+              {
+                "label": "HPF/LPF",
+                "value": "HPF 150–250 Hz / LPF 6–10 kHz",
+                "note": "evita lama e hiss"
+              }
+            ],
+            "tips": [
+              "Comprima o reverb (leve) para manter estável.",
+              "Use ducking no reverb com sidechain do vocal para clareza."
+            ]
+          },
+          {
+            "id": "slap",
+            "title": "Slap Delay (Aux)",
+            "purpose": "Espessura e presença sem reverb grande.",
+            "settings": [
+              {
+                "label": "Time",
+                "value": "80–140 ms",
+                "note": "sincronize ao groove"
+              },
+              {
+                "label": "Feedback",
+                "value": "0–15%",
+                "note": "1 repetição"
+              },
+              {
+                "label": "LPF",
+                "value": "3–6 kHz",
+                "note": "mais vintage"
+              }
+            ],
+            "tips": [
+              "Excelente para Pop/Hip‑Hop para vocal ‘na cara’."
+            ]
+          },
+          {
+            "id": "delay",
+            "title": "Delay Tempo‑Sync (Aux)",
+            "purpose": "Espaço rítmico e energia em refrões.",
+            "settings": [
+              {
+                "label": "Divisão",
+                "value": "1/4 ou 1/8 pontuado",
+                "note": "teste no contexto"
+              },
+              {
+                "label": "Feedback",
+                "value": "15–35%",
+                "note": "controle por automação"
+              },
+              {
+                "label": "Ducking",
+                "value": "forte",
+                "note": "delay aparece nos espaços"
+              }
+            ],
+            "tips": [
+              "Automatize sends: mais no refrão, menos no verso."
+            ]
+          }
+        ],
+        "notes": []
+      }
+    },
+    "drums_bus": {
+      "beginner": {
+        "goal": "Bateria coesa, punch e sem harsh.",
+        "targets": {
+          "bus_peak_dbfs": "~ -10 a -6 dBFS",
+          "glue_gr": "1–4 dB"
+        },
+        "checklist": [
+          "Cheque phase entre close mics e overheads.",
+          "Se o hi-hat está áspero, trate no OH/HH, não só no bus."
+        ],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging do Bus",
+            "purpose": "Garanta headroom e transientes limpos antes de comprimir.",
+            "pluginExamples": [
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (bus)",
+                "value": "~ -10 a -6 dBFS",
+                "note": "antes de bus comp"
+              },
+              {
+                "label": "RMS / VU",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "varia por estilo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o bus já vem clipado, resolva nas tracks (kick/snare/overheads)."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ do Bus (limpeza + punch)",
+            "purpose": "Tira lama e abre espaço sem matar impacto.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pro‑Q 3",
+              "SSL‑style EQ"
+            ],
+            "settings": [
+              {
+                "label": "HPF (opcional)",
+                "value": "20–35 Hz",
+                "note": "remover sub inútil"
+              },
+              {
+                "label": "‘Boxy’",
+                "value": "250–500 Hz (‑1 a ‑3 dB)",
+                "note": "se embolar"
+              },
+              {
+                "label": "Ataque",
+                "value": "3–6 kHz (+0.5 a +2 dB)",
+                "note": "se precisar de snap"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o kick perder peso, evite cortar 60–90 Hz no bus; corrija na fonte."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "glue",
+            "type": "Dynamics",
+            "title": "Bus Compressor (glue)",
+            "purpose": "Cola o kit e estabiliza picos sem esmagar.",
+            "pluginExamples": [
+              "SSL Bus Comp",
+              "VCA Compressor",
+              "Compressor DAW"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "2:1 para mais natural"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms",
+                "note": "deixe transiente passar"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–300 ms",
+                "note": "respirando no tempo"
+              },
+              {
+                "label": "GR",
+                "value": "1–4 dB (médio)",
+                "note": "mais que isso muda caráter"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "1–4 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Tape (leve)",
+            "purpose": "Dá densidade e ‘cola’ sem perder punch.",
+            "pluginExamples": [
+              "Tape",
+              "Saturation",
+              "Console emulation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve",
+                "note": "evite ‘fuzz’ no hi‑hat"
+              },
+              {
+                "label": "High trim",
+                "value": "‑0 a ‑2 dB se ficar áspero",
+                "note": "após saturar"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper/Limiter (controle de picos)",
+            "purpose": "Segura transientes mais agressivos com menos pumping.",
+            "pluginExamples": [
+              "Soft Clipper",
+              "Limiter (rápido)"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 a -0.5 dBFS",
+                "note": "evite clip digital"
+              },
+              {
+                "label": "Redução",
+                "value": "0–2 dB (picos)",
+                "note": "só domar picos"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o kick perder ataque, reduza clip e volte no compressor (attack mais lento)."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [
+          {
+            "id": "par",
+            "title": "Parallel Drum Crush (Aux)",
+            "purpose": "Corpo sem matar transiente.",
+            "settings": [
+              {
+                "label": "Compressor",
+                "value": "Ratio 8:1+, attack rápido, release rápido",
+                "note": "bem esmagado"
+              },
+              {
+                "label": "EQ",
+                "value": "HPF 80–120 Hz / LPF 6–10 kHz",
+                "note": "evita lama/harsh"
+              },
+              {
+                "label": "Blend",
+                "value": "-18 a -8 dB abaixo do bus",
+                "note": "misture até sentir"
+              }
+            ],
+            "tips": [
+              "Mantenha kick/snare limpos no bus principal; paralela é tempero."
+            ]
+          }
+        ],
+        "notes": []
+      },
+      "intermediate": {
+        "goal": "Mais controle de microdinâmica e agressividade com punch.",
+        "targets": {
+          "glue_gr": "1–4 dB",
+          "clip_reduction": "0–2 dB"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging do Bus",
+            "purpose": "Garanta headroom e transientes limpos antes de comprimir.",
+            "pluginExamples": [
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (bus)",
+                "value": "~ -10 a -6 dBFS",
+                "note": "antes de bus comp"
+              },
+              {
+                "label": "RMS / VU",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "varia por estilo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o bus já vem clipado, resolva nas tracks (kick/snare/overheads)."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ do Bus (limpeza + punch)",
+            "purpose": "Tira lama e abre espaço sem matar impacto.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pro‑Q 3",
+              "SSL‑style EQ"
+            ],
+            "settings": [
+              {
+                "label": "HPF (opcional)",
+                "value": "20–35 Hz",
+                "note": "remover sub inútil"
+              },
+              {
+                "label": "‘Boxy’",
+                "value": "250–500 Hz (‑1 a ‑3 dB)",
+                "note": "se embolar"
+              },
+              {
+                "label": "Ataque",
+                "value": "3–6 kHz (+0.5 a +2 dB)",
+                "note": "se precisar de snap"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o kick perder peso, evite cortar 60–90 Hz no bus; corrija na fonte."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "transient",
+            "type": "Dynamics",
+            "title": "Transient Shaper (opcional)",
+            "purpose": "Recupera ataque ou reduz sustain quando a compressão ‘amolece’ o kit.",
+            "pluginExamples": [
+              "Transient Shaper",
+              "Envelope Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Attack",
+                "value": "+1 a +4 (leve)",
+                "note": "apenas se necessário"
+              },
+              {
+                "label": "Sustain",
+                "value": "‑1 a ‑4 (leve)",
+                "note": "para secar room"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Use em paralelo (mix knob) quando possível."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "glue",
+            "type": "Dynamics",
+            "title": "Bus Compressor (glue)",
+            "purpose": "Cola o kit e estabiliza picos sem esmagar.",
+            "pluginExamples": [
+              "SSL Bus Comp",
+              "VCA Compressor",
+              "Compressor DAW"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "2:1 para mais natural"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms",
+                "note": "deixe transiente passar"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–300 ms",
+                "note": "respirando no tempo"
+              },
+              {
+                "label": "GR",
+                "value": "1–4 dB (médio)",
+                "note": "mais que isso muda caráter"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "1–4 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Tape (leve)",
+            "purpose": "Dá densidade e ‘cola’ sem perder punch.",
+            "pluginExamples": [
+              "Tape",
+              "Saturation",
+              "Console emulation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve",
+                "note": "evite ‘fuzz’ no hi‑hat"
+              },
+              {
+                "label": "High trim",
+                "value": "‑0 a ‑2 dB se ficar áspero",
+                "note": "após saturar"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper/Limiter (controle de picos)",
+            "purpose": "Segura transientes mais agressivos com menos pumping.",
+            "pluginExamples": [
+              "Soft Clipper",
+              "Limiter (rápido)"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 a -0.5 dBFS",
+                "note": "evite clip digital"
+              },
+              {
+                "label": "Redução",
+                "value": "0–2 dB (picos)",
+                "note": "só domar picos"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o kick perder ataque, reduza clip e volte no compressor (attack mais lento)."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [
+          {
+            "id": "par",
+            "title": "Parallel Drum Crush (Aux)",
+            "purpose": "Densidade ‘pro’ sem perder punch.",
+            "settings": [
+              {
+                "label": "Compressor",
+                "value": "8:1–20:1, attack 0.1–3 ms, release rápido",
+                "note": "smash"
+              },
+              {
+                "label": "Saturação",
+                "value": "leve a moderada",
+                "note": "harmônicos"
+              },
+              {
+                "label": "Blend",
+                "value": "misture até ‘colar’",
+                "note": "ouça no refrão"
+              }
+            ],
+            "tips": [
+              "Automatize a paralela para refrões."
+            ]
+          }
+        ],
+        "notes": []
+      },
+      "advanced": {
+        "goal": "Drums modernos: punch, densidade e transientes controlados.",
+        "targets": {
+          "glue_gr": "1–4 dB",
+          "parallel_blend": "ajustado ao estilo"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging do Bus",
+            "purpose": "Garanta headroom e transientes limpos antes de comprimir.",
+            "pluginExamples": [
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (bus)",
+                "value": "~ -10 a -6 dBFS",
+                "note": "antes de bus comp"
+              },
+              {
+                "label": "RMS / VU",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "varia por estilo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o bus já vem clipado, resolva nas tracks (kick/snare/overheads)."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ do Bus (limpeza + punch)",
+            "purpose": "Tira lama e abre espaço sem matar impacto.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pro‑Q 3",
+              "SSL‑style EQ"
+            ],
+            "settings": [
+              {
+                "label": "HPF (opcional)",
+                "value": "20–35 Hz",
+                "note": "remover sub inútil"
+              },
+              {
+                "label": "‘Boxy’",
+                "value": "250–500 Hz (‑1 a ‑3 dB)",
+                "note": "se embolar"
+              },
+              {
+                "label": "Ataque",
+                "value": "3–6 kHz (+0.5 a +2 dB)",
+                "note": "se precisar de snap"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o kick perder peso, evite cortar 60–90 Hz no bus; corrija na fonte."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn_eq",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (controlar harsh/box)",
+            "purpose": "Corta frequências só quando aparecem (mais transparente).",
+            "pluginExamples": [
+              "Dynamic EQ",
+              "Multiband EQ"
+            ],
+            "settings": [
+              {
+                "label": "Box",
+                "value": "250–500 Hz (‑1 a ‑4 dB quando ativa)",
+                "note": "Q médio"
+              },
+              {
+                "label": "Harsh",
+                "value": "2–5 kHz (‑1 a ‑3 dB quando ativa)",
+                "note": "para pratos agressivos"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Ajuste com solo + contexto. Se sempre ativa, talvez seja EQ estático."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "transient",
+            "type": "Dynamics",
+            "title": "Transient Shaper (ataque/sustain)",
+            "purpose": "Ajusta microdinâmica para punch e controle de room.",
+            "pluginExamples": [
+              "Transient Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Attack",
+                "value": "+1 a +5 (dependendo do estilo)",
+                "note": "EDM pode pedir mais"
+              },
+              {
+                "label": "Sustain",
+                "value": "‑1 a ‑6",
+                "note": "para secar"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "glue",
+            "type": "Dynamics",
+            "title": "Bus Compressor (glue)",
+            "purpose": "Cola o kit e estabiliza picos sem esmagar.",
+            "pluginExamples": [
+              "SSL Bus Comp",
+              "VCA Compressor",
+              "Compressor DAW"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "2:1 para mais natural"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms",
+                "note": "deixe transiente passar"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–300 ms",
+                "note": "respirando no tempo"
+              },
+              {
+                "label": "GR",
+                "value": "1–4 dB (médio)",
+                "note": "mais que isso muda caráter"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "1–4 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "parallel",
+            "type": "Routing",
+            "title": "Paralela (New York) — setup",
+            "purpose": "Cria corpo sem matar transiente usando compressão paralela pesada.",
+            "pluginExamples": [
+              "Bus Send",
+              "1176/Distressor‑style",
+              "Saturação"
+            ],
+            "settings": [
+              {
+                "label": "Compressor",
+                "value": "Ratio alto (8:1+), attack rápido, release rápido",
+                "note": "bem esmagado"
+              },
+              {
+                "label": "Blend",
+                "value": "‑18 a ‑8 dB abaixo do bus",
+                "note": "misture até sentir"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Filtre graves na paralela (HPF 80–120 Hz) para não sujar o kick."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Tape (leve)",
+            "purpose": "Dá densidade e ‘cola’ sem perder punch.",
+            "pluginExamples": [
+              "Tape",
+              "Saturation",
+              "Console emulation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve",
+                "note": "evite ‘fuzz’ no hi‑hat"
+              },
+              {
+                "label": "High trim",
+                "value": "‑0 a ‑2 dB se ficar áspero",
+                "note": "após saturar"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper/Limiter (controle de picos)",
+            "purpose": "Segura transientes mais agressivos com menos pumping.",
+            "pluginExamples": [
+              "Soft Clipper",
+              "Limiter (rápido)"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 a -0.5 dBFS",
+                "note": "evite clip digital"
+              },
+              {
+                "label": "Redução",
+                "value": "0–2 dB (picos)",
+                "note": "só domar picos"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o kick perder ataque, reduza clip e volte no compressor (attack mais lento)."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [
+          {
+            "id": "room",
+            "title": "Room/Chamber (Aux) — opcional",
+            "purpose": "Profundidade e tamanho do kit.",
+            "settings": [
+              {
+                "label": "Decay",
+                "value": "0.4–1.2 s",
+                "note": "mais curto para moderno"
+              },
+              {
+                "label": "HPF/LPF",
+                "value": "HPF 200 Hz / LPF 8–10 kHz",
+                "note": "evita lama"
+              }
+            ]
+          }
+        ],
+        "notes": []
+      }
+    },
+    "bass": {
+      "beginner": {
+        "goal": "Grave controlado + harmônicos para traduzir em qualquer sistema.",
+        "targets": {
+          "track_peak_dbfs": "~ -12 a -6 dBFS",
+          "comp_gr": "3–8 dB"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Clip Gain & Headroom",
+            "purpose": "Deixe espaço para saturação e comp sem distorção indesejada.",
+            "pluginExamples": [
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (track)",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de saturar"
+              },
+              {
+                "label": "RMS/VU",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "808 pode ser mais constante"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ (sub + definição)",
+            "purpose": "Limpa sub inútil e cria definição audível em caixas pequenas.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pro‑Q 3",
+              "TDR Nova"
+            ],
+            "settings": [
+              {
+                "label": "HPF (opcional)",
+                "value": "20–35 Hz",
+                "note": "remover sub inaudível"
+              },
+              {
+                "label": "‘Mud’",
+                "value": "200–350 Hz (‑1 a ‑4 dB)",
+                "note": "se embolar com vocal"
+              },
+              {
+                "label": "Definição",
+                "value": "700 Hz – 1.5 kHz (+0.5 a +3 dB)",
+                "note": "para notas/ataque"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o baixo sumir em celular, procure harmônicos (700 Hz–2 kHz) via saturação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (controle)",
+            "purpose": "Estabiliza notas e reduz saltos de dinâmica.",
+            "pluginExamples": [
+              "Compressor",
+              "Opto",
+              "VCA"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "3:1 – 6:1",
+                "note": "808 pode ser mais alto"
+              },
+              {
+                "label": "Attack",
+                "value": "20–60 ms",
+                "note": "preserva ataque"
+              },
+              {
+                "label": "Release",
+                "value": "80–200 ms",
+                "note": "no groove"
+              },
+              {
+                "label": "GR",
+                "value": "3–8 dB",
+                "note": "dependendo da performance"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "3–8 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Amp (harmônicos)",
+            "purpose": "Traz o baixo para frente sem aumentar volume no sub.",
+            "pluginExamples": [
+              "Saturation",
+              "Bass Amp Sim",
+              "Tape"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "moderado",
+                "note": "busque harmônicos 2ª/3ª"
+              },
+              {
+                "label": "Mix",
+                "value": "20–60%",
+                "note": "paralelo é ótimo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se embolar, use LPF na distorção (3–6 kHz)."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sidechain",
+            "type": "Dynamics",
+            "title": "Sidechain (opcional)",
+            "purpose": "Abre espaço para kick sem briga no low end.",
+            "pluginExamples": [
+              "Compressor com sidechain",
+              "Volume Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "1–4 dB",
+                "note": "só o suficiente"
+              },
+              {
+                "label": "Release",
+                "value": "100–250 ms",
+                "note": "ajuste ao BPM"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "EDM/Trap tende a pedir mais sidechain; Rock/Acoustic geralmente menos."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "intermediate": {
+        "goal": "Mais consistência e controle do low end no groove.",
+        "targets": {
+          "comp_gr": "3–8 dB",
+          "dyn_control": "1–5 dB quando ativa"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Clip Gain & Headroom",
+            "purpose": "Deixe espaço para saturação e comp sem distorção indesejada.",
+            "pluginExamples": [
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (track)",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de saturar"
+              },
+              {
+                "label": "RMS/VU",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "808 pode ser mais constante"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ (sub + definição)",
+            "purpose": "Limpa sub inútil e cria definição audível em caixas pequenas.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pro‑Q 3",
+              "TDR Nova"
+            ],
+            "settings": [
+              {
+                "label": "HPF (opcional)",
+                "value": "20–35 Hz",
+                "note": "remover sub inaudível"
+              },
+              {
+                "label": "‘Mud’",
+                "value": "200–350 Hz (‑1 a ‑4 dB)",
+                "note": "se embolar com vocal"
+              },
+              {
+                "label": "Definição",
+                "value": "700 Hz – 1.5 kHz (+0.5 a +3 dB)",
+                "note": "para notas/ataque"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o baixo sumir em celular, procure harmônicos (700 Hz–2 kHz) via saturação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (controle)",
+            "purpose": "Estabiliza notas e reduz saltos de dinâmica.",
+            "pluginExamples": [
+              "Compressor",
+              "Opto",
+              "VCA"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "3:1 – 6:1",
+                "note": "808 pode ser mais alto"
+              },
+              {
+                "label": "Attack",
+                "value": "20–60 ms",
+                "note": "preserva ataque"
+              },
+              {
+                "label": "Release",
+                "value": "80–200 ms",
+                "note": "no groove"
+              },
+              {
+                "label": "GR",
+                "value": "3–8 dB",
+                "note": "dependendo da performance"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "3–8 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (low end control)",
+            "purpose": "Controla ressonâncias de sub sem ‘apertar’ tudo.",
+            "pluginExamples": [
+              "Dynamic EQ",
+              "Multiband Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Sub band",
+                "value": "30–80 Hz (‑1 a ‑5 dB quando ativa)",
+                "note": "evita boomy"
+              },
+              {
+                "label": "Low‑mid",
+                "value": "120–250 Hz (‑1 a ‑4 dB quando ativa)",
+                "note": "abre espaço"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Amp (harmônicos)",
+            "purpose": "Traz o baixo para frente sem aumentar volume no sub.",
+            "pluginExamples": [
+              "Saturation",
+              "Bass Amp Sim",
+              "Tape"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "moderado",
+                "note": "busque harmônicos 2ª/3ª"
+              },
+              {
+                "label": "Mix",
+                "value": "20–60%",
+                "note": "paralelo é ótimo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se embolar, use LPF na distorção (3–6 kHz)."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sidechain",
+            "type": "Dynamics",
+            "title": "Sidechain (opcional)",
+            "purpose": "Abre espaço para kick sem briga no low end.",
+            "pluginExamples": [
+              "Compressor com sidechain",
+              "Volume Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "1–4 dB",
+                "note": "só o suficiente"
+              },
+              {
+                "label": "Release",
+                "value": "100–250 ms",
+                "note": "ajuste ao BPM"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "EDM/Trap tende a pedir mais sidechain; Rock/Acoustic geralmente menos."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper (picos / consistência)",
+            "purpose": "Deixa o baixo mais consistente e ajuda loudness sem pumping.",
+            "pluginExamples": [
+              "Soft Clipper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "0–3 dB (picos)",
+                "note": "com ouvidos"
+              },
+              {
+                "label": "Oversampling",
+                "value": "2x–8x se disponível",
+                "note": "menos aliasing"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "advanced": {
+        "goal": "808/bass moderno: sub sólido (mono) + presença harmônica.",
+        "targets": {
+          "mono_sub": "até 120 Hz",
+          "clip_reduction": "0–3 dB"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Clip Gain & Headroom",
+            "purpose": "Deixe espaço para saturação e comp sem distorção indesejada.",
+            "pluginExamples": [
+              "Trim / Gain",
+              "VU Meter"
+            ],
+            "settings": [
+              {
+                "label": "Picos (track)",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de saturar"
+              },
+              {
+                "label": "RMS/VU",
+                "value": "~ -18 dBFS RMS (aprox.)",
+                "note": "808 pode ser mais constante"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ (sub + definição)",
+            "purpose": "Limpa sub inútil e cria definição audível em caixas pequenas.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Pro‑Q 3",
+              "TDR Nova"
+            ],
+            "settings": [
+              {
+                "label": "HPF (opcional)",
+                "value": "20–35 Hz",
+                "note": "remover sub inaudível"
+              },
+              {
+                "label": "‘Mud’",
+                "value": "200–350 Hz (‑1 a ‑4 dB)",
+                "note": "se embolar com vocal"
+              },
+              {
+                "label": "Definição",
+                "value": "700 Hz – 1.5 kHz (+0.5 a +3 dB)",
+                "note": "para notas/ataque"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o baixo sumir em celular, procure harmônicos (700 Hz–2 kHz) via saturação."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "split",
+            "type": "Color",
+            "title": "Distorção em paralelo (split‑band)",
+            "purpose": "Sature só médios/agudos para preservar sub limpo.",
+            "pluginExamples": [
+              "Multiband Saturation",
+              "Send/Return com filtros"
+            ],
+            "settings": [
+              {
+                "label": "Split",
+                "value": "<120 Hz limpo; >120 Hz saturado",
+                "note": "ponto de partida"
+              },
+              {
+                "label": "LPF no alto",
+                "value": "3–6 kHz",
+                "note": "evita aspereza"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Em 808, mantenha sub mono e controle fase com o kick."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (low end control)",
+            "purpose": "Controla ressonâncias de sub sem ‘apertar’ tudo.",
+            "pluginExamples": [
+              "Dynamic EQ",
+              "Multiband Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Sub band",
+                "value": "30–80 Hz (‑1 a ‑5 dB quando ativa)",
+                "note": "evita boomy"
+              },
+              {
+                "label": "Low‑mid",
+                "value": "120–250 Hz (‑1 a ‑4 dB quando ativa)",
+                "note": "abre espaço"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (controle)",
+            "purpose": "Estabiliza notas e reduz saltos de dinâmica.",
+            "pluginExamples": [
+              "Compressor",
+              "Opto",
+              "VCA"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "3:1 – 6:1",
+                "note": "808 pode ser mais alto"
+              },
+              {
+                "label": "Attack",
+                "value": "20–60 ms",
+                "note": "preserva ataque"
+              },
+              {
+                "label": "Release",
+                "value": "80–200 ms",
+                "note": "no groove"
+              },
+              {
+                "label": "GR",
+                "value": "3–8 dB",
+                "note": "dependendo da performance"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "3–8 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "mono",
+            "type": "Utility",
+            "title": "Mono no Sub (recomendado)",
+            "purpose": "Evita problemas de fase e melhora tradução em PA/club.",
+            "pluginExamples": [
+              "Stereo Imager",
+              "Utility Width"
+            ],
+            "settings": [
+              {
+                "label": "Mono",
+                "value": "até 120 Hz",
+                "note": "ponto de partida"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Amp (harmônicos)",
+            "purpose": "Traz o baixo para frente sem aumentar volume no sub.",
+            "pluginExamples": [
+              "Saturation",
+              "Bass Amp Sim",
+              "Tape"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "moderado",
+                "note": "busque harmônicos 2ª/3ª"
+              },
+              {
+                "label": "Mix",
+                "value": "20–60%",
+                "note": "paralelo é ótimo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se embolar, use LPF na distorção (3–6 kHz)."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sidechain",
+            "type": "Dynamics",
+            "title": "Sidechain (opcional)",
+            "purpose": "Abre espaço para kick sem briga no low end.",
+            "pluginExamples": [
+              "Compressor com sidechain",
+              "Volume Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "1–4 dB",
+                "note": "só o suficiente"
+              },
+              {
+                "label": "Release",
+                "value": "100–250 ms",
+                "note": "ajuste ao BPM"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "EDM/Trap tende a pedir mais sidechain; Rock/Acoustic geralmente menos."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper (picos / consistência)",
+            "purpose": "Deixa o baixo mais consistente e ajuda loudness sem pumping.",
+            "pluginExamples": [
+              "Soft Clipper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "0–3 dB (picos)",
+                "note": "com ouvidos"
+              },
+              {
+                "label": "Oversampling",
+                "value": "2x–8x se disponível",
+                "note": "menos aliasing"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      }
+    },
+    "guitar": {
+      "beginner": {
+        "goal": "Guitarra com espaço, sem brigar com vocal e pratos.",
+        "targets": {
+          "hpf": "70–120 Hz",
+          "lpf": "8–14 kHz (se precisar)"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging",
+            "purpose": "Deixe a guitarra consistente e com headroom para EQ/comp.",
+            "pluginExamples": [
+              "Trim / Gain"
+            ],
+            "settings": [
+              {
+                "label": "Picos",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de FX"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "filters",
+            "type": "EQ",
+            "title": "HPF/LPF (espaço na mix)",
+            "purpose": "Remove graves/altos inúteis e abre espaço para vocal e pratos.",
+            "pluginExamples": [
+              "EQ Paramétrico"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "70–120 Hz",
+                "note": "suba até limpar"
+              },
+              {
+                "label": "LPF",
+                "value": "8–14 kHz",
+                "note": "se estiver ‘fizz’"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_sub",
+            "type": "EQ",
+            "title": "EQ (ressonâncias / harsh)",
+            "purpose": "Corta frequências que ‘arranham’ ou embolam.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Dynamic EQ (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "Harsh",
+                "value": "2–4.5 kHz (‑1 a ‑4 dB)",
+                "note": "se agressivo"
+              },
+              {
+                "label": "Box",
+                "value": "200–400 Hz (‑1 a ‑3 dB)",
+                "note": "se abafado"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (leve)",
+            "purpose": "Uniformiza dinâmica sem perder ataque.",
+            "pluginExamples": [
+              "Compressor",
+              "Opto"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 3:1",
+                "note": "suave"
+              },
+              {
+                "label": "GR",
+                "value": "1–4 dB",
+                "note": "picos"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "space",
+            "type": "FX",
+            "title": "Ambiência (send recomendado)",
+            "purpose": "Cria profundidade sem empurrar a guitarra para trás demais.",
+            "pluginExamples": [
+              "Plate/Room Reverb",
+              "Delay curto"
+            ],
+            "settings": [
+              {
+                "label": "Pre‑delay",
+                "value": "10–30 ms",
+                "note": "mantém definição"
+              },
+              {
+                "label": "Decay",
+                "value": "0.6–1.6 s (room/plate)",
+                "note": "ajuste ao arranjo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "intermediate": {
+        "goal": "Mais densidade e largura com controle de fase.",
+        "targets": {
+          "width": "20–60% (teste mono)"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging",
+            "purpose": "Deixe a guitarra consistente e com headroom para EQ/comp.",
+            "pluginExamples": [
+              "Trim / Gain"
+            ],
+            "settings": [
+              {
+                "label": "Picos",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de FX"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "filters",
+            "type": "EQ",
+            "title": "HPF/LPF (espaço na mix)",
+            "purpose": "Remove graves/altos inúteis e abre espaço para vocal e pratos.",
+            "pluginExamples": [
+              "EQ Paramétrico"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "70–120 Hz",
+                "note": "suba até limpar"
+              },
+              {
+                "label": "LPF",
+                "value": "8–14 kHz",
+                "note": "se estiver ‘fizz’"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_sub",
+            "type": "EQ",
+            "title": "EQ (ressonâncias / harsh)",
+            "purpose": "Corta frequências que ‘arranham’ ou embolam.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Dynamic EQ (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "Harsh",
+                "value": "2–4.5 kHz (‑1 a ‑4 dB)",
+                "note": "se agressivo"
+              },
+              {
+                "label": "Box",
+                "value": "200–400 Hz (‑1 a ‑3 dB)",
+                "note": "se abafado"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (leve)",
+            "purpose": "Uniformiza dinâmica sem perder ataque.",
+            "pluginExamples": [
+              "Compressor",
+              "Opto"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 3:1",
+                "note": "suave"
+              },
+              {
+                "label": "GR",
+                "value": "1–4 dB",
+                "note": "picos"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação (controle de corpo)",
+            "purpose": "Dá densidade e ajuda a ‘colar’ no mix.",
+            "pluginExamples": [
+              "Tape",
+              "Console",
+              "Saturation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve a moderado",
+                "note": "cuidado com médios"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "space",
+            "type": "FX",
+            "title": "Ambiência (send recomendado)",
+            "purpose": "Cria profundidade sem empurrar a guitarra para trás demais.",
+            "pluginExamples": [
+              "Plate/Room Reverb",
+              "Delay curto"
+            ],
+            "settings": [
+              {
+                "label": "Pre‑delay",
+                "value": "10–30 ms",
+                "note": "mantém definição"
+              },
+              {
+                "label": "Decay",
+                "value": "0.6–1.6 s (room/plate)",
+                "note": "ajuste ao arranjo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "stereo",
+            "type": "FX",
+            "title": "Stereo (double/chorus) — opcional",
+            "purpose": "Alarga sem bagunçar fase (use com cuidado).",
+            "pluginExamples": [
+              "Doubler",
+              "Micro Pitch",
+              "Chorus (suave)"
+            ],
+            "settings": [
+              {
+                "label": "Width",
+                "value": "20–60%",
+                "note": "teste em mono"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se desaparecer em mono, reduza width ou use double real L/R."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "advanced": {
+        "goal": "Controle fino de harsh + automação para ‘mix grande’.",
+        "targets": {
+          "dyn_eq": "quando necessário"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging",
+            "purpose": "Deixe a guitarra consistente e com headroom para EQ/comp.",
+            "pluginExamples": [
+              "Trim / Gain"
+            ],
+            "settings": [
+              {
+                "label": "Picos",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de FX"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "filters",
+            "type": "EQ",
+            "title": "HPF/LPF (espaço na mix)",
+            "purpose": "Remove graves/altos inúteis e abre espaço para vocal e pratos.",
+            "pluginExamples": [
+              "EQ Paramétrico"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "70–120 Hz",
+                "note": "suba até limpar"
+              },
+              {
+                "label": "LPF",
+                "value": "8–14 kHz",
+                "note": "se estiver ‘fizz’"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn_eq",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (harsh control)",
+            "purpose": "Controla aspereza só nos momentos críticos.",
+            "pluginExamples": [
+              "Dynamic EQ"
+            ],
+            "settings": [
+              {
+                "label": "Harsh band",
+                "value": "2.5–4.5 kHz (‑1 a ‑5 dB quando ativa)",
+                "note": "Q médio"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_sub",
+            "type": "EQ",
+            "title": "EQ (ressonâncias / harsh)",
+            "purpose": "Corta frequências que ‘arranham’ ou embolam.",
+            "pluginExamples": [
+              "EQ Paramétrico",
+              "Dynamic EQ (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "Harsh",
+                "value": "2–4.5 kHz (‑1 a ‑4 dB)",
+                "note": "se agressivo"
+              },
+              {
+                "label": "Box",
+                "value": "200–400 Hz (‑1 a ‑3 dB)",
+                "note": "se abafado"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (leve)",
+            "purpose": "Uniformiza dinâmica sem perder ataque.",
+            "pluginExamples": [
+              "Compressor",
+              "Opto"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 3:1",
+                "note": "suave"
+              },
+              {
+                "label": "GR",
+                "value": "1–4 dB",
+                "note": "picos"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação (controle de corpo)",
+            "purpose": "Dá densidade e ajuda a ‘colar’ no mix.",
+            "pluginExamples": [
+              "Tape",
+              "Console",
+              "Saturation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve a moderado",
+                "note": "cuidado com médios"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "automation",
+            "type": "Workflow",
+            "title": "Automação (volume/FX)",
+            "purpose": "Ajusta presença por seção sem esmagar com comp.",
+            "pluginExamples": [
+              "Volume automation",
+              "Send automation"
+            ],
+            "settings": [
+              {
+                "label": "Meta",
+                "value": "vocal sempre legível",
+                "note": "guitarra apoia"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Automação costuma soar mais ‘pro’ do que mais comp/limiter."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "space",
+            "type": "FX",
+            "title": "Ambiência (send recomendado)",
+            "purpose": "Cria profundidade sem empurrar a guitarra para trás demais.",
+            "pluginExamples": [
+              "Plate/Room Reverb",
+              "Delay curto"
+            ],
+            "settings": [
+              {
+                "label": "Pre‑delay",
+                "value": "10–30 ms",
+                "note": "mantém definição"
+              },
+              {
+                "label": "Decay",
+                "value": "0.6–1.6 s (room/plate)",
+                "note": "ajuste ao arranjo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "stereo",
+            "type": "FX",
+            "title": "Stereo (double/chorus) — opcional",
+            "purpose": "Alarga sem bagunçar fase (use com cuidado).",
+            "pluginExamples": [
+              "Doubler",
+              "Micro Pitch",
+              "Chorus (suave)"
+            ],
+            "settings": [
+              {
+                "label": "Width",
+                "value": "20–60%",
+                "note": "teste em mono"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se desaparecer em mono, reduza width ou use double real L/R."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      }
+    },
+    "keys_synth": {
+      "beginner": {
+        "goal": "Synth/keys limpos, com espaço e movimento.",
+        "targets": {
+          "hpf": "80–150 Hz (se não for sub)"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging",
+            "purpose": "Controle o nível para não clipar FX e bus.",
+            "pluginExamples": [
+              "Trim / Gain"
+            ],
+            "settings": [
+              {
+                "label": "Picos",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de FX"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ (espaço e foco)",
+            "purpose": "Abre espaço para vocal e baixo.",
+            "pluginExamples": [
+              "EQ Paramétrico"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "80–150 Hz (depende do patch)",
+                "note": "se não for sub"
+              },
+              {
+                "label": "Médios",
+                "value": "300–800 Hz (‑1 a ‑3 dB)",
+                "note": "se ficar ‘cheio’"
+              },
+              {
+                "label": "Brilho",
+                "value": "8–12 kHz (+0.5 a +2 dB)",
+                "note": "se faltar ar"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (leve/moderada)",
+            "purpose": "Controla picos e mantém sustain consistente.",
+            "pluginExamples": [
+              "Compressor",
+              "Multiband (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "mais se for pluck"
+              },
+              {
+                "label": "GR",
+                "value": "1–6 dB",
+                "note": "depende do material"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sidechain",
+            "type": "Dynamics",
+            "title": "Sidechain (opcional)",
+            "purpose": "Cria groove e espaço para kick (muito comum em EDM).",
+            "pluginExamples": [
+              "Compressor SC",
+              "Volume Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "1–6 dB",
+                "note": "ajuste ao estilo"
+              },
+              {
+                "label": "Release",
+                "value": "100–300 ms",
+                "note": "no BPM"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "fx",
+            "type": "FX",
+            "title": "Espaço / Modulação",
+            "purpose": "Define profundidade e movimento.",
+            "pluginExamples": [
+              "Reverb",
+              "Delay",
+              "Chorus/Phaser"
+            ],
+            "settings": [
+              {
+                "label": "Regra",
+                "value": "use sends para organizar",
+                "note": "menos lama"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "intermediate": {
+        "goal": "Tradução melhor + largura com segurança.",
+        "targets": {
+          "width": "sutil",
+          "mono_sub": "até 120 Hz"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging",
+            "purpose": "Controle o nível para não clipar FX e bus.",
+            "pluginExamples": [
+              "Trim / Gain"
+            ],
+            "settings": [
+              {
+                "label": "Picos",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de FX"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ (espaço e foco)",
+            "purpose": "Abre espaço para vocal e baixo.",
+            "pluginExamples": [
+              "EQ Paramétrico"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "80–150 Hz (depende do patch)",
+                "note": "se não for sub"
+              },
+              {
+                "label": "Médios",
+                "value": "300–800 Hz (‑1 a ‑3 dB)",
+                "note": "se ficar ‘cheio’"
+              },
+              {
+                "label": "Brilho",
+                "value": "8–12 kHz (+0.5 a +2 dB)",
+                "note": "se faltar ar"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Drive (harmônicos)",
+            "purpose": "Ajuda tradução e presença sem aumentar volume.",
+            "pluginExamples": [
+              "Tape",
+              "Saturation",
+              "Bitcrush (criativo)"
+            ],
+            "settings": [
+              {
+                "label": "Mix",
+                "value": "10–40%",
+                "note": "mais seguro em paralelo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (leve/moderada)",
+            "purpose": "Controla picos e mantém sustain consistente.",
+            "pluginExamples": [
+              "Compressor",
+              "Multiband (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "mais se for pluck"
+              },
+              {
+                "label": "GR",
+                "value": "1–6 dB",
+                "note": "depende do material"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sidechain",
+            "type": "Dynamics",
+            "title": "Sidechain (opcional)",
+            "purpose": "Cria groove e espaço para kick (muito comum em EDM).",
+            "pluginExamples": [
+              "Compressor SC",
+              "Volume Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "1–6 dB",
+                "note": "ajuste ao estilo"
+              },
+              {
+                "label": "Release",
+                "value": "100–300 ms",
+                "note": "no BPM"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "fx",
+            "type": "FX",
+            "title": "Espaço / Modulação",
+            "purpose": "Define profundidade e movimento.",
+            "pluginExamples": [
+              "Reverb",
+              "Delay",
+              "Chorus/Phaser"
+            ],
+            "settings": [
+              {
+                "label": "Regra",
+                "value": "use sends para organizar",
+                "note": "menos lama"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "imager",
+            "type": "Utility",
+            "title": "Stereo Imaging (com cuidado)",
+            "purpose": "Alarga sem comprometer mono.",
+            "pluginExamples": [
+              "Imager",
+              "M/S Width"
+            ],
+            "settings": [
+              {
+                "label": "Mono",
+                "value": "até 120 Hz",
+                "note": "proteja o sub"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Cheque em mono sempre; se sumir, reduza largura."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "advanced": {
+        "goal": "M/S + dynamic control para pads e leads complexos.",
+        "targets": {
+          "ms_control": "sutil"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "gain",
+            "type": "Utility",
+            "title": "Gain Staging",
+            "purpose": "Controle o nível para não clipar FX e bus.",
+            "pluginExamples": [
+              "Trim / Gain"
+            ],
+            "settings": [
+              {
+                "label": "Picos",
+                "value": "~ -12 a -6 dBFS",
+                "note": "antes de FX"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "ms_eq",
+            "type": "EQ",
+            "title": "EQ Mid/Side (foco)",
+            "purpose": "Limpa médios no Side e mantém punch no Mid.",
+            "pluginExamples": [
+              "M/S EQ",
+              "Linear Phase EQ (se necessário)"
+            ],
+            "settings": [
+              {
+                "label": "Side low‑mid",
+                "value": "200–600 Hz (‑1 a ‑3 dB)",
+                "note": "menos lama"
+              },
+              {
+                "label": "Mid presence",
+                "value": "2–5 kHz (+0.5 a +2 dB)",
+                "note": "se precisar de foco"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação / Drive (harmônicos)",
+            "purpose": "Ajuda tradução e presença sem aumentar volume.",
+            "pluginExamples": [
+              "Tape",
+              "Saturation",
+              "Bitcrush (criativo)"
+            ],
+            "settings": [
+              {
+                "label": "Mix",
+                "value": "10–40%",
+                "note": "mais seguro em paralelo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ (espaço e foco)",
+            "purpose": "Abre espaço para vocal e baixo.",
+            "pluginExamples": [
+              "EQ Paramétrico"
+            ],
+            "settings": [
+              {
+                "label": "HPF",
+                "value": "80–150 Hz (depende do patch)",
+                "note": "se não for sub"
+              },
+              {
+                "label": "Médios",
+                "value": "300–800 Hz (‑1 a ‑3 dB)",
+                "note": "se ficar ‘cheio’"
+              },
+              {
+                "label": "Brilho",
+                "value": "8–12 kHz (+0.5 a +2 dB)",
+                "note": "se faltar ar"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (ressonâncias)",
+            "purpose": "Controla ressonâncias em pads/strings sem matar vida.",
+            "pluginExamples": [
+              "Dynamic EQ"
+            ],
+            "settings": [
+              {
+                "label": "Bandas",
+                "value": "depende do patch",
+                "note": "procure picos no analyzer"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressão (leve/moderada)",
+            "purpose": "Controla picos e mantém sustain consistente.",
+            "pluginExamples": [
+              "Compressor",
+              "Multiband (opcional)"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "2:1 – 4:1",
+                "note": "mais se for pluck"
+              },
+              {
+                "label": "GR",
+                "value": "1–6 dB",
+                "note": "depende do material"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sidechain",
+            "type": "Dynamics",
+            "title": "Sidechain (opcional)",
+            "purpose": "Cria groove e espaço para kick (muito comum em EDM).",
+            "pluginExamples": [
+              "Compressor SC",
+              "Volume Shaper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "1–6 dB",
+                "note": "ajuste ao estilo"
+              },
+              {
+                "label": "Release",
+                "value": "100–300 ms",
+                "note": "no BPM"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "fx",
+            "type": "FX",
+            "title": "Espaço / Modulação",
+            "purpose": "Define profundidade e movimento.",
+            "pluginExamples": [
+              "Reverb",
+              "Delay",
+              "Chorus/Phaser"
+            ],
+            "settings": [
+              {
+                "label": "Regra",
+                "value": "use sends para organizar",
+                "note": "menos lama"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "imager",
+            "type": "Utility",
+            "title": "Stereo Imaging (com cuidado)",
+            "purpose": "Alarga sem comprometer mono.",
+            "pluginExamples": [
+              "Imager",
+              "M/S Width"
+            ],
+            "settings": [
+              {
+                "label": "Mono",
+                "value": "até 120 Hz",
+                "note": "proteja o sub"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Cheque em mono sempre; se sumir, reduza largura."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      }
+    },
+    "mix_bus": {
+      "beginner": {
+        "goal": "Cola leve e segurança (sem masterizar no mix).",
+        "targets": {
+          "premaster_peaks": "~ -6 dBFS",
+          "glue_gr": "0.5–2 dB"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "meter",
+            "type": "Metering",
+            "title": "Metering & Headroom",
+            "purpose": "Configure medidores antes de ‘mexer’ no som.",
+            "pluginExamples": [
+              "LUFS Meter",
+              "True Peak",
+              "Spectrum Analyzer"
+            ],
+            "settings": [
+              {
+                "label": "Headroom",
+                "value": "deixe ~ -6 dBFS de pico no premaster",
+                "note": "evite clip no master bus"
+              },
+              {
+                "label": "Mix bus (ST LUFS)",
+                "value": "~ -20 a -14 LUFS",
+                "note": "depende do estilo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se você ainda está mixando, evite limitar forte no mix bus."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ suave (tilt/low shelf)",
+            "purpose": "Ajustes pequenos para balance geral.",
+            "pluginExamples": [
+              "EQ",
+              "Tilt EQ"
+            ],
+            "settings": [
+              {
+                "label": "Low shelf",
+                "value": "+/- 0.5 a 1.5 dB @ 60–120 Hz",
+                "note": "peso"
+              },
+              {
+                "label": "High shelf",
+                "value": "+/- 0.5 a 1.5 dB @ 10–16 kHz",
+                "note": "ar"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se precisar de correção grande, volte às tracks."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "glue",
+            "type": "Dynamics",
+            "title": "Glue Compressor (leve)",
+            "purpose": "Cola a mix com compressão sutil.",
+            "pluginExamples": [
+              "VCA/SSL Comp",
+              "Bus Comp"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "1.5:1 – 2:1",
+                "note": "bem leve"
+              },
+              {
+                "label": "GR",
+                "value": "0.5–2 dB",
+                "note": "só ‘colar’"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms",
+                "note": "transiente"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–300 ms",
+                "note": "respirar"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "0.5–2 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação (cola / densidade)",
+            "purpose": "Dá densidade e sensação ‘pro’.",
+            "pluginExamples": [
+              "Tape",
+              "Console",
+              "Saturation"
+            ],
+            "settings": [
+              {
+                "label": "Mix",
+                "value": "5–20%",
+                "note": "muito pouco já muda"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Utility",
+            "title": "Limiter (só segurança)",
+            "purpose": "Segura picos acidentais sem alterar dinâmica.",
+            "pluginExamples": [
+              "Limiter"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 dBFS",
+                "note": "só para não clipar"
+              },
+              {
+                "label": "GR",
+                "value": "0–1 dB",
+                "note": "se estiver mais, volte"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "intermediate": {
+        "goal": "Controle extra de low end/harsh sem exagero.",
+        "targets": {
+          "dyn_control": "leve"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "meter",
+            "type": "Metering",
+            "title": "Metering & Headroom",
+            "purpose": "Configure medidores antes de ‘mexer’ no som.",
+            "pluginExamples": [
+              "LUFS Meter",
+              "True Peak",
+              "Spectrum Analyzer"
+            ],
+            "settings": [
+              {
+                "label": "Headroom",
+                "value": "deixe ~ -6 dBFS de pico no premaster",
+                "note": "evite clip no master bus"
+              },
+              {
+                "label": "Mix bus (ST LUFS)",
+                "value": "~ -20 a -14 LUFS",
+                "note": "depende do estilo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se você ainda está mixando, evite limitar forte no mix bus."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ suave (tilt/low shelf)",
+            "purpose": "Ajustes pequenos para balance geral.",
+            "pluginExamples": [
+              "EQ",
+              "Tilt EQ"
+            ],
+            "settings": [
+              {
+                "label": "Low shelf",
+                "value": "+/- 0.5 a 1.5 dB @ 60–120 Hz",
+                "note": "peso"
+              },
+              {
+                "label": "High shelf",
+                "value": "+/- 0.5 a 1.5 dB @ 10–16 kHz",
+                "note": "ar"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se precisar de correção grande, volte às tracks."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "glue",
+            "type": "Dynamics",
+            "title": "Glue Compressor (leve)",
+            "purpose": "Cola a mix com compressão sutil.",
+            "pluginExamples": [
+              "VCA/SSL Comp",
+              "Bus Comp"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "1.5:1 – 2:1",
+                "note": "bem leve"
+              },
+              {
+                "label": "GR",
+                "value": "0.5–2 dB",
+                "note": "só ‘colar’"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms",
+                "note": "transiente"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–300 ms",
+                "note": "respirar"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "0.5–2 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn",
+            "type": "Dynamics",
+            "title": "Dynamic EQ / Multiband (opcional)",
+            "purpose": "Controla low end e harsh sem ‘puxar’ tudo.",
+            "pluginExamples": [
+              "Dynamic EQ",
+              "Multiband Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Low band",
+                "value": "30–120 Hz (1–2 dB de controle)",
+                "note": "evita boomy"
+              },
+              {
+                "label": "Harsh band",
+                "value": "2–5 kHz (controle leve)",
+                "note": "se agressivo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Use o mínimo. Se a mix mudar muito, corrija nas pistas."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação (cola / densidade)",
+            "purpose": "Dá densidade e sensação ‘pro’.",
+            "pluginExamples": [
+              "Tape",
+              "Console",
+              "Saturation"
+            ],
+            "settings": [
+              {
+                "label": "Mix",
+                "value": "5–20%",
+                "note": "muito pouco já muda"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Utility",
+            "title": "Limiter (só segurança)",
+            "purpose": "Segura picos acidentais sem alterar dinâmica.",
+            "pluginExamples": [
+              "Limiter"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 dBFS",
+                "note": "só para não clipar"
+              },
+              {
+                "label": "GR",
+                "value": "0–1 dB",
+                "note": "se estiver mais, volte"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "advanced": {
+        "goal": "Mix bus moderno com M/S e clipping sutil (opcional).",
+        "targets": {
+          "clip": "0–1.5 dB (picos)"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "meter",
+            "type": "Metering",
+            "title": "Metering & Headroom",
+            "purpose": "Configure medidores antes de ‘mexer’ no som.",
+            "pluginExamples": [
+              "LUFS Meter",
+              "True Peak",
+              "Spectrum Analyzer"
+            ],
+            "settings": [
+              {
+                "label": "Headroom",
+                "value": "deixe ~ -6 dBFS de pico no premaster",
+                "note": "evite clip no master bus"
+              },
+              {
+                "label": "Mix bus (ST LUFS)",
+                "value": "~ -20 a -14 LUFS",
+                "note": "depende do estilo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se você ainda está mixando, evite limitar forte no mix bus."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "ms_eq",
+            "type": "EQ",
+            "title": "EQ Mid/Side (foco + largura)",
+            "purpose": "Ajusta low end no Mid e brilho no Side com controle.",
+            "pluginExamples": [
+              "M/S EQ"
+            ],
+            "settings": [
+              {
+                "label": "Mono baixo",
+                "value": "até 120 Hz (no Mid)",
+                "note": "estabilidade"
+              },
+              {
+                "label": "Side air",
+                "value": "+0.5 a +1.5 dB @ 12–16 kHz",
+                "note": "com cuidado"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Cheque correlação e mono frequentemente."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq",
+            "type": "EQ",
+            "title": "EQ suave (tilt/low shelf)",
+            "purpose": "Ajustes pequenos para balance geral.",
+            "pluginExamples": [
+              "EQ",
+              "Tilt EQ"
+            ],
+            "settings": [
+              {
+                "label": "Low shelf",
+                "value": "+/- 0.5 a 1.5 dB @ 60–120 Hz",
+                "note": "peso"
+              },
+              {
+                "label": "High shelf",
+                "value": "+/- 0.5 a 1.5 dB @ 10–16 kHz",
+                "note": "ar"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se precisar de correção grande, volte às tracks."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "glue",
+            "type": "Dynamics",
+            "title": "Glue Compressor (leve)",
+            "purpose": "Cola a mix com compressão sutil.",
+            "pluginExamples": [
+              "VCA/SSL Comp",
+              "Bus Comp"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "1.5:1 – 2:1",
+                "note": "bem leve"
+              },
+              {
+                "label": "GR",
+                "value": "0.5–2 dB",
+                "note": "só ‘colar’"
+              },
+              {
+                "label": "Attack",
+                "value": "10–30 ms",
+                "note": "transiente"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–300 ms",
+                "note": "respirar"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "0.5–2 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn",
+            "type": "Dynamics",
+            "title": "Dynamic EQ / Multiband (opcional)",
+            "purpose": "Controla low end e harsh sem ‘puxar’ tudo.",
+            "pluginExamples": [
+              "Dynamic EQ",
+              "Multiband Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Low band",
+                "value": "30–120 Hz (1–2 dB de controle)",
+                "note": "evita boomy"
+              },
+              {
+                "label": "Harsh band",
+                "value": "2–5 kHz (controle leve)",
+                "note": "se agressivo"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Use o mínimo. Se a mix mudar muito, corrija nas pistas."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação (cola / densidade)",
+            "purpose": "Dá densidade e sensação ‘pro’.",
+            "pluginExamples": [
+              "Tape",
+              "Console",
+              "Saturation"
+            ],
+            "settings": [
+              {
+                "label": "Mix",
+                "value": "5–20%",
+                "note": "muito pouco já muda"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper (opcional, pré‑limiter)",
+            "purpose": "Aumenta loudness percebido com menos pumping.",
+            "pluginExamples": [
+              "Soft Clipper"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "0–1.5 dB (picos)",
+                "note": "sutil"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Utility",
+            "title": "Limiter (só segurança)",
+            "purpose": "Segura picos acidentais sem alterar dinâmica.",
+            "pluginExamples": [
+              "Limiter"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1 dBFS",
+                "note": "só para não clipar"
+              },
+              {
+                "label": "GR",
+                "value": "0–1 dB",
+                "note": "se estiver mais, volte"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      }
+    },
+    "master": {
+      "beginner": {
+        "goal": "Master simples: equilíbrio + limiter com segurança.",
+        "targets": {
+          "target_lufs": "por gênero",
+          "true_peak": "≤ -1.0 dBTP (streaming)"
+        },
+        "checklist": [
+          "A/B com referências (loudness match).",
+          "Cheque mono e correlação.",
+          "Export em 24‑bit ou 32‑float, dither só para 16‑bit."
+        ],
+        "steps": [
+          {
+            "id": "meter",
+            "type": "Metering",
+            "title": "Referência + Metering",
+            "purpose": "Defina objetivo (streaming/club) e acompanhe LUFS/TP.",
+            "pluginExamples": [
+              "LUFS Meter",
+              "True Peak Meter",
+              "Spectrum",
+              "Reference Track A/B"
+            ],
+            "settings": [
+              {
+                "label": "Streaming (guia)",
+                "value": "‑14 a ‑10 LUFS (I)",
+                "note": "normalização varia"
+              },
+              {
+                "label": "True Peak",
+                "value": "≤ -1.0 dBTP",
+                "note": "recomendado para streaming"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Evite masterizar alto demais sem necessidade: ‘mais alto’ ≠ ‘melhor’."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_corr",
+            "type": "EQ",
+            "title": "EQ corretivo (pequeno)",
+            "purpose": "Ajustes leves para balance tonal.",
+            "pluginExamples": [
+              "Linear/Minimum Phase EQ"
+            ],
+            "settings": [
+              {
+                "label": "Cortes",
+                "value": "0.5–2 dB (narrow a médio)",
+                "note": "tire ressonâncias"
+              },
+              {
+                "label": "Shelves",
+                "value": "±0.5–1.5 dB",
+                "note": "balanço geral"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se você precisa de +4 dB no master, volte à mix."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressor (cola leve)",
+            "purpose": "Dá estabilidade e densidade com pouca GR.",
+            "pluginExamples": [
+              "Bus Compressor",
+              "Mastering Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "1.2:1 – 2:1",
+                "note": "bem leve"
+              },
+              {
+                "label": "Attack",
+                "value": "20–60 ms",
+                "note": "preserva punch"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–400 ms",
+                "note": "respirar"
+              },
+              {
+                "label": "GR",
+                "value": "0.5–2 dB",
+                "note": "só colar"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "0.5–2 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Dynamics",
+            "title": "Limiter (final)",
+            "purpose": "Atinge loudness com controle de picos.",
+            "pluginExamples": [
+              "Limiter",
+              "True‑Peak Limiter"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1.0 dBTP (streaming) / -0.3 dBTP (club*)",
+                "note": "*com cautela"
+              },
+              {
+                "label": "Redução",
+                "value": "1–4 dB (picos)",
+                "note": "comece leve"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se distorcer, reduza ganho, use clipper antes ou ajuste release/lookahead."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dither",
+            "type": "Utility",
+            "title": "Dither (se for export 16‑bit)",
+            "purpose": "Use dither apenas no último estágio ao reduzir bit depth.",
+            "pluginExamples": [
+              "Dither"
+            ],
+            "settings": [
+              {
+                "label": "Quando",
+                "value": "somente ao exportar 16‑bit",
+                "note": "não para 24/32‑float"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "intermediate": {
+        "goal": "Master completo: controle por banda, saturação e loudness com clareza.",
+        "targets": {
+          "target_lufs": "por gênero",
+          "true_peak": "≤ -1.0 dBTP (streaming)"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "meter",
+            "type": "Metering",
+            "title": "Referência + Metering",
+            "purpose": "Defina objetivo (streaming/club) e acompanhe LUFS/TP.",
+            "pluginExamples": [
+              "LUFS Meter",
+              "True Peak Meter",
+              "Spectrum",
+              "Reference Track A/B"
+            ],
+            "settings": [
+              {
+                "label": "Streaming (guia)",
+                "value": "‑14 a ‑10 LUFS (I)",
+                "note": "normalização varia"
+              },
+              {
+                "label": "True Peak",
+                "value": "≤ -1.0 dBTP",
+                "note": "recomendado para streaming"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Evite masterizar alto demais sem necessidade: ‘mais alto’ ≠ ‘melhor’."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_corr",
+            "type": "EQ",
+            "title": "EQ corretivo (pequeno)",
+            "purpose": "Ajustes leves para balance tonal.",
+            "pluginExamples": [
+              "Linear/Minimum Phase EQ"
+            ],
+            "settings": [
+              {
+                "label": "Cortes",
+                "value": "0.5–2 dB (narrow a médio)",
+                "note": "tire ressonâncias"
+              },
+              {
+                "label": "Shelves",
+                "value": "±0.5–1.5 dB",
+                "note": "balanço geral"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se você precisa de +4 dB no master, volte à mix."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn_eq",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (controle de harsh/boomy)",
+            "purpose": "Corrige problemas só quando aparecem.",
+            "pluginExamples": [
+              "Dynamic EQ"
+            ],
+            "settings": [
+              {
+                "label": "Boomy",
+                "value": "60–140 Hz (‑0.5 a ‑2 dB quando ativa)",
+                "note": "se o low end ‘salta’"
+              },
+              {
+                "label": "Harsh",
+                "value": "2–5 kHz (‑0.5 a ‑2 dB quando ativa)",
+                "note": "se agressivo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp",
+            "type": "Dynamics",
+            "title": "Compressor (cola leve)",
+            "purpose": "Dá estabilidade e densidade com pouca GR.",
+            "pluginExamples": [
+              "Bus Compressor",
+              "Mastering Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Ratio",
+                "value": "1.2:1 – 2:1",
+                "note": "bem leve"
+              },
+              {
+                "label": "Attack",
+                "value": "20–60 ms",
+                "note": "preserva punch"
+              },
+              {
+                "label": "Release",
+                "value": "Auto ou 100–400 ms",
+                "note": "respirar"
+              },
+              {
+                "label": "GR",
+                "value": "0.5–2 dB",
+                "note": "só colar"
+              }
+            ],
+            "meters": [
+              {
+                "label": "Gain Reduction",
+                "target": "0.5–2 dB"
+              }
+            ],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat",
+            "type": "Color",
+            "title": "Saturação (densidade)",
+            "purpose": "Aumenta loudness percebido e coesão.",
+            "pluginExamples": [
+              "Tape",
+              "Tube",
+              "Saturation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve",
+                "note": "evite distorção audível (a não ser intencional)"
+              },
+              {
+                "label": "Mix",
+                "value": "5–20%",
+                "note": "muito pouco já muda"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "mb",
+            "type": "Dynamics",
+            "title": "Multiband (opcional)",
+            "purpose": "Controla bandas específicas (low end, presença) com cuidado.",
+            "pluginExamples": [
+              "Multiband Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Low band",
+                "value": "1–2 dB de controle",
+                "note": "não ‘afunde’ o kick"
+              },
+              {
+                "label": "High band",
+                "value": "0.5–1.5 dB",
+                "note": "controle de brilho"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se estiver fazendo muito, volte à mix. Multiband é fácil exagerar."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "imager",
+            "type": "Utility",
+            "title": "Stereo Imaging (com regra)",
+            "purpose": "Ajusta largura sem destruir mono.",
+            "pluginExamples": [
+              "Imager",
+              "M/S Processor"
+            ],
+            "settings": [
+              {
+                "label": "Sub",
+                "value": "mono até 120 Hz",
+                "note": "quase sempre"
+              },
+              {
+                "label": "Width",
+                "value": "+0 a +15% (sutil)",
+                "note": "depende do arranjo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper (pré‑limiter)",
+            "purpose": "Domar transientes para o limiter trabalhar menos.",
+            "pluginExamples": [
+              "Soft Clipper",
+              "Hard Clip (cuidado)"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "0–2 dB (picos)",
+                "note": "sutil"
+              },
+              {
+                "label": "Oversampling",
+                "value": "4x–16x se possível",
+                "note": "menos aliasing"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim",
+            "type": "Dynamics",
+            "title": "Limiter (final)",
+            "purpose": "Atinge loudness com controle de picos.",
+            "pluginExamples": [
+              "Limiter",
+              "True‑Peak Limiter"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1.0 dBTP (streaming) / -0.3 dBTP (club*)",
+                "note": "*com cautela"
+              },
+              {
+                "label": "Redução",
+                "value": "1–4 dB (picos)",
+                "note": "comece leve"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se distorcer, reduza ganho, use clipper antes ou ajuste release/lookahead."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dither",
+            "type": "Utility",
+            "title": "Dither (se for export 16‑bit)",
+            "purpose": "Use dither apenas no último estágio ao reduzir bit depth.",
+            "pluginExamples": [
+              "Dither"
+            ],
+            "settings": [
+              {
+                "label": "Quando",
+                "value": "somente ao exportar 16‑bit",
+                "note": "não para 24/32‑float"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": []
+      },
+      "advanced": {
+        "goal": "Master avançado: múltiplos estágios, clip + true‑peak, decisões refinadas.",
+        "targets": {
+          "target_lufs": "por gênero",
+          "true_peak": "≤ -1.0 dBTP (streaming) / -0.3 dBTP (club*)"
+        },
+        "checklist": [],
+        "steps": [
+          {
+            "id": "prep",
+            "type": "Workflow",
+            "title": "Pré‑Master Setup",
+            "purpose": "Headroom, oversampling e referência para decisões confiáveis.",
+            "pluginExamples": [
+              "Gain staging",
+              "Oversampling (onde disponível)",
+              "A/B reference"
+            ],
+            "settings": [
+              {
+                "label": "Headroom",
+                "value": "picos do premaster ~ -6 dBFS",
+                "note": "antes de processar"
+              },
+              {
+                "label": "Sample rate",
+                "value": "mantenha o do projeto",
+                "note": "evite conversões desnecessárias"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se o premaster já está clipando, volte à mix. Master não conserta tudo."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "eq_lin",
+            "type": "EQ",
+            "title": "Linear Phase EQ (correção sutil)",
+            "purpose": "Correções transparentes quando necessário (cuidado com pré‑ringing).",
+            "pluginExamples": [
+              "Linear Phase EQ"
+            ],
+            "settings": [
+              {
+                "label": "Cortes",
+                "value": "0.5–1.5 dB",
+                "note": "sutil"
+              },
+              {
+                "label": "Low shelf",
+                "value": "±0.5–1 dB @ 60–120 Hz",
+                "note": "peso"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dyn_eq",
+            "type": "Dynamics",
+            "title": "Dynamic EQ (controle de harsh/boomy)",
+            "purpose": "Corrige problemas só quando aparecem.",
+            "pluginExamples": [
+              "Dynamic EQ"
+            ],
+            "settings": [
+              {
+                "label": "Boomy",
+                "value": "60–140 Hz (‑0.5 a ‑2 dB quando ativa)",
+                "note": "se o low end ‘salta’"
+              },
+              {
+                "label": "Harsh",
+                "value": "2–5 kHz (‑0.5 a ‑2 dB quando ativa)",
+                "note": "se agressivo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "comp_var",
+            "type": "Dynamics",
+            "title": "Compressão (2 estágios) — opcional",
+            "purpose": "Controle suave com dois compressores leves em série.",
+            "pluginExamples": [
+              "VCA (rápido)",
+              "Opto (lento)"
+            ],
+            "settings": [
+              {
+                "label": "GR total",
+                "value": "1–3 dB somado",
+                "note": "divida em dois estágios"
+              },
+              {
+                "label": "Ataque/release",
+                "value": "um mais rápido, outro mais lento",
+                "note": "estabilidade"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "mb",
+            "type": "Dynamics",
+            "title": "Multiband (opcional)",
+            "purpose": "Controla bandas específicas (low end, presença) com cuidado.",
+            "pluginExamples": [
+              "Multiband Compressor"
+            ],
+            "settings": [
+              {
+                "label": "Low band",
+                "value": "1–2 dB de controle",
+                "note": "não ‘afunde’ o kick"
+              },
+              {
+                "label": "High band",
+                "value": "0.5–1.5 dB",
+                "note": "controle de brilho"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Se estiver fazendo muito, volte à mix. Multiband é fácil exagerar."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "sat2",
+            "type": "Color",
+            "title": "Saturação/Exciter (banda alta) — opcional",
+            "purpose": "Recupera ‘air’ e presença sem EQ exagerado.",
+            "pluginExamples": [
+              "Exciter",
+              "Harmonic enhancer"
+            ],
+            "settings": [
+              {
+                "label": "Faixa",
+                "value": "6–16 kHz (sutil)",
+                "note": "evite ‘fizz’"
+              },
+              {
+                "label": "Mix",
+                "value": "5–15%",
+                "note": "muito pouco"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "imager",
+            "type": "Utility",
+            "title": "Stereo Imaging (com regra)",
+            "purpose": "Ajusta largura sem destruir mono.",
+            "pluginExamples": [
+              "Imager",
+              "M/S Processor"
+            ],
+            "settings": [
+              {
+                "label": "Sub",
+                "value": "mono até 120 Hz",
+                "note": "quase sempre"
+              },
+              {
+                "label": "Width",
+                "value": "+0 a +15% (sutil)",
+                "note": "depende do arranjo"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "clip",
+            "type": "Dynamics",
+            "title": "Clipper (pré‑limiter)",
+            "purpose": "Domar transientes para o limiter trabalhar menos.",
+            "pluginExamples": [
+              "Soft Clipper",
+              "Hard Clip (cuidado)"
+            ],
+            "settings": [
+              {
+                "label": "Redução",
+                "value": "0–2 dB (picos)",
+                "note": "sutil"
+              },
+              {
+                "label": "Oversampling",
+                "value": "4x–16x se possível",
+                "note": "menos aliasing"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim1",
+            "type": "Dynamics",
+            "title": "Limiter 1 (pré)",
+            "purpose": "Primeiro limiter leve para estabilizar picos antes do final.",
+            "pluginExamples": [
+              "Limiter"
+            ],
+            "settings": [
+              {
+                "label": "GR",
+                "value": "0.5–2 dB",
+                "note": "leve"
+              },
+              {
+                "label": "Ceiling",
+                "value": "-1.0 dBTP",
+                "note": "ainda não é o final"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "lim2",
+            "type": "Dynamics",
+            "title": "Limiter 2 (final True‑Peak)",
+            "purpose": "Define ceiling final e atinge o loudness alvo.",
+            "pluginExamples": [
+              "True‑Peak Limiter"
+            ],
+            "settings": [
+              {
+                "label": "Ceiling",
+                "value": "-1.0 dBTP (streaming) / -0.3 dBTP (club*)",
+                "note": "*cautela"
+              },
+              {
+                "label": "Integrated LUFS",
+                "value": "alvo por gênero",
+                "note": "veja seção de targets"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "A/B com referência normalizada (loudness match) para julgar timbre, não volume."
+            ],
+            "variations": [],
+            "proTips": []
+          },
+          {
+            "id": "dither",
+            "type": "Utility",
+            "title": "Dither (se for export 16‑bit)",
+            "purpose": "Use dither apenas no último estágio ao reduzir bit depth.",
+            "pluginExamples": [
+              "Dither"
+            ],
+            "settings": [
+              {
+                "label": "Quando",
+                "value": "somente ao exportar 16‑bit",
+                "note": "não para 24/32‑float"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ],
+        "auxSends": [],
+        "notes": [
+          "*‘Club master’ pode exigir mais loudness, mas aumenta risco de distorção. Use com cuidado."
+        ]
+      }
+    }
+  },
+  "genreGuides": {
+    "pop": {
+      "globalNotes": [
+        "Priorize intelligibility do vocal e brilho controlado.",
+        "Arranjos densos pedem cortes de low‑mid (200–500 Hz) com cuidado."
+      ],
+      "instrumentNotes": {
+        "vocal_lead": {
+          "focus": [
+            "presença 2–5 kHz",
+            "air 12–16 kHz",
+            "delay ducked"
+          ],
+          "variations": [
+            "Vocal muito agressivo? Use dynamic EQ em 3–5 kHz em vez de cortar estático.",
+            "Refrão grande? Automatize +1–2 dB no send de delay e/ou reverb."
+          ]
+        },
+        "master": {
+          "focus": [
+            "clareza",
+            "brilho",
+            "punch"
+          ],
+          "targets": {
+            "streaming_lufs_i": "-14 a -10 LUFS",
+            "true_peak": "≤ -1.0 dBTP"
+          }
+        }
+      }
+    },
+    "rock": {
+      "globalNotes": [
+        "Médios são ‘o som’: evite ‘scooping’ exagerado.",
+        "Bateria e guitarras competem; faça espaço com HPF/LPF e automação."
+      ],
+      "instrumentNotes": {
+        "drums_bus": {
+          "focus": [
+            "punch",
+            "cola",
+            "pratos não ásperos"
+          ],
+          "variations": [
+            "Se o hi‑hat está áspero, trate em overheads/HH com EQ/dynamic.",
+            "Paralela ajuda ‘tamanho’ sem esmagar o bus principal."
+          ]
+        },
+        "master": {
+          "focus": [
+            "energia",
+            "médios",
+            "transientes"
+          ],
+          "targets": {
+            "streaming_lufs_i": "-14 a -9 LUFS",
+            "true_peak": "≤ -1.0 dBTP"
+          }
+        }
+      }
+    },
+    "hiphop": {
+      "globalNotes": [
+        "Kick/808 dominam o low end: controle sub e fase.",
+        "Vocal geralmente ‘na cara’ com efeitos controlados (ducking)."
+      ],
+      "instrumentNotes": {
+        "bass": {
+          "focus": [
+            "sub sólido",
+            "harmônicos 700 Hz–2 kHz",
+            "sidechain com kick"
+          ],
+          "variations": [
+            "808 ‘some’ em celular? Aumente harmônicos (saturação em paralelo).",
+            "Se o sub ‘bombeia’, ajuste release do sidechain no groove."
+          ]
+        },
+        "vocal_lead": {
+          "focus": [
+            "de‑esser preciso",
+            "saturação sutil",
+            "delay curto + long delay automatizado"
+          ],
+          "variations": [
+            "Trap moderno: pitch correction mais rápida e mais ‘efeito’.",
+            "Ad‑libs: mais reverb/delay e mais saturação (em paralelo)."
+          ]
+        },
+        "master": {
+          "focus": [
+            "low end control",
+            "loudness com clareza"
+          ],
+          "targets": {
+            "streaming_lufs_i": "-14 a -8 LUFS",
+            "true_peak": "≤ -1.0 a -0.8 dBTP"
+          }
+        }
+      }
+    },
+    "edm": {
+      "globalNotes": [
+        "Sidechain e transientes limpos são essenciais para sensação de energia.",
+        "Ganhos pequenos por estágio: clipping sutil costuma soar melhor que limitar pesado."
+      ],
+      "instrumentNotes": {
+        "keys_synth": {
+          "focus": [
+            "sidechain musical",
+            "largura",
+            "brilho controlado"
+          ],
+          "variations": [
+            "Se o lead perde foco, reduza width e aumente presença no Mid (M/S EQ)."
+          ]
+        },
+        "master": {
+          "focus": [
+            "loudness",
+            "punch",
+            "controle de transientes"
+          ],
+          "targets": {
+            "streaming_lufs_i": "-14 a -7 LUFS",
+            "true_peak": "≤ -1.0 a -0.5 dBTP"
+          }
+        }
+      }
+    },
+    "acoustic": {
+      "globalNotes": [
+        "Preserve dinâmica e naturalidade; menos é mais.",
+        "Reverbs mais orgânicos (room/chamber) costumam funcionar melhor."
+      ],
+      "instrumentNotes": {
+        "vocal_lead": {
+          "focus": [
+            "dinâmica",
+            "natural",
+            "sibilância suave"
+          ],
+          "variations": [
+            "Use menos saturação e mais automação para manter a performance viva.",
+            "Se o vocal fica ‘nasal’, trate com cortes pequenos em 900 Hz–1.2 kHz."
+          ]
+        },
+        "master": {
+          "focus": [
+            "dinâmica",
+            "balance",
+            "transparência"
+          ],
+          "targets": {
+            "streaming_lufs_i": "-16 a -12 LUFS",
+            "true_peak": "≤ -1.0 dBTP"
+          }
+        }
+      }
+    }
+  },
+  "patch": {
+    "chainMods": []
+  }
+}

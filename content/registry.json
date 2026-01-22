@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0",
+  "packages": [
+    {
+      "id": "core",
+      "path": "content/core/manifest.json",
+      "required": true,
+      "enabled": true
+    },
+    {
+      "id": "dlc_lofi_pack",
+      "path": "content/dlc/lofi_pack/manifest.json",
+      "required": false,
+      "enabled": true
+    }
+  ]
+}

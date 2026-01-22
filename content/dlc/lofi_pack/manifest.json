@@ -1,0 +1,11 @@
+{
+  "id": "dlc_lofi_pack",
+  "type": "dlc",
+  "name": "Lo‑Fi & Chill Pack",
+  "version": "1.0.0",
+  "description": "Expansão: gênero Lo‑Fi/Chill + variações de cadeia e guias.",
+  "entrypoints": {
+    "genres": "data/genres.json",
+    "chains": "data/chains.json"
+  }
+}

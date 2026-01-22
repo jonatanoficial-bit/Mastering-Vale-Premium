@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0",
+  "genreGuides": {
+    "lofi": {
+      "globalNotes": [
+        "Textura e imperfeição fazem parte: ruído, wow/flutter e filtros suaves.",
+        "Evite excesso de brilho; low‑pass musical costuma soar mais ‘vintage’."
+      ],
+      "instrumentNotes": {
+        "keys_synth": {
+          "focus": [
+            "tape/vinyl",
+            "filtros suaves",
+            "largura moderada"
+          ],
+          "variations": [
+            "Um LPF em 10–14 kHz no bus musical pode ajudar a ‘colar’ o lo‑fi.",
+            "Ruído deve ficar ‘sentido’, não ‘ouvido’: use -30 a -20 dBFS como guia."
+          ]
+        },
+        "master": {
+          "focus": [
+            "calor",
+            "suavidade",
+            "dinâmica"
+          ],
+          "targets": {
+            "streaming_lufs_i": "-16 a -10 LUFS",
+            "true_peak": "≤ -1.0 dBTP"
+          }
+        }
+      }
+    }
+  },
+  "patch": {
+    "chainMods": [
+      {
+        "genreId": "lofi",
+        "instrumentId": "keys_synth",
+        "level": "beginner",
+        "mode": "insertAfter",
+        "afterStepId": "eq",
+        "steps": [
+          {
+            "id": "vinyl",
+            "type": "Color",
+            "title": "Vinyl/Noise Texture (opcional)",
+            "purpose": "Adiciona textura e ‘cola’ vintage.",
+            "pluginExamples": [
+              "Vinyl",
+              "Noise Generator",
+              "Tape"
+            ],
+            "settings": [
+              {
+                "label": "Noise level",
+                "value": "‑30 a ‑20 dBFS (bem baixo)",
+                "note": "só sensação"
+              },
+              {
+                "label": "Crackle",
+                "value": "0–20%",
+                "note": "depende do gosto"
+              },
+              {
+                "label": "LPF",
+                "value": "10–14 kHz",
+                "note": "suaviza"
+              }
+            ],
+            "meters": [],
+            "tips": [
+              "Automatize em intros/breaks e reduza em partes cheias."
+            ],
+            "variations": [],
+            "proTips": []
+          }
+        ]
+      },
+      {
+        "genreId": "lofi",
+        "instrumentId": "master",
+        "level": "intermediate",
+        "mode": "insertBefore",
+        "beforeStepId": "clip",
+        "steps": [
+          {
+            "id": "tape",
+            "type": "Color",
+            "title": "Tape (calor/softening)",
+            "purpose": "Suaviza transientes e dá ‘cola’ lo‑fi.",
+            "pluginExamples": [
+              "Tape",
+              "Console",
+              "Saturation"
+            ],
+            "settings": [
+              {
+                "label": "Drive",
+                "value": "leve",
+                "note": "evite distorção óbvia"
+              },
+              {
+                "label": "HF roll‑off",
+                "value": "‑0.5 a ‑2 dB",
+                "note": "suaviza"
+              }
+            ],
+            "meters": [],
+            "tips": [],
+            "variations": [],
+            "proTips": []
+          }
+        ]
+      }
+    ]
+  }
+}
