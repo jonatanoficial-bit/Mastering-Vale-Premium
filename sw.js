@@ -1,5 +1,5 @@
 
-const CACHE = "mixblueprint_pro_v2_shell_v1";
+const CACHE = "mixblueprint_shell_fix_1769108967";
 const SHELL = [
   "./",
   "./index.html",

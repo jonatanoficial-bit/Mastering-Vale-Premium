@@ -388,39 +388,46 @@ export const ui = {
     return wrap;
   },
 
-,
-  upgrade(){
+  footer(){
+    const f = el("div",{class:"footer"});
+    f.innerHTML = `Blueprints interativos • DLC-ready • Mobile-first • Vanilla JS • <a href="./README.md" target="_blank" rel="noreferrer">README</a>`;
+    return f;
+  }
+
+upgrade({onBack, onUnlock}){
   const wrap = el("div",{class:"main"});
   const card = el("div",{class:"card accent"});
   card.appendChild(el("div",{class:"hd"},[
     el("div",{},[
       el("h2",{html:"Desbloqueie recursos profissionais"}),
-      el("p",{html:"DLCs adicionam cadeias avançadas, decisões críticas e masterização profissional."})
+      el("p",{html:"DLCs adicionam cadeias avançadas, decisões críticas e masterização profissional. Estrutura pronta para checkout/licença."})
     ]),
     el("span",{class:"badge", html:"Upgrade"})
   ]));
   const bd = el("div",{class:"bd"});
   const list = el("div",{class:"list"});
   [
-    {t:"Vocal Pro Pack",d:"Cadeias vocais avançadas por gênero e voz."},
-    {t:"Master Pro Pack",d:"Masterização streaming, club e dinâmica."}
+    {t:"Vocal Pro Pack",d:"Cadeias vocais avançadas por gênero e voz (lead/backing)."},
+    {t:"Master Pro Pack",d:"Masterização multi-stage (streaming/club/dynamic) com validação e riscos."}
   ].forEach(x=>{
     const it = el("div",{class:"item"});
-    it.appendChild(el("div",{class:"meta"},[el("strong",{html:x.t}),el("span",{html:x.d})]));
-    it.appendChild(el("button",{class:"btn primary", onclick:()=>alert("Checkout futuro")},[el("span",{html:"Desbloquear"})]));
+    it.appendChild(el("div",{class:"meta"},[
+      el("strong",{html:x.t}),
+      el("span",{html:x.d})
+    ]));
+    it.appendChild(el("button",{class:"btn primary", onclick:()=> onUnlock?.(x)},[el("span",{html:"Desbloquear"})]));
     list.appendChild(it);
   });
   bd.appendChild(list);
+  bd.appendChild(el("div",{class:"div"}));
+  bd.appendChild(el("div",{class:"row"},[
+    el("button",{class:"btn", onclick:()=> onBack?.()},[el("span",{html:"Voltar"})])
+  ]));
   card.appendChild(bd);
   wrap.appendChild(card);
   return wrap;
-}
+},
 
-  footer(){
-    const f = el("div",{class:"footer"});
-    f.innerHTML = `Blueprints interativos • DLC-ready • Mobile-first • Vanilla JS • <a href="./README.md" target="_blank" rel="noreferrer">README</a>`;
-    return f;
-  }
 };
 
 function info(title, desc){
@@ -432,5 +439,3 @@ function info(title, desc){
   it.appendChild(el("span",{class:"badge", html:"OK"}));
   return it;
 }
-
-
