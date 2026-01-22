@@ -1,17 +1,25 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": 2,
   "packages": [
     {
       "id": "core",
-      "path": "content/core/manifest.json",
-      "required": true,
-      "enabled": true
+      "name": "Core Library",
+      "type": "core",
+      "version": "2.0.0",
+      "enabledByDefault": true,
+      "path": "content/core/manifest.json"
     },
     {
-      "id": "dlc_lofi_pack",
-      "path": "content/dlc/lofi_pack/manifest.json",
-      "required": false,
-      "enabled": true
+      "id": "dlc_lofi_chill",
+      "name": "Lo‑Fi / Chill Pack",
+      "type": "dlc",
+      "version": "1.1.0",
+      "enabledByDefault": true,
+      "path": "content/dlc/lofi/manifest.json",
+      "monetization": {
+        "tier": "free_sample",
+        "note": "Exemplo de DLC/pack. Pronto para paywall no futuro."
+      }
     }
   ]
 }

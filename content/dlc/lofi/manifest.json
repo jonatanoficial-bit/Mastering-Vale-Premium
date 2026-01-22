@@ -1,0 +1,17 @@
+{
+  "id": "dlc_lofi_chill",
+  "name": "Lo‑Fi / Chill Pack",
+  "version": "1.1.0",
+  "schemaVersion": 2,
+  "assets": [],
+  "data": [
+    {
+      "type": "genres",
+      "path": "content/dlc/lofi/data/genres.json"
+    },
+    {
+      "type": "blueprints",
+      "path": "content/dlc/lofi/data/blueprints.json"
+    }
+  ]
+}

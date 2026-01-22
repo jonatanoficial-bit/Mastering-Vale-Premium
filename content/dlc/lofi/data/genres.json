@@ -1,0 +1,13 @@
+{
+  "genres": [
+    {
+      "id": "lofi",
+      "name": "Lo‑Fi / Chill",
+      "accent": "#A8FFB8",
+      "stageAccent": {
+        "mix": "#A8FFB8",
+        "master": "#9CF0FF"
+      }
+    }
+  ]
+}

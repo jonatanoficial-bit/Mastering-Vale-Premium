@@ -1,0 +1,463 @@
+{
+  "schemaVersion": 2,
+  "blueprints": [
+    {
+      "id": "bp_pop_vocal",
+      "genreId": "pop",
+      "instrumentId": "vocal_lead",
+      "title": "Vocal Pop — Cadeia Interativa",
+      "summary": "Cadeia comercial moderna com decisões reais (voz, vibe, arranjo).",
+      "levels": {
+        "beginner": {
+          "label": "Iniciante",
+          "focus": [
+            "ganho",
+            "controle",
+            "clareza"
+          ]
+        },
+        "intermediate": {
+          "label": "Intermediário",
+          "focus": [
+            "dinâmica",
+            "timbre",
+            "presença"
+          ]
+        },
+        "advanced": {
+          "label": "Avançado",
+          "focus": [
+            "microdinâmica",
+            "harmônicos",
+            "densidade"
+          ]
+        }
+      },
+      "decisions": [
+        {
+          "id": "voiceType",
+          "label": "Tipo de voz",
+          "type": "segmented",
+          "options": [
+            {
+              "id": "male",
+              "label": "Masculina"
+            },
+            {
+              "id": "female",
+              "label": "Feminina"
+            }
+          ],
+          "default": "female"
+        },
+        {
+          "id": "vibe",
+          "label": "Vibe",
+          "type": "segmented",
+          "options": [
+            {
+              "id": "natural",
+              "label": "Natural"
+            },
+            {
+              "id": "commercial",
+              "label": "Comercial"
+            },
+            {
+              "id": "aggressive",
+              "label": "Agressiva"
+            }
+          ],
+          "default": "commercial"
+        },
+        {
+          "id": "arrangement",
+          "label": "Arranjo",
+          "type": "segmented",
+          "options": [
+            {
+              "id": "sparse",
+              "label": "Espaçado"
+            },
+            {
+              "id": "dense",
+              "label": "Denso"
+            }
+          ],
+          "default": "dense"
+        },
+        {
+          "id": "air",
+          "label": "Ar / Brilho",
+          "type": "slider",
+          "min": 0,
+          "max": 100,
+          "default": 55,
+          "marks": [
+            {
+              "v": 0,
+              "t": "Suave"
+            },
+            {
+              "v": 50,
+              "t": "Padrão"
+            },
+            {
+              "v": 100,
+              "t": "Bright"
+            }
+          ]
+        }
+      ],
+      "targets": {
+        "lufs_s": {
+          "label": "LUFS Short",
+          "min": -20,
+          "max": -12,
+          "unit": "LUFS"
+        },
+        "tp": {
+          "label": "True Peak",
+          "min": -6,
+          "max": -1,
+          "unit": "dBTP"
+        },
+        "gr": {
+          "label": "GR Total",
+          "min": 0,
+          "max": 10,
+          "unit": "dB"
+        },
+        "dyn": {
+          "label": "Dinâmica",
+          "min": 0,
+          "max": 100,
+          "unit": ""
+        }
+      },
+      "baseChain": [
+        {
+          "id": "in_gain",
+          "name": "Gain / Trim",
+          "type": "utility",
+          "why": "Headroom consistente antes de processar.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Ajuste para picos ~ -10 a -6 dBFS."
+            },
+            "intermediate": {
+              "text": "Ajuste para picos ~ -12 a -8 dBFS, mantendo timbre."
+            },
+            "advanced": {
+              "text": "Normalização por seção + clip gain para estabilidade."
+            }
+          }
+        },
+        {
+          "id": "hp_eq",
+          "name": "EQ (HPF + Cleanup)",
+          "type": "eq",
+          "why": "Remover ruído/rumble e abrir espaço na mix.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "HPF 70–110 Hz; cortes suaves em ressonâncias."
+            },
+            "intermediate": {
+              "text": "HPF dinâmico se necessário; notch em 200–500 se embolar."
+            },
+            "advanced": {
+              "text": "Dynamic EQ por fonema; M/S se o arranjo pedir."
+            }
+          }
+        },
+        {
+          "id": "deesser",
+          "name": "De‑Esser",
+          "type": "dynamics",
+          "why": "Controle de sibilância mantendo brilho.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Foque 5–8 kHz; 2–5 dB de redução."
+            },
+            "intermediate": {
+              "text": "Split-band; 3–6 dB em picos; ataque rápido."
+            },
+            "advanced": {
+              "text": "Dual-stage: leve antes e final pós-brilho."
+            }
+          }
+        },
+        {
+          "id": "comp_main",
+          "name": "Compressão (Principal)",
+          "type": "dynamics",
+          "why": "Consistência e presença.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Ratio 2:1–3:1; GR 3–6 dB; ataque médio."
+            },
+            "intermediate": {
+              "text": "Dois compressores leves em série; GR total 4–7 dB."
+            },
+            "advanced": {
+              "text": "Serial + parallel controlando microdinâmica; GR total 4–8 dB."
+            }
+          }
+        },
+        {
+          "id": "tone_sat",
+          "name": "Saturação / Harmônicos",
+          "type": "saturation",
+          "why": "Densidade e presença sem aumentar volume.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Sutil; evite distorção audível."
+            },
+            "intermediate": {
+              "text": "Tape/Tube leve; compense gain."
+            },
+            "advanced": {
+              "text": "Stage drive por seções; oversampling se houver."
+            }
+          }
+        },
+        {
+          "id": "air_eq",
+          "name": "Air / Brilho (Shelf)",
+          "type": "eq",
+          "why": "“Final polish” no topo.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "+1 a +3 dB @ 10–16 kHz (se necessário)."
+            },
+            "intermediate": {
+              "text": "Shelf + dynamic control pra evitar sibilância."
+            },
+            "advanced": {
+              "text": "Air por automação; M/S se vocal estiver central demais."
+            }
+          }
+        },
+        {
+          "id": "fx_send",
+          "name": "FX (Reverb/Delay Sends)",
+          "type": "fx",
+          "why": "Profundidade e espaço sem “afogar” o vocal.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Reverb curto + delay slap leve."
+            },
+            "intermediate": {
+              "text": "Delay tempo-sinc + ducking; pre-delay no reverb."
+            },
+            "advanced": {
+              "text": "Múltiplos sends por frase; automação de throws."
+            }
+          }
+        },
+        {
+          "id": "limiter_safety",
+          "name": "Limiter (Safety)",
+          "type": "dynamics",
+          "why": "Segurar picos extremos (não para loudness).",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Apenas 1–2 dB em picos."
+            },
+            "intermediate": {
+              "text": "Ceiling -1 dB; 1–3 dB em picos."
+            },
+            "advanced": {
+              "text": "Use clipper antes se necessário; limiter só “catcher”."
+            }
+          }
+        }
+      ],
+      "rules": [
+        {
+          "when": {
+            "vibe": "natural"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "tone_sat",
+              "fields": {
+                "note": "Natural: mantenha saturação mínima (densidade sem distorcer)."
+              }
+            },
+            {
+              "op": "update",
+              "stepId": "air_eq",
+              "fields": {
+                "note": "Natural: use shelf sutil; priorize clareza com cuts."
+              }
+            }
+          ],
+          "meterBias": {
+            "gr": -1,
+            "dyn": 10
+          }
+        },
+        {
+          "when": {
+            "vibe": "aggressive"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "comp_main",
+              "fields": {
+                "note": "Agressiva: ataque um pouco mais rápido e GR total maior (sem pumping)."
+              }
+            },
+            {
+              "op": "insertAfter",
+              "afterStepId": "comp_main",
+              "step": {
+                "id": "clipper",
+                "name": "Clipper (Controlled)",
+                "type": "dynamics",
+                "why": "Aumentar densidade percebida com controle de picos.",
+                "settingsByLevel": {
+                  "beginner": {
+                    "text": "Opcional; use com cuidado."
+                  },
+                  "intermediate": {
+                    "text": "1–2 dB de clipping máximo; compense."
+                  },
+                  "advanced": {
+                    "text": "Oversampling alto; controle por seção."
+                  }
+                }
+              }
+            }
+          ],
+          "meterBias": {
+            "gr": 2,
+            "dyn": -10
+          }
+        },
+        {
+          "when": {
+            "arrangement": "dense"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "hp_eq",
+              "fields": {
+                "note": "Denso: limpe mais médios-baixos e use dinâmica para abrir espaço."
+              }
+            },
+            {
+              "op": "insertAfter",
+              "afterStepId": "hp_eq",
+              "step": {
+                "id": "dyn_eq_presence",
+                "name": "Dynamic EQ (Presença)",
+                "type": "eq",
+                "why": "Aumentar presença sem aspereza.",
+                "settingsByLevel": {
+                  "beginner": {
+                    "text": "Opcional; use preset 'presence' se tiver."
+                  },
+                  "intermediate": {
+                    "text": "2–4 kHz dinâmico; 1–3 dB."
+                  },
+                  "advanced": {
+                    "text": "Multi-band por fonema; ataque rápido."
+                  }
+                }
+              }
+            }
+          ],
+          "meterBias": {
+            "lufs_s": 1,
+            "dyn": -5
+          }
+        },
+        {
+          "when": {
+            "voiceType": "male"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "hp_eq",
+              "fields": {
+                "note": "Voz masculina: HPF geralmente mais baixo (60–90 Hz), cuidado com 200–350 Hz."
+              }
+            }
+          ],
+          "meterBias": {
+            "tp": -0.2
+          }
+        },
+        {
+          "when": {
+            "voiceType": "female"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "deesser",
+              "fields": {
+                "note": "Voz feminina: atenção extra em 6–9 kHz (sibilância)."
+              }
+            }
+          ],
+          "meterBias": {
+            "tp": -0.1
+          }
+        },
+        {
+          "when": {
+            "air": ">=75"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "air_eq",
+              "fields": {
+                "note": "Air alto: reavalie de‑esser pós‑air; evite aspereza."
+              }
+            }
+          ],
+          "meterBias": {
+            "gr": 0.3,
+            "dyn": -2
+          }
+        },
+        {
+          "when": {
+            "air": "<=30"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "air_eq",
+              "fields": {
+                "note": "Air baixo: prefira clareza com cuts e saturação leve ao invés de brilho."
+              }
+            }
+          ],
+          "meterBias": {
+            "dyn": 3
+          }
+        }
+      ],
+      "copyTemplate": {
+        "title": "{genre} / {instrument} — {level}",
+        "lines": [
+          "Decisões: voz={voiceType}, vibe={vibe}, arranjo={arrangement}, air={air}",
+          "",
+          "Cadeia:",
+          "{steps}",
+          "",
+          "Targets (guia): LUFS-S {lufs_s_range} | TP {tp_range} | GR {gr_range}"
+        ]
+      }
+    }
+  ]
+}

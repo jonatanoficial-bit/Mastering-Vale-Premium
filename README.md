@@ -1,193 +1,99 @@
-# MixBlueprint (vanilla) — Mobile‑first AAA
+# MixBlueprint Pro (v2) — Mobile-first • Vanilla • DLC-ready
 
-Um web‑app **mobile‑first** (PWA) feito em **HTML + CSS + JavaScript puro** para ajudar profissionais de áudio (iniciante → avançado) com:
+Este projeto é um **assistente interativo de mix e masterização** (web app/PWA), focado em **decisão profissional**:
+o usuário escolhe **gênero → instrumento → nível**, responde **decisões (vibe, voz, arranjo, etc.)** e a **cadeia muda em tempo real**.
 
-- **Cadeias mínimas** por **gênero** e **instrumento** (vocal, drums, bass/808, guitarra, synth/keys, mix bus, master).
-- **Medições reais** (ponto de partida): dBFS, LUFS, True Peak, GR etc.
-- **Variações** por gênero e notas de workflow.
-- **Arquitetura modular** pronta para **DLC/expansões** sem alterar o core.
-- **Admin local** (modo estático) para gerenciar DLCs e instalar conteúdos extras via JSON.
-
-> ⚠️ Observação: valores são guias. O áudio “certo” é o que funciona no contexto e com referências.
-
----
+## ✅ Stack
+- HTML + CSS + JavaScript (vanilla)
+- SPA por hash routing (compatível com GitHub Pages)
+- Conteúdo modular via **registry + manifests + JSON**
+- Admin local para gerenciar pacotes/DLCs
 
 ## Rodar localmente
+> Use servidor local (ES Modules não funcionam bem via `file://`).
 
-Como o projeto usa **ES Modules**, você precisa de um servidor estático (não abre certo via `file://`).
-
-### Opção 1 (Python)
-
+### Python
 ```bash
 python -m http.server 8080
 ```
 
 Abra:
-
 - App: `http://localhost:8080/`
 - Admin: `http://localhost:8080/admin.html`
 
-### Opção 2 (Node)
-
+### Node
 ```bash
 npx serve .
 ```
 
----
+## PWA / Offline
+O app registra Service Worker (`sw.js`) e faz cache do “shell” + conteúdo (quando possível).
 
-## Deploy no GitHub Pages
+## Estrutura de conteúdo (Core + DLC)
+- `content/registry.json` → lista pacotes
+- Cada pacote tem `manifest.json` com arquivos JSON.
+- `content/core/...` → conteúdo base
+- `content/dlc/...` → DLCs no repositório
+- DLCs **locais** podem ser instaladas via Admin (localStorage), sem alterar o core.
 
-1. Suba o repositório para o GitHub.
-2. Vá em **Settings → Pages**.
-3. Em **Build and deployment**, selecione:
-   - **Source**: Deploy from a branch
-   - **Branch**: `main` (ou `master`)
-   - **Folder**: `/root`
-4. Salve.
+### Tipos de dados
+- `genres.json` → lista de gêneros + cores
+- `instruments.json` → instrumentos/buses
+- `blueprints.json` → cadeias interativas (mix)
+- `masters.json` → modos de master
 
-O app é SPA com **hash‑routing**, então funciona bem no Pages.
+## Blueprints interativos (modelo)
+Cada blueprint pode ter:
+- `decisions`: segmented (botões) e slider
+- `baseChain`: passos principais
+- `rules`: aplicam patch na cadeia conforme decisões
 
----
-
-## Admin (local)
-
-- Acesse: `admin.html`
-- Senha padrão: **admin**
-- Troque em: **Segurança**
-
-> **Importante**: isso **não é segurança real**. É um “login local” só para modo estático.  
-> Se você quiser transformar em produto comercial com segurança, é só integrar backend (auth + storage).
-
----
-
-## Estrutura de pastas (principal)
-
-```
-/
-├─ index.html
-├─ admin.html
-├─ styles/
-├─ src/
-│  ├─ app.js
-│  ├─ admin.js
-│  ├─ router.js
-│  ├─ content/
-│  │  ├─ manager.js
-│  │  └─ store.js
-│  ├─ ui/
-│  │  ├─ render.js
-│  │  ├─ icons.js
-│  │  └─ toast.js
-│  ├─ utils/
-│  │  ├─ dom.js
-│  │  ├─ storage.js
-│  │  └─ format.js
-│  └─ pwa/
-│     └─ register.js
-├─ pwa/
-│  ├─ manifest.webmanifest
-│  └─ sw.js
-└─ content/
-   ├─ registry.json
-   ├─ core/
-   │  ├─ manifest.json
-   │  └─ data/
-   │     ├─ genres.json
-   │     └─ chains.json
-   └─ dlc/
-      └─ lofi_pack/
-         ├─ manifest.json
-         └─ data/
-            ├─ genres.json
-            └─ chains.json
-```
-
----
-
-## Sistema de DLC / Expansões
-
-### Como funciona
-
-- `content/registry.json` lista pacotes disponíveis (core + DLCs embutidos).
-- Cada pacote tem um `manifest.json` com `entrypoints` para arquivos JSON.
-- O **core** define:
-  - lista de instrumentos
-  - cadeias base (`baseChains`)
-  - guias por gênero (`genreGuides`)
-- Um **DLC** pode:
-  - adicionar gêneros novos
-  - adicionar guias (`genreGuides`)
-  - aplicar **patches** em cadeias via `patch.chainMods` (ex.: inserir um step extra)
-
-### Exemplo (patch)
-
-O DLC **Lo‑Fi & Chill Pack** adiciona o gênero `lofi` e aplica um patch:
-
-- insere um step de **Vinyl/Noise** em `keys_synth (beginner)`
-- adiciona um step de **Tape** na master (intermediate)
-
-Veja em: `content/dlc/lofi_pack/data/chains.json`
-
----
-
-## Formato de bundle para importar DLC no Admin
-
-O Admin instala DLC local via um único JSON (bundle):
-
+Exemplo de regra:
 ```json
 {
-  "bundleVersion": "1.0",
-  "manifest": {
-    "id": "dlc_meu_pack",
-    "type": "dlc",
-    "name": "Meu DLC",
-    "version": "0.1.0",
-    "description": "…"
-  },
-  "data": {
-    "genres": [ ... ],
-    "chains": {
-      "schemaVersion": "1.0",
-      "genreGuides": { ... },
-      "patch": { "chainMods": [ ... ] }
-    }
-  }
+  "when": {"vibe":"aggressive"},
+  "patch": [
+    {"op":"insertAfter","afterStepId":"comp_main","step": {"id":"clipper","name":"Clipper","type":"dynamics","why":"..."}}
+  ],
+  "meterBias": {"gr": 2, "dyn": -10}
 }
 ```
 
+## Admin (local)
+Abra `admin.html`.
+
+### Login
+- Senha padrão: `admin`
+- Troque em “Segurança (local)”
+
+> Observação: este login é **modo local** (não é segurança real). A arquitetura está pronta para substituir por backend.
+
+### Funções
+- Ativar/desativar pacotes (core/DLC)
+- Instalar DLC via “bundle JSON”
+- Remover DLC local
+- Exportar/restaurar backups do estado local (favoritos, DLCs etc.)
+
+## Deploy no GitHub Pages
+1. Suba o repositório com estes arquivos.
+2. GitHub → Settings → Pages:
+   - Source: `Deploy from a branch`
+   - Branch: `main` / folder: `/ (root)`
+3. Acesse a URL gerada.
+
+Como é hash routing, não precisa configurar redirects.
+
+## Próximos passos AAA (já preparados)
+- Paywall real (Stripe/Checkout) plugável
+- Packs premium por gênero/engenheiro
+- Sistema de progresso e perfil (além de favoritos)
+- “Master Pro” com comparadores e validações avançadas
+
 ---
-
-## Nota sobre medições (prática)
-
-O app mostra **pontos de partida** para:
-
-- **dBFS** (picos / headroom)
-- **LUFS** (short‑term / integrated)
-- **True Peak (dBTP)**
-- **Gain Reduction** em comp/de‑esser
-
-Você deve adaptar ao material e às referências. Para decisões confiáveis:
-- compare com referência usando **loudness match**
-- cheque em mono e em volume baixo
-- use automação antes de esmagar com dinâmica
-
----
-
-## Próximos upgrades (fáceis de encaixar)
-
-- Backend (login real + storage em DB)
-- Conta por usuário + sync cloud
-- Conteúdo com assets (imagens por gênero/instrumento)
-- “Profiles” de mastering (Streaming / Club / Dynamic)
-- Export de “session checklist” por DAW
-
----
-
-## Licença
-
-Você pode adicionar uma licença (MIT, Apache-2.0, proprietária) conforme seu objetivo comercial.
+Criado para evolução em DLCs sem alterar o core.
 
 
-## Exemplo de bundle
-
-Há um exemplo pronto em `examples/lofi_pack.bundle.json` (você pode importar no Admin).
+## v3 — Comercial (DLC)
+- Paywall lógico por DLC
+- Progresso do usuário (local)
+- Master Pro marcado como Premium

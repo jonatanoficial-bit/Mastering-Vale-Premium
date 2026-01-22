@@ -3,18 +3,13 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-  <meta name="theme-color" content="#0B0D12"/>
-  <meta name="description" content="Admin do MixBlueprint — gerencie conteúdo e DLCs."/>
-  <title>MixBlueprint Admin</title>
-
-  <link rel="icon" href="assets/brand/favicon.png" type="image/png"/>
-  <link rel="stylesheet" href="styles/app.css"/>
-  <link rel="stylesheet" href="styles/admin.css"/>
+  <meta name="theme-color" content="#0b0f17"/>
+  <title>MixBlueprint Pro — Admin</title>
+  <link rel="stylesheet" href="./styles/admin.css"/>
 </head>
 <body>
-  <div class="noise"></div>
-  <div id="admin" class="app adminWrap" aria-label="Admin MixBlueprint"></div>
-
-  <script type="module" src="src/admin.js"></script>
+  <div class="app" id="root"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./js/admin.js"></script>
 </body>
 </html>

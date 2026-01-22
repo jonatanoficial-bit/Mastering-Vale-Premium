@@ -1,0 +1,95 @@
+{
+  "instruments": [
+    {
+      "id": "vocal_lead",
+      "name": "Vocal Lead",
+      "icon": "mic",
+      "categories": [
+        "mix"
+      ],
+      "quickTags": [
+        "de-esser",
+        "comp",
+        "eq"
+      ]
+    },
+    {
+      "id": "drums_bus",
+      "name": "Drums Bus",
+      "icon": "drums",
+      "categories": [
+        "mix"
+      ],
+      "quickTags": [
+        "transient",
+        "glue",
+        "saturation"
+      ]
+    },
+    {
+      "id": "bass_808",
+      "name": "Bass / 808",
+      "icon": "bass",
+      "categories": [
+        "mix"
+      ],
+      "quickTags": [
+        "sub",
+        "mono",
+        "dist"
+      ]
+    },
+    {
+      "id": "guitar",
+      "name": "Guitarra",
+      "icon": "guitar",
+      "categories": [
+        "mix"
+      ],
+      "quickTags": [
+        "tone",
+        "mid",
+        "space"
+      ]
+    },
+    {
+      "id": "keys_synth",
+      "name": "Keys / Synth",
+      "icon": "keys",
+      "categories": [
+        "mix"
+      ],
+      "quickTags": [
+        "width",
+        "filter",
+        "fx"
+      ]
+    },
+    {
+      "id": "mix_bus",
+      "name": "Mix Bus",
+      "icon": "bus",
+      "categories": [
+        "mix"
+      ],
+      "quickTags": [
+        "glue",
+        "tone",
+        "headroom"
+      ]
+    },
+    {
+      "id": "master",
+      "name": "Masterização",
+      "icon": "master",
+      "categories": [
+        "master"
+      ],
+      "quickTags": [
+        "lufs",
+        "tp",
+        "dynamics"
+      ]
+    }
+  ]
+}

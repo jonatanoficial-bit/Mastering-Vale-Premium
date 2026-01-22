@@ -1,11 +1,25 @@
 {
   "id": "core",
-  "type": "core",
-  "name": "MixBlueprint Core",
-  "version": "1.0.0",
-  "description": "Conteúdo principal: gêneros base, instrumentos e cadeias.",
-  "entrypoints": {
-    "genres": "data/genres.json",
-    "chains": "data/chains.json"
-  }
+  "name": "Core Library",
+  "version": "2.0.0",
+  "schemaVersion": 2,
+  "assets": [],
+  "data": [
+    {
+      "type": "genres",
+      "path": "content/core/data/genres.json"
+    },
+    {
+      "type": "instruments",
+      "path": "content/core/data/instruments.json"
+    },
+    {
+      "type": "blueprints",
+      "path": "content/core/data/blueprints.json"
+    },
+    {
+      "type": "masters",
+      "path": "content/core/data/masters.json"
+    }
+  ]
 }

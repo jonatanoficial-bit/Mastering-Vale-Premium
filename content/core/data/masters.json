@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "modes": [
+    {
+      "id": "m_streaming_fast",
+      "title": "Master Rápida (Streaming)",
+      "tier": "core",
+      "summary": "Cadeia simples, segura e consistente para streaming.",
+      "targets": {
+        "lufs_i": {
+          "min": -14,
+          "max": -12,
+          "unit": "LUFS-I"
+        },
+        "tp": {
+          "min": -1.2,
+          "max": -1.0,
+          "unit": "dBTP"
+        },
+        "dr": {
+          "min": 35,
+          "max": 70,
+          "unit": ""
+        }
+      },
+      "chain": [
+        {
+          "id": "m_gain",
+          "name": "Trim / Gain",
+          "why": "Headroom antes da cadeia."
+        },
+        {
+          "id": "m_tone",
+          "name": "EQ (Tone)",
+          "why": "Correções amplas."
+        },
+        {
+          "id": "m_comp",
+          "name": "Bus Comp",
+          "why": "Glue leve."
+        },
+        {
+          "id": "m_sat",
+          "name": "Saturação leve",
+          "why": "Densidade."
+        },
+        {
+          "id": "m_limiter",
+          "name": "Limiter",
+          "why": "Ceiling e loudness."
+        }
+      ],
+      "risks": [
+        {
+          "id": "overlimit",
+          "label": "Over‑limiting",
+          "hint": "Se GR no limiter passar de ~3–4 dB com frequência, revise a mix."
+        },
+        {
+          "id": "clip",
+          "label": "Clipping inter‑sample",
+          "hint": "Mantenha TP <= -1.0 dBTP para segurança em conversões."
+        }
+      ]
+    },
+    {
+      "id": "m_club_punch",
+      "title": "Master Club (Punch)",
+      "tier": "premium_hint",
+      "summary": "Mais impacto, mantendo controle de picos e sub.",
+      "targets": {
+        "lufs_i": {
+          "min": -10,
+          "max": -8,
+          "unit": "LUFS-I"
+        },
+        "tp": {
+          "min": -1.0,
+          "max": -0.8,
+          "unit": "dBTP"
+        },
+        "dr": {
+          "min": 25,
+          "max": 55,
+          "unit": ""
+        }
+      },
+      "chain": [
+        {
+          "id": "m_gain",
+          "name": "Trim / Gain",
+          "why": "Headroom."
+        },
+        {
+          "id": "m_sub",
+          "name": "Sub Control (Mono)",
+          "why": "Sub firme e central."
+        },
+        {
+          "id": "m_clip",
+          "name": "Clipper (Controlado)",
+          "why": "Densidade antes do limiter."
+        },
+        {
+          "id": "m_limiter",
+          "name": "Limiter",
+          "why": "Ceiling e loudness."
+        }
+      ],
+      "risks": [
+        {
+          "id": "pumping",
+          "label": "Pumping",
+          "hint": "Se o kick “respira” demais, reduza GR/ataque e revise release."
+        }
+      ],
+      "paywall": {
+        "label": "DLC Master Pro",
+        "cta": "Desbloquear"
+      },
+      "premium": true
+    }
+  ]
+}

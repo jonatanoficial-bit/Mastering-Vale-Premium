@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 2,
+  "blueprints": [
+    {
+      "id": "bp_lofi_drums",
+      "genreId": "lofi",
+      "instrumentId": "drums_bus",
+      "title": "Lo‑Fi Drums — Glue & Texture",
+      "summary": "Glue, transient shaping e textura com decisões de vibe.",
+      "levels": {
+        "beginner": {
+          "label": "Iniciante",
+          "focus": [
+            "glue",
+            "textura"
+          ]
+        },
+        "intermediate": {
+          "label": "Intermediário",
+          "focus": [
+            "transient",
+            "swing",
+            "tone"
+          ]
+        },
+        "advanced": {
+          "label": "Avançado",
+          "focus": [
+            "paralelo",
+            "wow/flutter",
+            "noise"
+          ]
+        }
+      },
+      "decisions": [
+        {
+          "id": "grit",
+          "label": "Textura",
+          "type": "segmented",
+          "options": [
+            {
+              "id": "clean",
+              "label": "Clean"
+            },
+            {
+              "id": "tape",
+              "label": "Tape"
+            },
+            {
+              "id": "vinyl",
+              "label": "Vinyl"
+            }
+          ],
+          "default": "tape"
+        },
+        {
+          "id": "punch",
+          "label": "Punch",
+          "type": "slider",
+          "min": 0,
+          "max": 100,
+          "default": 45,
+          "marks": [
+            {
+              "v": 0,
+              "t": "Soft"
+            },
+            {
+              "v": 50,
+              "t": "Balanced"
+            },
+            {
+              "v": 100,
+              "t": "Hard"
+            }
+          ]
+        }
+      ],
+      "targets": {
+        "gr": {
+          "label": "GR Total",
+          "min": 0,
+          "max": 8,
+          "unit": "dB"
+        },
+        "dyn": {
+          "label": "Dinâmica",
+          "min": 0,
+          "max": 100,
+          "unit": ""
+        }
+      },
+      "baseChain": [
+        {
+          "id": "hp",
+          "name": "HPF / Cleanup",
+          "type": "eq",
+          "why": "Limpar rumble.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "HPF ~25–35 Hz."
+            },
+            "intermediate": {
+              "text": "HPF + cuts suaves."
+            },
+            "advanced": {
+              "text": "Dynamic cleanup por hits."
+            }
+          }
+        },
+        {
+          "id": "trans",
+          "name": "Transient Shaper",
+          "type": "dynamics",
+          "why": "Ataque e sustain.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Ajustes leves."
+            },
+            "intermediate": {
+              "text": "Punch + sustain control."
+            },
+            "advanced": {
+              "text": "Paralelo por banda."
+            }
+          }
+        },
+        {
+          "id": "glue",
+          "name": "Bus Comp (Glue)",
+          "type": "dynamics",
+          "why": "Colar o bus.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "GR 1–3 dB."
+            },
+            "intermediate": {
+              "text": "GR 2–4 dB; release musical."
+            },
+            "advanced": {
+              "text": "Serial + paralelo."
+            }
+          }
+        },
+        {
+          "id": "sat",
+          "name": "Saturação / Texture",
+          "type": "saturation",
+          "why": "Caráter lo‑fi.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "Sutil."
+            },
+            "intermediate": {
+              "text": "Tape/Tube leve."
+            },
+            "advanced": {
+              "text": "Wow/flutter + noise controlado."
+            }
+          }
+        },
+        {
+          "id": "lim",
+          "name": "Limiter (Safety)",
+          "type": "dynamics",
+          "why": "Segurar picos.",
+          "settingsByLevel": {
+            "beginner": {
+              "text": "1–2 dB em picos."
+            },
+            "intermediate": {
+              "text": "Até 3 dB."
+            },
+            "advanced": {
+              "text": "Clipper antes se necessário."
+            }
+          }
+        }
+      ],
+      "rules": [
+        {
+          "when": {
+            "grit": "vinyl"
+          },
+          "patch": [
+            {
+              "op": "insertAfter",
+              "afterStepId": "sat",
+              "step": {
+                "id": "vinyl",
+                "name": "Vinyl/Noise Layer",
+                "type": "fx",
+                "why": "Textura e cola.",
+                "settingsByLevel": {
+                  "beginner": {
+                    "text": "Baixo volume."
+                  },
+                  "intermediate": {
+                    "text": "Automação por seção."
+                  },
+                  "advanced": {
+                    "text": "Sidechain do noise."
+                  }
+                }
+              }
+            }
+          ],
+          "meterBias": {
+            "dyn": -5
+          }
+        },
+        {
+          "when": {
+            "grit": "clean"
+          },
+          "patch": [
+            {
+              "op": "update",
+              "stepId": "sat",
+              "fields": {
+                "note": "Clean: mantenha saturação mínima; foque no transient + glue."
+              }
+            }
+          ],
+          "meterBias": {
+            "dyn": 8
+          }
+        }
+      ]
+    }
+  ]
+}
