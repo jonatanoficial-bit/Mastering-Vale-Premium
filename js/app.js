@@ -184,7 +184,7 @@ function render(){
   }
 
   if(state.view === "upgrade"){
-    body = ui.upgrade({ onBack: ()=> navTo(`#/browse?g=${state.selection.genreId}`), onUnlock: ()=> toast("Checkout (placeholder): pronto para integrar") });
+    body = ui.upgrade();
   }
 
   if(state.view === "favorites"){
@@ -307,26 +307,6 @@ function render(){
 }
 
 async function init(){
-  // crash guard: show readable error on screen (helps debugging on deploy)
-  window.addEventListener("error", (e)=>{
-    const box = document.createElement("div");
-    box.style.position="fixed";
-    box.style.left="12px";
-    box.style.right="12px";
-    box.style.bottom="12px";
-    box.style.zIndex="9999";
-    box.style.padding="12px 14px";
-    box.style.borderRadius="16px";
-    box.style.background="rgba(16,18,30,.88)";
-    box.style.border="1px solid rgba(255,255,255,.14)";
-    box.style.backdropFilter="blur(14px)";
-    box.style.color="rgba(255,255,255,.92)";
-    box.style.fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
-    box.style.fontSize="12px";
-    box.textContent = "Erro: " + (e?.message || "desconhecido");
-    document.body.appendChild(box);
-    setTimeout(()=> box.remove(), 8000);
-  });
   state.hub = new ContentHub(state.store);
   await state.hub.init();
   // default selection
