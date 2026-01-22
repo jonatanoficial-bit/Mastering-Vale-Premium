@@ -46,6 +46,7 @@ export const ui = {
     const mk = (label, target)=> el("button",{class:"pill", onclick: ()=> onNav(target), "aria-pressed": String(current===label)}, [el("span",{html:label})]);
     pills.appendChild(el("a",{class:"pill", href:"#/browse"}, [el("span",{html:"Explorar"})]));
     pills.appendChild(el("a",{class:"pill", href:"#/favorites"}, [el("span",{html:"Favoritos"})]));
+    pills.appendChild(el("a",{class:"pill", href:"#/upgrade"}, [el("span",{html:"Upgrade"})]));
     pills.appendChild(el("a",{class:"pill", href:"./admin.html"}, [el("span",{html:"Admin"})]));
 
     inner.appendChild(brand);
@@ -387,25 +388,8 @@ export const ui = {
     return wrap;
   },
 
-  footer(){
-    const f = el("div",{class:"footer"});
-    f.innerHTML = `Blueprints interativos • DLC-ready • Mobile-first • Vanilla JS • <a href="./README.md" target="_blank" rel="noreferrer">README</a>`;
-    return f;
-  }
-};
-
-function info(title, desc){
-  const it = el("div",{class:"item"});
-  it.appendChild(el("div",{class:"meta"},[
-    el("strong",{html:title}),
-    el("span",{html:desc})
-  ]));
-  it.appendChild(el("span",{class:"badge", html:"OK"}));
-  return it;
-}
-
-
-,upgrade(){
+,
+  upgrade(){
   const wrap = el("div",{class:"main"});
   const card = el("div",{class:"card accent"});
   card.appendChild(el("div",{class:"hd"},[
@@ -431,3 +415,22 @@ function info(title, desc){
   wrap.appendChild(card);
   return wrap;
 }
+
+  footer(){
+    const f = el("div",{class:"footer"});
+    f.innerHTML = `Blueprints interativos • DLC-ready • Mobile-first • Vanilla JS • <a href="./README.md" target="_blank" rel="noreferrer">README</a>`;
+    return f;
+  }
+};
+
+function info(title, desc){
+  const it = el("div",{class:"item"});
+  it.appendChild(el("div",{class:"meta"},[
+    el("strong",{html:title}),
+    el("span",{html:desc})
+  ]));
+  it.appendChild(el("span",{class:"badge", html:"OK"}));
+  return it;
+}
+
+
