@@ -97,3 +97,9 @@ Criado para evolução em DLCs sem alterar o core.
 - Paywall lógico por DLC
 - Progresso do usuário (local)
 - Master Pro marcado como Premium
+
+
+## v4 — Diferencial de Mercado
+- Tela de Upgrade comercial
+- Checklists profissionais por blueprint
+- Base pronta para DLCs premium reais

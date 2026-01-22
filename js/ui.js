@@ -403,3 +403,31 @@ function info(title, desc){
   it.appendChild(el("span",{class:"badge", html:"OK"}));
   return it;
 }
+
+
+,upgrade(){
+  const wrap = el("div",{class:"main"});
+  const card = el("div",{class:"card accent"});
+  card.appendChild(el("div",{class:"hd"},[
+    el("div",{},[
+      el("h2",{html:"Desbloqueie recursos profissionais"}),
+      el("p",{html:"DLCs adicionam cadeias avançadas, decisões críticas e masterização profissional."})
+    ]),
+    el("span",{class:"badge", html:"Upgrade"})
+  ]));
+  const bd = el("div",{class:"bd"});
+  const list = el("div",{class:"list"});
+  [
+    {t:"Vocal Pro Pack",d:"Cadeias vocais avançadas por gênero e voz."},
+    {t:"Master Pro Pack",d:"Masterização streaming, club e dinâmica."}
+  ].forEach(x=>{
+    const it = el("div",{class:"item"});
+    it.appendChild(el("div",{class:"meta"},[el("strong",{html:x.t}),el("span",{html:x.d})]));
+    it.appendChild(el("button",{class:"btn primary", onclick:()=>alert("Checkout futuro")},[el("span",{html:"Desbloquear"})]));
+    list.appendChild(it);
+  });
+  bd.appendChild(list);
+  card.appendChild(bd);
+  wrap.appendChild(card);
+  return wrap;
+}

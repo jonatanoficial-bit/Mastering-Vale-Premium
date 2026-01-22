@@ -44,6 +44,7 @@ function route(){
   else if(page === "blueprint") state.view = "blueprint";
   else if(page === "master") state.view = "master";
   else if(page === "favorites") state.view = "favorites";
+  else if(page === "upgrade") state.view = "upgrade";
   else state.view = "home";
 
   const params = new URLSearchParams(location.hash.split("?")[1] || "");
@@ -180,6 +181,10 @@ function render(){
       onBrowse: ()=> navTo(`#/browse?g=${state.selection.genreId}`),
       onFavorites: ()=> navTo(`#/favorites`)
     });
+  }
+
+  if(state.view === "upgrade"){
+    body = ui.upgrade();
   }
 
   if(state.view === "favorites"){

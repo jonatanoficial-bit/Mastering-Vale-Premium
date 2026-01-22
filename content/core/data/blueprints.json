@@ -457,7 +457,25 @@
           "",
           "Targets (guia): LUFS-S {lufs_s_range} | TP {tp_range} | GR {gr_range}"
         ]
-      }
+      },
+      "checklist": [
+        {
+          "id": "gain",
+          "label": "Gain staging ajustado"
+        },
+        {
+          "id": "dyn",
+          "label": "Dinâmica controlada"
+        },
+        {
+          "id": "tone",
+          "label": "Timbre equilibrado"
+        },
+        {
+          "id": "targets",
+          "label": "Targets conferidos"
+        }
+      ]
     }
   ]
 }
