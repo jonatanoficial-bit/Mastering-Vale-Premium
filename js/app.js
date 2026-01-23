@@ -184,7 +184,7 @@ function render(){
   }
 
   if(state.view === "upgrade"){
-    body = ui.upgrade();
+    body = ui.upgrade({ onCheckout: ()=> toast("Checkout (placeholder): pronto para integrar") });
   }
 
   if(state.view === "favorites"){
@@ -325,10 +325,12 @@ async function init(){
       navTo("#/favorites");
     }
   });
-
-  // PWA SW
+  // PWA SW (desativado temporariamente para evitar cache quebrado em produção)
   if("serviceWorker" in navigator){
-    try{ await navigator.serviceWorker.register("./sw.js"); }catch{}
+    try{
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for(const r of regs){ await r.unregister(); }
+    }catch{}
   }
 
   route();
