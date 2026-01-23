@@ -28,16 +28,29 @@ function setAccentByGenre(genre) {
 
 function toast(msg) {
   const el = document.getElementById("toast");
+  if (!el) return;
   el.textContent = msg;
   el.classList.add("show");
   clearTimeout(toast._t);
   toast._t = setTimeout(() => el.classList.remove("show"), 1700);
 }
 
+function navTo(path) {
+  // se já estiver no mesmo hash, força re-render (mobile às vezes não dispara hashchange)
+  if (location.hash === path) {
+    route();
+  } else {
+    location.hash = path;
+  }
+}
+
 function route() {
-  const hash = (location.hash || "#/").replace("#", "");
-  const parts = hash.split("/").filter(Boolean);
+  // ✅ CORREÇÃO: separar path e query corretamente
+  const raw = (location.hash || "#/").slice(1); // remove '#'
+  const [pathPart, queryPart = ""] = raw.split("?");
+  const parts = pathPart.split("/").filter(Boolean);
   const page = parts[0] || "";
+
   if (page === "") state.view = "home";
   else if (page === "browse") state.view = "browse";
   else if (page === "blueprint") state.view = "blueprint";
@@ -46,19 +59,16 @@ function route() {
   else if (page === "upgrade") state.view = "upgrade";
   else state.view = "home";
 
-  const params = new URLSearchParams(location.hash.split("?")[1] || "");
+  const params = new URLSearchParams(queryPart);
   const genreId = params.get("g");
   const instrumentId = params.get("i");
   const level = params.get("l");
+
   if (genreId) state.selection.genreId = genreId;
   if (instrumentId) state.selection.instrumentId = instrumentId;
   if (level) state.selection.level = level;
 
   render();
-}
-
-function navTo(path) {
-  location.hash = path;
 }
 
 function buildCopyText({ genre, instrument, level, blueprint, decisions, chain, meterTargets }) {
@@ -161,10 +171,14 @@ async function copyToClipboard(text) {
 function render() {
   const hub = state.hub;
   const root = document.getElementById("root");
+  if (!hub || !root) return;
+
   const genres = hub.getGenres();
   const instruments = hub.getInstruments();
+
   const currentGenre = genres.find((g) => g.id === state.selection.genreId) || genres[0];
   if (!state.selection.genreId && currentGenre) state.selection.genreId = currentGenre.id;
+
   setAccentByGenre(currentGenre);
 
   const header = ui.topbar({
@@ -196,6 +210,7 @@ function render() {
       const i = instruments.find((x) => x.id === f.instrumentId);
       return { ...f, genreName: g?.name || f.genreId, instrumentName: i?.name || f.instrumentId };
     });
+
     body = ui.favorites({
       items: cards,
       onOpen: (f) => navTo(`#/blueprint?g=${f.genreId}&i=${f.instrumentId}&l=${f.level || "intermediate"}`),
@@ -334,18 +349,7 @@ async function init() {
 
   window.addEventListener("hashchange", route);
 
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "/") {
-      e.preventDefault();
-      navTo(`#/browse?g=${state.selection.genreId}`);
-    }
-    if (e.key.toLowerCase() === "f" && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
-      navTo("#/favorites");
-    }
-  });
-
-  // ✅ PWA SW (DESATIVADO TEMPORARIAMENTE) — remove SW antigo e evita cache quebrado
+  // ✅ SW desativado temporariamente (evita cache quebrado)
   if ("serviceWorker" in navigator) {
     try {
       const regs = await navigator.serviceWorker.getRegistrations();
