@@ -46,7 +46,6 @@ export const ui = {
     const mk = (label, target)=> el("button",{class:"pill", onclick: ()=> onNav(target), "aria-pressed": String(current===label)}, [el("span",{html:label})]);
     pills.appendChild(el("a",{class:"pill", href:"#/browse"}, [el("span",{html:"Explorar"})]));
     pills.appendChild(el("a",{class:"pill", href:"#/favorites"}, [el("span",{html:"Favoritos"})]));
-    pills.appendChild(el("a",{class:"pill", href:"#/upgrade"}, [el("span",{html:"Upgrade"})]));
     pills.appendChild(el("a",{class:"pill", href:"./admin.html"}, [el("span",{html:"Admin"})]));
 
     inner.appendChild(brand);
@@ -388,59 +387,6 @@ export const ui = {
     return wrap;
   },
 
-upgrade({ onBack, onOpenMaster, onOpenBrowse } = {}){
-  const wrap = el("div",{class:"main"});
-  const card = el("div",{class:"card accent"});
-  card.appendChild(el("div",{class:"hd"},[
-    el("div",{},[
-      el("h2",{html:"Upgrade — DLCs Profissionais"}),
-      el("p",{html:"Conteúdos Premium (DLC) adicionam cadeias avançadas, decisões críticas e masterização profissional — prontos para venda e expansão."})
-    ]),
-    el("button",{class:"btn", onclick: ()=> (onBack ? onBack() : (location.hash = "#/"))},[el("span",{html:"Voltar"})])
-  ]));
-
-  const bd = el("div",{class:"bd"});
-
-  bd.appendChild(sectionTitle("DLCs em destaque"));
-  const list = el("div",{class:"list"});
-  [
-    {id:"dlc_vocal_pro", t:"Vocal Pro Pack", d:"Voz masc/fem • Leads/Backs • cadeias e decisões avançadas por gênero.", tag:"Premium"},
-    {id:"dlc_master_pro", t:"Master Pro Pack", d:"Streaming / Club / Dynamic • multi-stage • riscos e validações.", tag:"Premium"}
-  ].forEach(x=>{
-    const it = el("div",{class:"item"});
-    it.appendChild(el("div",{class:"meta"},[
-      el("strong",{html:x.t}),
-      el("span",{html:x.d})
-    ]));
-    const right = el("div",{class:"row", style:"gap:8px"});
-    right.appendChild(el("span",{class:"badge", html:x.tag}));
-    right.appendChild(el("button",{class:"btn primary", onclick:()=> alert("Checkout/licença: placeholder pronto para integrar")},[el("span",{html:"Desbloquear"})]));
-    it.appendChild(right);
-    list.appendChild(it);
-  });
-  bd.appendChild(list);
-
-  bd.appendChild(el("div",{class:"div"}));
-  bd.appendChild(sectionTitle("O que você ganha com DLC"));
-  bd.appendChild(el("div",{class:"list"},[
-    info("Decisões mais críticas","Variações por voz, arranjo, destino (streaming/club), densidade e vibe."),
-    info("Cadeias mais profundas","Mais etapas, alternativas e 'porquês' (nível comercial)."),
-    info("Masterização avançada","Multi-stage com clipper/limiter e validações de risco."),
-    info("Atualizações sem mexer no core","Packs instaláveis via Admin ou via entrega oficial.")
-  ]));
-
-  bd.appendChild(el("div",{class:"div"}));
-  bd.appendChild(sectionTitle("Atalhos"));
-  bd.appendChild(el("div",{class:"row"},[
-    el("button",{class:"btn", onclick: ()=> (onOpenBrowse ? onOpenBrowse() : (location.hash = "#/browse"))},[el("span",{html:"Explorar"})]),
-    el("button",{class:"btn primary", onclick: ()=> (onOpenMaster ? onOpenMaster() : (location.hash = "#/master"))},[el("span",{html:"Masterização"})])
-  ]));
-
-  card.appendChild(bd);
-  wrap.appendChild(card);
-  return wrap;
-},
-
   footer(){
     const f = el("div",{class:"footer"});
     f.innerHTML = `Blueprints interativos • DLC-ready • Mobile-first • Vanilla JS • <a href="./README.md" target="_blank" rel="noreferrer">README</a>`;
@@ -459,3 +405,29 @@ function info(title, desc){
 }
 
 
+,upgrade(){
+  const wrap = el("div",{class:"main"});
+  const card = el("div",{class:"card accent"});
+  card.appendChild(el("div",{class:"hd"},[
+    el("div",{},[
+      el("h2",{html:"Desbloqueie recursos profissionais"}),
+      el("p",{html:"DLCs adicionam cadeias avançadas, decisões críticas e masterização profissional."})
+    ]),
+    el("span",{class:"badge", html:"Upgrade"})
+  ]));
+  const bd = el("div",{class:"bd"});
+  const list = el("div",{class:"list"});
+  [
+    {t:"Vocal Pro Pack",d:"Cadeias vocais avançadas por gênero e voz."},
+    {t:"Master Pro Pack",d:"Masterização streaming, club e dinâmica."}
+  ].forEach(x=>{
+    const it = el("div",{class:"item"});
+    it.appendChild(el("div",{class:"meta"},[el("strong",{html:x.t}),el("span",{html:x.d})]));
+    it.appendChild(el("button",{class:"btn primary", onclick:()=>alert("Checkout futuro")},[el("span",{html:"Desbloquear"})]));
+    list.appendChild(it);
+  });
+  bd.appendChild(list);
+  card.appendChild(bd);
+  wrap.appendChild(card);
+  return wrap;
+}
