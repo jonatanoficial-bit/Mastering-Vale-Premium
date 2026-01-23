@@ -1,4 +1,3 @@
-
 import { ContentHub } from "./content.js";
 import { ui } from "./ui.js";
 import { Store } from "./store.js";
@@ -11,13 +10,13 @@ const state = {
   selection: {
     genreId: null,
     instrumentId: null,
-    level: "intermediate"
+    level: "intermediate",
   },
   activeBlueprint: null,
-  decisions: {}
+  decisions: {},
 };
 
-function setAccentByGenre(genre){
+function setAccentByGenre(genre) {
   const root = document.documentElement;
   const accent = genre?.accent ?? "#B7A7FF";
   const mix = genre?.stageAccent?.mix ?? "#9CF0FF";
@@ -27,55 +26,60 @@ function setAccentByGenre(genre){
   root.style.setProperty("--accent3", master);
 }
 
-function toast(msg){
+function toast(msg) {
   const el = document.getElementById("toast");
   el.textContent = msg;
   el.classList.add("show");
   clearTimeout(toast._t);
-  toast._t = setTimeout(()=> el.classList.remove("show"), 1700);
+  toast._t = setTimeout(() => el.classList.remove("show"), 1700);
 }
 
-function route(){
-  const hash = (location.hash || "#/").replace("#","");
+function route() {
+  const hash = (location.hash || "#/").replace("#", "");
   const parts = hash.split("/").filter(Boolean);
   const page = parts[0] || "";
-  if(page === "") state.view = "home";
-  else if(page === "browse") state.view = "browse";
-  else if(page === "blueprint") state.view = "blueprint";
-  else if(page === "master") state.view = "master";
-  else if(page === "favorites") state.view = "favorites";
-  else if(page === "upgrade") state.view = "upgrade";
+  if (page === "") state.view = "home";
+  else if (page === "browse") state.view = "browse";
+  else if (page === "blueprint") state.view = "blueprint";
+  else if (page === "master") state.view = "master";
+  else if (page === "favorites") state.view = "favorites";
+  else if (page === "upgrade") state.view = "upgrade";
   else state.view = "home";
 
   const params = new URLSearchParams(location.hash.split("?")[1] || "");
   const genreId = params.get("g");
   const instrumentId = params.get("i");
   const level = params.get("l");
-  if(genreId) state.selection.genreId = genreId;
-  if(instrumentId) state.selection.instrumentId = instrumentId;
-  if(level) state.selection.level = level;
+  if (genreId) state.selection.genreId = genreId;
+  if (instrumentId) state.selection.instrumentId = instrumentId;
+  if (level) state.selection.level = level;
 
   render();
 }
 
-function navTo(path){
+function navTo(path) {
   location.hash = path;
 }
 
-function buildCopyText({genre, instrument, level, blueprint, decisions, chain, meterTargets}){
+function buildCopyText({ genre, instrument, level, blueprint, decisions, chain, meterTargets }) {
   const template = blueprint.copyTemplate;
   const title = template.title
     .replace("{genre}", genre.name)
     .replace("{instrument}", instrument.name)
     .replace("{level}", levelLabel(level));
 
-  const lines = template.lines.map(line=>{
+  const lines = template.lines.map((line) => {
     return line
       .replace("{voiceType}", decisions.voiceType ?? "-")
       .replace("{vibe}", decisions.vibe ?? "-")
       .replace("{arrangement}", decisions.arrangement ?? "-")
       .replace("{air}", String(decisions.air ?? "-"))
-      .replace("{steps}", chain.map((s,idx)=> `${idx+1}. ${s.name}${s.note?` — Nota: ${s.note}`:""}`).join("\n"))
+      .replace(
+        "{steps}",
+        chain
+          .map((s, idx) => `${idx + 1}. ${s.name}${s.note ? ` — Nota: ${s.note}` : ""}`)
+          .join("\n")
+      )
       .replace("{lufs_s_range}", rangeStr(meterTargets.lufs_s))
       .replace("{tp_range}", rangeStr(meterTargets.tp))
       .replace("{gr_range}", rangeStr(meterTargets.gr));
@@ -83,22 +87,21 @@ function buildCopyText({genre, instrument, level, blueprint, decisions, chain, m
   return `${title}\n\n${lines.join("\n")}`.trim();
 }
 
-function rangeStr(t){
-  if(!t) return "-";
+function rangeStr(t) {
+  if (!t) return "-";
   const min = (t.min ?? "").toString();
   const max = (t.max ?? "").toString();
-  return `${min}..${max} ${t.unit||""}`.trim();
+  return `${min}..${max} ${t.unit || ""}`.trim();
 }
 
-function levelLabel(lvl){
-  const map = { beginner:"Iniciante", intermediate:"Intermediário", advanced:"Avançado" };
+function levelLabel(lvl) {
+  const map = { beginner: "Iniciante", intermediate: "Intermediário", advanced: "Avançado" };
   return map[lvl] || lvl;
 }
 
-function computeMeters(blueprint, decisions){
-  // educational guides: base in the middle, then bias by rules + slider
+function computeMeters(blueprint, decisions) {
   const base = {};
-  for(const [k,t] of Object.entries(blueprint.targets || {})){
+  for (const [k, t] of Object.entries(blueprint.targets || {})) {
     const mid = (t.min + t.max) / 2;
     base[k] = { ...t, value: mid };
   }
@@ -107,19 +110,17 @@ function computeMeters(blueprint, decisions){
   const res = eng.resolve(decisions);
   const bias = res.meterBias || {};
 
-  // slider influence
-  if(typeof decisions.air === "number" && blueprint.targets?.dyn){
+  if (typeof decisions.air === "number" && blueprint.targets?.dyn) {
     const a = decisions.air;
-    bias.dyn = (bias.dyn || 0) + (a - 50) * -0.08; // more air -> slightly less perceived dyn
+    bias.dyn = (bias.dyn || 0) + (a - 50) * -0.08;
   }
 
-  for(const [k,delta] of Object.entries(bias)){
-    if(base[k]) base[k].value = base[k].value + delta;
+  for (const [k, delta] of Object.entries(bias)) {
+    if (base[k]) base[k].value = base[k].value + delta;
   }
 
-  // clamp and derive bars
   const out = {};
-  for(const [k,m] of Object.entries(base)){
+  for (const [k, m] of Object.entries(base)) {
     const v = Math.max(m.min, Math.min(m.max, m.value));
     const pct = (v - m.min) / (m.max - m.min + 1e-9);
     out[k] = { ...m, value: v, pct };
@@ -127,8 +128,8 @@ function computeMeters(blueprint, decisions){
   return out;
 }
 
-function downloadText(filename, text){
-  const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+function downloadText(filename, text) {
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -136,110 +137,118 @@ function downloadText(filename, text){
   document.body.appendChild(a);
   a.click();
   a.remove();
-  setTimeout(()=> URL.revokeObjectURL(url), 1000);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-async function copyToClipboard(text){
-  try{
+async function copyToClipboard(text) {
+  try {
     await navigator.clipboard.writeText(text);
     return true;
-  }catch{
-    // fallback
+  } catch {
     const ta = document.createElement("textarea");
     ta.value = text;
-    ta.style.position="fixed"; ta.style.left="-9999px";
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
     document.body.appendChild(ta);
-    ta.focus(); ta.select();
+    ta.focus();
+    ta.select();
     const ok = document.execCommand("copy");
     ta.remove();
     return ok;
   }
 }
 
-function render(){
+function render() {
   const hub = state.hub;
   const root = document.getElementById("root");
   const genres = hub.getGenres();
   const instruments = hub.getInstruments();
-  const currentGenre = genres.find(g=>g.id===state.selection.genreId) || genres[0];
-  if(!state.selection.genreId && currentGenre) state.selection.genreId = currentGenre.id;
+  const currentGenre = genres.find((g) => g.id === state.selection.genreId) || genres[0];
+  if (!state.selection.genreId && currentGenre) state.selection.genreId = currentGenre.id;
   setAccentByGenre(currentGenre);
 
   const header = ui.topbar({
     onNav: navTo,
     current: state.view,
-    accentName: currentGenre?.name || "—"
+    accentName: currentGenre?.name || "—",
   });
 
   let body = null;
 
-  if(state.view === "home"){
+  if (state.view === "home") {
     body = ui.home({
       genres,
       instruments,
       store: state.store,
-      onBrowse: ()=> navTo(`#/browse?g=${state.selection.genreId}`),
-      onFavorites: ()=> navTo(`#/favorites`)
+      onBrowse: () => navTo(`#/browse?g=${state.selection.genreId}`),
+      onFavorites: () => navTo(`#/favorites`),
     });
   }
 
-  if(state.view === "upgrade"){
-    body = ui.upgrade({ onCheckout: ()=> toast("Checkout (placeholder): pronto para integrar") });
+  if (state.view === "upgrade") {
+    body = ui.upgrade();
   }
 
-  if(state.view === "favorites"){
+  if (state.view === "favorites") {
     const favs = state.store.getFavorites();
-    const cards = favs.map(f=>{
-      const g = genres.find(x=>x.id===f.genreId);
-      const i = instruments.find(x=>x.id===f.instrumentId);
+    const cards = favs.map((f) => {
+      const g = genres.find((x) => x.id === f.genreId);
+      const i = instruments.find((x) => x.id === f.instrumentId);
       return { ...f, genreName: g?.name || f.genreId, instrumentName: i?.name || f.instrumentId };
     });
     body = ui.favorites({
       items: cards,
-      onOpen: (f)=> navTo(`#/blueprint?g=${f.genreId}&i=${f.instrumentId}&l=${f.level||"intermediate"}`),
-      onClear: ()=>{ state.store.clearFavorites(); toast("Favoritos limpos"); render(); }
+      onOpen: (f) => navTo(`#/blueprint?g=${f.genreId}&i=${f.instrumentId}&l=${f.level || "intermediate"}`),
+      onClear: () => {
+        state.store.clearFavorites();
+        toast("Favoritos limpos");
+        render();
+      },
     });
   }
 
-  if(state.view === "browse"){
+  if (state.view === "browse") {
     body = ui.browse({
       genres,
       instruments,
       selection: state.selection,
-      onSelectGenre: (id)=>{ state.selection.genreId=id; navTo(`#/browse?g=${id}`); },
-      onSelectInstrument: (id)=>{
-        state.selection.instrumentId=id;
-        if(id==="master"){
+      onSelectGenre: (id) => {
+        state.selection.genreId = id;
+        navTo(`#/browse?g=${id}`);
+      },
+      onSelectInstrument: (id) => {
+        state.selection.instrumentId = id;
+        if (id === "master") {
           navTo(`#/master?g=${state.selection.genreId}`);
-        }else{
+        } else {
           navTo(`#/blueprint?g=${state.selection.genreId}&i=${id}&l=${state.selection.level}`);
         }
-      }
+      },
     });
   }
 
-  if(state.view === "master"){
+  if (state.view === "master") {
     const masters = hub.getMasterModes();
     body = ui.master({
       genre: currentGenre,
       modes: masters,
-      onBack: ()=> navTo(`#/browse?g=${state.selection.genreId}`),
-      onUnlock: ()=> toast("Paywall (placeholder): pronto para integrar checkout")
+      onBack: () => navTo(`#/browse?g=${state.selection.genreId}`),
+      onUnlock: () => toast("Paywall (placeholder): pronto para integrar checkout"),
     });
   }
 
-  if(state.view === "blueprint"){
-    const blueprint = hub.findBlueprint(state.selection.genreId, state.selection.instrumentId) 
-      || hub.fallbackBlueprint(state.selection.instrumentId);
+  if (state.view === "blueprint") {
+    const blueprint =
+      hub.findBlueprint(state.selection.genreId, state.selection.instrumentId) ||
+      hub.fallbackBlueprint(state.selection.instrumentId);
 
     state.activeBlueprint = blueprint;
-    const instrument = instruments.find(i=>i.id===state.selection.instrumentId) || instruments[0];
+    const instrument = instruments.find((i) => i.id === state.selection.instrumentId) || instruments[0];
 
-    // init decisions default
-    if(blueprint){
+    if (blueprint) {
       const d = {};
-      for(const dec of (blueprint.decisions||[])){
-        d[dec.id] = (state.decisions[dec.id] ?? dec.default);
+      for (const dec of blueprint.decisions || []) {
+        d[dec.id] = state.decisions[dec.id] ?? dec.default;
       }
       state.decisions = d;
     }
@@ -257,10 +266,16 @@ function render(){
       decisions: state.decisions,
       meters,
       resolvedChain: chain,
-      onBack: ()=> navTo(`#/browse?g=${state.selection.genreId}`),
-      onSetLevel: (lvl)=>{ state.selection.level=lvl; navTo(`#/blueprint?g=${state.selection.genreId}&i=${state.selection.instrumentId}&l=${lvl}`); },
-      onDecision: (id, value)=>{ state.decisions[id]=value; render(); },
-      onCopy: async ()=>{
+      onBack: () => navTo(`#/browse?g=${state.selection.genreId}`),
+      onSetLevel: (lvl) => {
+        state.selection.level = lvl;
+        navTo(`#/blueprint?g=${state.selection.genreId}&i=${state.selection.instrumentId}&l=${lvl}`);
+      },
+      onDecision: (id, value) => {
+        state.decisions[id] = value;
+        render();
+      },
+      onCopy: async () => {
         const text = buildCopyText({
           genre: currentGenre,
           instrument,
@@ -268,12 +283,12 @@ function render(){
           blueprint,
           decisions: state.decisions,
           chain,
-          meterTargets: blueprint.targets || {}
+          meterTargets: blueprint.targets || {},
         });
         const ok = await copyToClipboard(text);
-        toast(ok? "Cadeia copiada" : "Falha ao copiar");
+        toast(ok ? "Cadeia copiada" : "Falha ao copiar");
       },
-      onDownload: ()=>{
+      onDownload: () => {
         const text = buildCopyText({
           genre: currentGenre,
           instrument,
@@ -281,22 +296,26 @@ function render(){
           blueprint,
           decisions: state.decisions,
           chain,
-          meterTargets: blueprint.targets || {}
+          meterTargets: blueprint.targets || {},
         });
-        const safe = `${currentGenre.name}_${instrument.name}_${levelLabel(state.selection.level)}`.replace(/[^\w\-]+/g,"_");
+        const safe = `${currentGenre.name}_${instrument.name}_${levelLabel(state.selection.level)}`.replace(/[^\w\-]+/g, "_");
         downloadText(`${safe}.txt`, text);
         toast("TXT gerado");
       },
-      onFavorite: ()=>{
+      onFavorite: () => {
         state.store.toggleFavorite({
           genreId: currentGenre.id,
           instrumentId: instrument.id,
-          level: state.selection.level
+          level: state.selection.level,
         });
-        toast(state.store.isFavorite(currentGenre.id, instrument.id, state.selection.level) ? "Adicionado aos favoritos" : "Removido dos favoritos");
+        toast(
+          state.store.isFavorite(currentGenre.id, instrument.id, state.selection.level)
+            ? "Adicionado aos favoritos"
+            : "Removido dos favoritos"
+        );
         render();
       },
-      isFavorite: state.store.isFavorite(currentGenre.id, instrument.id, state.selection.level)
+      isFavorite: state.store.isFavorite(currentGenre.id, instrument.id, state.selection.level),
     });
   }
 
@@ -306,31 +325,32 @@ function render(){
   root.appendChild(ui.footer());
 }
 
-async function init(){
+async function init() {
   state.hub = new ContentHub(state.store);
   await state.hub.init();
-  // default selection
+
   const genres = state.hub.getGenres();
-  if(!state.selection.genreId) state.selection.genreId = genres[0]?.id || null;
+  if (!state.selection.genreId) state.selection.genreId = genres[0]?.id || null;
+
   window.addEventListener("hashchange", route);
 
-  // keyboard quick nav (desktop)
-  window.addEventListener("keydown", (e)=>{
-    if(e.key === "/"){
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "/") {
       e.preventDefault();
       navTo(`#/browse?g=${state.selection.genreId}`);
     }
-    if(e.key.toLowerCase()==="f" && (e.ctrlKey||e.metaKey)){
+    if (e.key.toLowerCase() === "f" && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       navTo("#/favorites");
     }
   });
-  // PWA SW (desativado temporariamente para evitar cache quebrado em produção)
-  if("serviceWorker" in navigator){
-    try{
+
+  // ✅ PWA SW (DESATIVADO TEMPORARIAMENTE) — remove SW antigo e evita cache quebrado
+  if ("serviceWorker" in navigator) {
+    try {
       const regs = await navigator.serviceWorker.getRegistrations();
-      for(const r of regs){ await r.unregister(); }
-    }catch{}
+      for (const r of regs) await r.unregister();
+    } catch {}
   }
 
   route();
