@@ -14,6 +14,7 @@ const state = {
   },
   activeBlueprint: null,
   decisions: {},
+  _lastView: null,
 };
 
 function setAccentByGenre(genre) {
@@ -36,16 +37,13 @@ function toast(msg) {
 }
 
 function navTo(path) {
-  // se já estiver no mesmo hash, força re-render (mobile às vezes não dispara hashchange)
-  if (location.hash === path) {
-    route();
-  } else {
-    location.hash = path;
-  }
+  // mobile às vezes não dispara hashchange se for o mesmo hash
+  if (location.hash === path) route();
+  else location.hash = path;
 }
 
 function route() {
-  // ✅ CORREÇÃO: separar path e query corretamente
+  // ✅ separa path e query corretamente
   const raw = (location.hash || "#/").slice(1); // remove '#'
   const [pathPart, queryPart = ""] = raw.split("?");
   const parts = pathPart.split("/").filter(Boolean);
@@ -168,10 +166,64 @@ async function copyToClipboard(text) {
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   PART 2 — Micro-feedbacks premium (sem frameworks)
+   - Ripple em .btn/.pill/.item
+   - Transição suave entre views
+   - Segurança: não interfere com lógica de engine
+───────────────────────────────────────────────────────────── */
+
+function attachRippleOnce() {
+  if (window.__RIPPLE_ATTACHED__) return;
+  window.__RIPPLE_ATTACHED__ = true;
+
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      const target = e.target?.closest?.(".btn, .pill, .item");
+      if (!target) return;
+
+      // respeita preferências de acessibilidade
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const rect = target.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const r = document.createElement("span");
+      r.className = "ripple";
+      r.style.left = `${x}px`;
+      r.style.top = `${y}px`;
+      target.appendChild(r);
+
+      // vibração leve opcional (mobile)
+      try {
+        if (navigator.vibrate && (target.classList.contains("btn") || target.classList.contains("pill"))) {
+          navigator.vibrate(8);
+        }
+      } catch {}
+
+      setTimeout(() => r.remove(), 650);
+    },
+    { passive: true }
+  );
+}
+
+function applyViewTransition(container) {
+  // remove classes anteriores
+  container.classList.remove("view-enter", "view-exit");
+  // anima entrada
+  container.classList.add("view-enter");
+  const clean = () => container.classList.remove("view-enter");
+  container.addEventListener("animationend", clean, { once: true });
+}
+
 function render() {
   const hub = state.hub;
   const root = document.getElementById("root");
   if (!hub || !root) return;
+
+  attachRippleOnce();
 
   const genres = hub.getGenres();
   const instruments = hub.getInstruments();
@@ -199,9 +251,7 @@ function render() {
     });
   }
 
-  if (state.view === "upgrade") {
-    body = ui.upgrade();
-  }
+  if (state.view === "upgrade") body = ui.upgrade();
 
   if (state.view === "favorites") {
     const favs = state.store.getFavorites();
@@ -233,11 +283,8 @@ function render() {
       },
       onSelectInstrument: (id) => {
         state.selection.instrumentId = id;
-        if (id === "master") {
-          navTo(`#/master?g=${state.selection.genreId}`);
-        } else {
-          navTo(`#/blueprint?g=${state.selection.genreId}&i=${id}&l=${state.selection.level}`);
-        }
+        if (id === "master") navTo(`#/master?g=${state.selection.genreId}`);
+        else navTo(`#/blueprint?g=${state.selection.genreId}&i=${id}&l=${state.selection.level}`);
       },
     });
   }
@@ -262,9 +309,7 @@ function render() {
 
     if (blueprint) {
       const d = {};
-      for (const dec of blueprint.decisions || []) {
-        d[dec.id] = state.decisions[dec.id] ?? dec.default;
-      }
+      for (const dec of blueprint.decisions || []) d[dec.id] = state.decisions[dec.id] ?? dec.default;
       state.decisions = d;
     }
 
@@ -334,10 +379,22 @@ function render() {
     });
   }
 
+  // ✅ view wrapper para animação (sem mexer na UI existente)
+  const viewWrap = document.createElement("div");
+  viewWrap.className = "view-wrap";
+  viewWrap.dataset.view = state.view;
+  viewWrap.appendChild(body);
+
   root.innerHTML = "";
   root.appendChild(header);
-  root.appendChild(body);
+  root.appendChild(viewWrap);
   root.appendChild(ui.footer());
+
+  // transição só quando muda de view
+  if (state._lastView !== state.view) {
+    applyViewTransition(viewWrap);
+    state._lastView = state.view;
+  }
 }
 
 async function init() {
@@ -349,7 +406,7 @@ async function init() {
 
   window.addEventListener("hashchange", route);
 
-  // ✅ SW desativado temporariamente (evita cache quebrado)
+  // SW continua desativado (evita cache quebrado em produção enquanto evolui)
   if ("serviceWorker" in navigator) {
     try {
       const regs = await navigator.serviceWorker.getRegistrations();
