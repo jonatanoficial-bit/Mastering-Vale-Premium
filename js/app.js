@@ -135,7 +135,7 @@ function computeMeters(blueprint, decisions) {
   return out;
 }
 
-function computeInsights({ blueprint, decisions, meters }) {
+function computeInsights({ decisions, meters }) {
   const tips = [];
 
   const lufs = meters?.lufs_s;
@@ -152,7 +152,6 @@ function computeInsights({ blueprint, decisions, meters }) {
   }
 
   if (tp?.unit) {
-    // TP geralmente é negativo em dBTP
     if (tp.value > -0.3) tips.push(`True Peak alto: deixe margem (ex.: ≤ -0.3 dBTP) para evitar inter-sample clipping.`);
     else tips.push(`True Peak sob controle: boa margem para plataformas.`);
   }
@@ -176,7 +175,6 @@ function computeInsights({ blueprint, decisions, meters }) {
   if (decisions?.voiceType === "bright") tips.push(`Voz “Bright”: priorize controle em 3–5 kHz e de-esser antes do brilho final.`);
   if (decisions?.voiceType === "dark") tips.push(`Voz “Dark”: realce presença (2–4 kHz) e ar no final (8–12 kHz) com cuidado.`);
 
-  // limita e garante no mínimo 2
   const uniq = [];
   for (const t of tips) if (!uniq.includes(t)) uniq.push(t);
   return uniq.slice(0, 5);
@@ -212,7 +210,6 @@ async function copyToClipboard(text) {
   }
 }
 
-/* PART 2 — ripple */
 function attachRippleOnce() {
   if (window.__RIPPLE_ATTACHED__) return;
   window.__RIPPLE_ATTACHED__ = true;
@@ -246,11 +243,9 @@ function applyViewTransition(container) {
   container.addEventListener("animationend", clean, { once: true });
 }
 
-/* PART 3 — engine feel animation */
 function animateEngineFeel(scope, shouldPulse) {
   if (!scope) return;
 
-  // meter fill animate
   const fills = scope.querySelectorAll('.meter .bar .fill[data-w]');
   if (fills?.length) {
     fills.forEach((f) => {
@@ -262,11 +257,23 @@ function animateEngineFeel(scope, shouldPulse) {
     });
   }
 
-  // pulse chain on decision change
+  // ✅ radial dial animate
+  const dials = scope.querySelectorAll('.dial .fg[data-c][data-p]');
+  if (dials?.length) {
+    dials.forEach((c) => {
+      const C = Number(c.getAttribute("data-c") || "0");
+      const p = Number(c.getAttribute("data-p") || "0") / 100;
+      const off = C * (1 - Math.max(0, Math.min(1, p)));
+      c.style.strokeDashoffset = String(C);
+      requestAnimationFrame(() => {
+        c.style.strokeDashoffset = String(off);
+      });
+    });
+  }
+
   const chain = scope.querySelector(".chain");
   if (shouldPulse && chain) {
     chain.classList.remove("pulse");
-    // reflow
     void chain.offsetWidth;
     chain.classList.add("pulse");
   }
@@ -306,9 +313,7 @@ function render() {
     });
   }
 
-  if (state.view === "upgrade") {
-    body = ui.upgrade();
-  }
+  if (state.view === "upgrade") body = ui.upgrade();
 
   if (state.view === "favorites") {
     const favs = state.store.getFavorites();
@@ -374,8 +379,7 @@ function render() {
     const resolved = engine.resolve(state.decisions);
     const chain = resolved.chain;
     const meters = computeMeters(blueprint, state.decisions);
-
-    const insights = computeInsights({ blueprint, decisions: state.decisions, meters });
+    const insights = computeInsights({ decisions: state.decisions, meters });
 
     viewSigNow = JSON.stringify({
       view: "blueprint",
@@ -457,13 +461,11 @@ function render() {
   root.appendChild(viewWrap);
   root.appendChild(ui.footer());
 
-  // view transition
   if (state._lastView !== state.view) {
     applyViewTransition(viewWrap);
     state._lastView = state.view;
   }
 
-  // engine feel animate (only blueprint really)
   const sig = viewSigNow || `${state.view}`;
   const shouldPulse = state._decisionSig && sig && state._decisionSig !== sig;
   if (sig) state._decisionSig = sig;

@@ -30,13 +30,47 @@ function sectionTitle(title, right=null){
   return wrap;
 }
 
+function makeLogoNode(){
+  // ✅ Logo robusto: tenta carregar ./assets/logo.png; se falhar, usa fallback elegante (sem ícone quebrado)
+  const img = el("img",{src:"./assets/logo.png", alt:"Logo", loading:"lazy"});
+  img.addEventListener("error", ()=>{
+    const fb = el("div",{class:"logo-fallback", html:"VG"});
+    img.replaceWith(fb);
+  }, { once:true });
+  return img;
+}
+
+function makeDial(pct){
+  const size = 34;
+  const r = 12;
+  const cx = size/2, cy = size/2;
+  const C = 2 * Math.PI * r;
+  const p = Math.max(0, Math.min(1, Number(pct||0)));
+  const offset = C * (1 - p);
+
+  const svg = el("svg",{class:"dial", viewBox:`0 0 ${size} ${size}`, width:String(size), height:String(size), "aria-hidden":"true"});
+  const bg = el("circle",{class:"bg", cx:String(cx), cy:String(cy), r:String(r)});
+  const fg = el("circle",{
+    class:"fg",
+    cx:String(cx),
+    cy:String(cy),
+    r:String(r),
+    "data-c": String(C.toFixed(3)),
+    "data-p": String(Math.round(p*100)),
+    style:`stroke-dasharray:${C.toFixed(3)};stroke-dashoffset:${C.toFixed(3)};`
+  });
+  svg.appendChild(bg);
+  svg.appendChild(fg);
+  return svg;
+}
+
 export const ui = {
   topbar({onNav, current, accentName}){
     const bar = el("div",{class:"topbar safe"});
     const inner = el("div",{class:"topbar-inner"});
 
     const brand = el("div",{class:"brand", onclick:()=> onNav("#/")},[
-      el("img",{src:"./assets/logo.png", alt:"Logo"}),
+      makeLogoNode(),
       el("div",{class:"title"},[
         el("strong",{html:"MixBlueprint Pro"}),
         el("span",{html:`Modo: <b style="color:var(--accent2)">${accentName||"—"}</b>`})
@@ -293,7 +327,6 @@ export const ui = {
     ]));
     const bd = el("div",{class:"bd"});
 
-    // level switch
     bd.appendChild(sectionTitle("Nível"));
     const seg = el("div",{class:"seg"});
     for(const opt of ["beginner","intermediate","advanced"]){
@@ -360,7 +393,6 @@ export const ui = {
 
     const bd2 = el("div",{class:"bd"});
 
-    // insights (engine feel)
     if((insights||[]).length){
       bd2.appendChild(sectionTitle("Insights (engine)"));
       const box = el("div",{class:"insights"});
@@ -379,14 +411,21 @@ export const ui = {
     const metersEl = el("div",{class:"meters"});
     for(const k of Object.keys(meters||{})){
       const m = meters[k];
+
       const box = el("div",{class:"meter"});
-      box.appendChild(el("div",{class:"lbl", html:m.label}));
+      const top = el("div",{class:"m-top"});
+      top.appendChild(el("div",{class:"lbl", html:m.label}));
+      top.appendChild(makeDial(m.pct));
+      box.appendChild(top);
+
       const val = (m.unit==="LUFS") ? m.value.toFixed(1) : (m.unit? m.value.toFixed(2): Math.round(m.value).toString());
       box.appendChild(el("div",{class:"val", html:`<b>${val}</b> <span style="color:var(--muted)">${m.unit||""}</span>`}));
+
       const bar = el("div",{class:"bar"});
       const fill = el("i",{class:"fill", style:"width:0%", "data-w": String(Math.round(m.pct*100))});
       bar.appendChild(fill);
       box.appendChild(bar);
+
       metersEl.appendChild(box);
     }
     bd2.appendChild(metersEl);

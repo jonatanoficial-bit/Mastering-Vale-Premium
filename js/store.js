@@ -1,3 +1,4 @@
+
 export class Store{
   constructor(ns){
     this.ns = ns;
@@ -86,17 +87,18 @@ export class Store{
       }
     }
   }
+}
 
-  // ✅ progress tracking (AGORA NO LUGAR CERTO)
-  getProgress(){
-    return JSON.parse(localStorage.getItem(this._m("progress")) || "{}");
-  }
-  setProgress(key, value=true){
-    const p = this.getProgress();
-    p[key] = { value, ts: Date.now() };
-    localStorage.setItem(this._m("progress"), JSON.stringify(p));
-  }
-  hasProgress(key){
-    return !!this.getProgress()[key]?.value;
-  }
+
+// progress tracking
+getProgress(){
+  return JSON.parse(localStorage.getItem(this._m("progress")) || "{}");
+}
+setProgress(key, value=true){
+  const p = this.getProgress();
+  p[key] = { value, ts: Date.now() };
+  localStorage.setItem(this._m("progress"), JSON.stringify(p));
+}
+hasProgress(key){
+  return !!this.getProgress()[key]?.value;
 }

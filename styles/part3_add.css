@@ -1,0 +1,46 @@
+/* PART 3 ADDITIONS — cole no FINAL do seu styles/app.css (seguro; não quebra nada) */
+
+/* Logo fallback */
+.logo-fallback{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  letter-spacing:.3px;
+  color: rgba(255,255,255,.92);
+  border:1px solid rgba(255,255,255,.14);
+  background:
+    radial-gradient(18px 18px at 30% 30%, rgba(156,240,255,.35), transparent 60%),
+    radial-gradient(18px 18px at 70% 30%, rgba(183,167,255,.30), transparent 62%),
+    linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* Meter header with radial dial */
+.meter .m-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.dial{
+  overflow:visible;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,.45));
+}
+.dial .bg{
+  fill:none;
+  stroke: rgba(255,255,255,.12);
+  stroke-width: 4;
+}
+.dial .fg{
+  fill:none;
+  stroke: rgba(156,240,255,.78);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset .55s cubic-bezier(.2,.8,.2,1);
+}
