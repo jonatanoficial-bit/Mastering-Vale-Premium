@@ -46,6 +46,7 @@ export const ui = {
     const mk = (label, target)=> el("button",{class:"pill", onclick: ()=> onNav(target), "aria-pressed": String(current===label)}, [el("span",{html:label})]);
     pills.appendChild(el("a",{class:"pill", href:"#/browse"}, [el("span",{html:"Explorar"})]));
     pills.appendChild(el("a",{class:"pill", href:"#/favorites"}, [el("span",{html:"Favoritos"})]));
+    pills.appendChild(el("a",{class:"pill", href:"#/upgrade"}, [el("span",{html:"Upgrade"})]));
     pills.appendChild(el("a",{class:"pill", href:"./admin.html"}, [el("span",{html:"Admin"})]));
 
     inner.appendChild(brand);
@@ -233,7 +234,7 @@ export const ui = {
 
       if(m.premium){
         const b = el("button",{class:"btn primary", onclick:onUnlock});
-        b.textContent = m.paywall.cta || "Desbloquear";
+        b.textContent = (m.paywall && m.paywall.cta) ? m.paywall.cta : "Desbloquear";
         it.appendChild(b);
       }else{
         it.appendChild(el("span",{class:"badge", html:"Core"}));
@@ -387,6 +388,39 @@ export const ui = {
     return wrap;
   },
 
+upgrade({onCheckout}={}){
+  const wrap = el("div",{class:"main"});
+  const card = el("div",{class:"card accent"});
+  card.appendChild(el("div",{class:"hd"},[
+    el("div",{},[
+      el("h2",{html:"Desbloqueie recursos profissionais"}),
+      el("p",{html:"DLCs adicionam cadeias avançadas, decisões críticas e masterização profissional. Modelo comercial por DLC — pronto para integrar checkout."})
+    ]),
+    el("span",{class:"badge", html:"Upgrade"})
+  ]));
+  const bd = el("div",{class:"bd"});
+  const list = el("div",{class:"list"});
+  [
+    {t:"Vocal Pro Pack",d:"Cadeias vocais avançadas por gênero e voz.", sku:"dlc_vocal_pro"},
+    {t:"Master Pro Pack",d:"Masterização streaming, club e dinâmica.", sku:"dlc_master_pro"}
+  ].forEach(x=>{
+    const it = el("div",{class:"item"});
+    it.appendChild(el("div",{class:"meta"},[
+      el("strong",{html:x.t}),
+      el("span",{html:x.d})
+    ]));
+    it.appendChild(el("button",{
+      class:"btn primary",
+      onclick:()=> (onCheckout? onCheckout(x.sku) : alert("Checkout futuro (placeholder)"))
+    },[el("span",{html:"Desbloquear"})]));
+    list.appendChild(it);
+  });
+  bd.appendChild(list);
+  card.appendChild(bd);
+  wrap.appendChild(card);
+  return wrap;
+},
+
   footer(){
     const f = el("div",{class:"footer"});
     f.innerHTML = `Blueprints interativos • DLC-ready • Mobile-first • Vanilla JS • <a href="./README.md" target="_blank" rel="noreferrer">README</a>`;
@@ -403,23 +437,6 @@ function info(title, desc){
   it.appendChild(el("span",{class:"badge", html:"OK"}));
   return it;
 }
-
-
-,upgrade(){
-  const wrap = el("div",{class:"main"});
-  const card = el("div",{class:"card accent"});
-  card.appendChild(el("div",{class:"hd"},[
-    el("div",{},[
-      el("h2",{html:"Desbloqueie recursos profissionais"}),
-      el("p",{html:"DLCs adicionam cadeias avançadas, decisões críticas e masterização profissional."})
-    ]),
-    el("span",{class:"badge", html:"Upgrade"})
-  ]));
-  const bd = el("div",{class:"bd"});
-  const list = el("div",{class:"list"});
-  [
-    {t:"Vocal Pro Pack",d:"Cadeias vocais avançadas por gênero e voz."},
-    {t:"Master Pro Pack",d:"Masterização streaming, club e dinâmica."}
   ].forEach(x=>{
     const it = el("div",{class:"item"});
     it.appendChild(el("div",{class:"meta"},[el("strong",{html:x.t}),el("span",{html:x.d})]));
