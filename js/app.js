@@ -15,6 +15,7 @@ const state = {
   activeBlueprint: null,
   decisions: {},
   _lastView: null,
+  _decisionSig: "",
 };
 
 function setAccentByGenre(genre) {
@@ -37,14 +38,12 @@ function toast(msg) {
 }
 
 function navTo(path) {
-  // mobile às vezes não dispara hashchange se for o mesmo hash
   if (location.hash === path) route();
   else location.hash = path;
 }
 
 function route() {
-  // ✅ separa path e query corretamente
-  const raw = (location.hash || "#/").slice(1); // remove '#'
+  const raw = (location.hash || "#/").slice(1);
   const [pathPart, queryPart = ""] = raw.split("?");
   const parts = pathPart.split("/").filter(Boolean);
   const page = parts[0] || "";
@@ -67,6 +66,18 @@ function route() {
   if (level) state.selection.level = level;
 
   render();
+}
+
+function levelLabel(lvl) {
+  const map = { beginner: "Iniciante", intermediate: "Intermediário", advanced: "Avançado" };
+  return map[lvl] || lvl;
+}
+
+function rangeStr(t) {
+  if (!t) return "-";
+  const min = (t.min ?? "").toString();
+  const max = (t.max ?? "").toString();
+  return `${min}..${max} ${t.unit || ""}`.trim();
 }
 
 function buildCopyText({ genre, instrument, level, blueprint, decisions, chain, meterTargets }) {
@@ -93,18 +104,6 @@ function buildCopyText({ genre, instrument, level, blueprint, decisions, chain, 
       .replace("{gr_range}", rangeStr(meterTargets.gr));
   });
   return `${title}\n\n${lines.join("\n")}`.trim();
-}
-
-function rangeStr(t) {
-  if (!t) return "-";
-  const min = (t.min ?? "").toString();
-  const max = (t.max ?? "").toString();
-  return `${min}..${max} ${t.unit || ""}`.trim();
-}
-
-function levelLabel(lvl) {
-  const map = { beginner: "Iniciante", intermediate: "Intermediário", advanced: "Avançado" };
-  return map[lvl] || lvl;
 }
 
 function computeMeters(blueprint, decisions) {
@@ -134,6 +133,53 @@ function computeMeters(blueprint, decisions) {
     out[k] = { ...m, value: v, pct };
   }
   return out;
+}
+
+function computeInsights({ blueprint, decisions, meters }) {
+  const tips = [];
+
+  const lufs = meters?.lufs_s;
+  const tp = meters?.tp;
+  const gr = meters?.gr;
+  const dyn = meters?.dyn;
+
+  if (lufs?.unit === "LUFS") {
+    const targetMid = (lufs.min + lufs.max) / 2;
+    const delta = lufs.value - targetMid;
+    if (delta > 1.2) tips.push(`Volume acima do alvo sugerido: reduza ~${delta.toFixed(1)} LUFS (ou alivie limiter).`);
+    else if (delta < -1.2) tips.push(`Volume abaixo do alvo: suba ganho/clipper até aproximar do centro do range.`);
+    else tips.push(`Loudness bem alinhado com o alvo (zona “comercial”).`);
+  }
+
+  if (tp?.unit) {
+    // TP geralmente é negativo em dBTP
+    if (tp.value > -0.3) tips.push(`True Peak alto: deixe margem (ex.: ≤ -0.3 dBTP) para evitar inter-sample clipping.`);
+    else tips.push(`True Peak sob controle: boa margem para plataformas.`);
+  }
+
+  if (gr?.unit) {
+    const grMid = (gr.min + gr.max) / 2;
+    if (gr.value > grMid + 0.8) tips.push(`Compressão/limiting forte (GR alto): pode achatar transientes. Teste reduzir 0.5–1.5 dB.`);
+    else tips.push(`GR em faixa saudável: boa preservação de punch.`);
+  }
+
+  if (dyn?.unit) {
+    const dynMid = (dyn.min + dyn.max) / 2;
+    if (dyn.value < dynMid - 0.4) tips.push(`Dinâmica baixa: experimente menos compressão no bus/master e mais automação.`);
+  }
+
+  if (typeof decisions?.air === "number") {
+    if (decisions.air >= 78) tips.push(`“Air” muito alto: cuidado com aspereza/sibilância. Use de-esser/dynamic EQ acima de 6–10 kHz.`);
+    else if (decisions.air <= 28) tips.push(`“Air” baixo: pode soar opaco. Um shelf suave + exciter leve pode abrir sem harsh.`);
+  }
+
+  if (decisions?.voiceType === "bright") tips.push(`Voz “Bright”: priorize controle em 3–5 kHz e de-esser antes do brilho final.`);
+  if (decisions?.voiceType === "dark") tips.push(`Voz “Dark”: realce presença (2–4 kHz) e ar no final (8–12 kHz) com cuidado.`);
+
+  // limita e garante no mínimo 2
+  const uniq = [];
+  for (const t of tips) if (!uniq.includes(t)) uniq.push(t);
+  return uniq.slice(0, 5);
 }
 
 function downloadText(filename, text) {
@@ -166,13 +212,7 @@ async function copyToClipboard(text) {
   }
 }
 
-/* ─────────────────────────────────────────────────────────────
-   PART 2 — Micro-feedbacks premium (sem frameworks)
-   - Ripple em .btn/.pill/.item
-   - Transição suave entre views
-   - Segurança: não interfere com lógica de engine
-───────────────────────────────────────────────────────────── */
-
+/* PART 2 — ripple */
 function attachRippleOnce() {
   if (window.__RIPPLE_ATTACHED__) return;
   window.__RIPPLE_ATTACHED__ = true;
@@ -182,8 +222,6 @@ function attachRippleOnce() {
     (e) => {
       const target = e.target?.closest?.(".btn, .pill, .item");
       if (!target) return;
-
-      // respeita preferências de acessibilidade
       if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       const rect = target.getBoundingClientRect();
@@ -195,14 +233,6 @@ function attachRippleOnce() {
       r.style.left = `${x}px`;
       r.style.top = `${y}px`;
       target.appendChild(r);
-
-      // vibração leve opcional (mobile)
-      try {
-        if (navigator.vibrate && (target.classList.contains("btn") || target.classList.contains("pill"))) {
-          navigator.vibrate(8);
-        }
-      } catch {}
-
       setTimeout(() => r.remove(), 650);
     },
     { passive: true }
@@ -210,12 +240,36 @@ function attachRippleOnce() {
 }
 
 function applyViewTransition(container) {
-  // remove classes anteriores
-  container.classList.remove("view-enter", "view-exit");
-  // anima entrada
+  container.classList.remove("view-enter");
   container.classList.add("view-enter");
   const clean = () => container.classList.remove("view-enter");
   container.addEventListener("animationend", clean, { once: true });
+}
+
+/* PART 3 — engine feel animation */
+function animateEngineFeel(scope, shouldPulse) {
+  if (!scope) return;
+
+  // meter fill animate
+  const fills = scope.querySelectorAll('.meter .bar .fill[data-w]');
+  if (fills?.length) {
+    fills.forEach((f) => {
+      const w = Number(f.getAttribute("data-w") || "0");
+      f.style.width = "0%";
+      requestAnimationFrame(() => {
+        f.style.width = `${Math.max(0, Math.min(100, w))}%`;
+      });
+    });
+  }
+
+  // pulse chain on decision change
+  const chain = scope.querySelector(".chain");
+  if (shouldPulse && chain) {
+    chain.classList.remove("pulse");
+    // reflow
+    void chain.offsetWidth;
+    chain.classList.add("pulse");
+  }
 }
 
 function render() {
@@ -240,6 +294,7 @@ function render() {
   });
 
   let body = null;
+  let viewSigNow = "";
 
   if (state.view === "home") {
     body = ui.home({
@@ -251,7 +306,9 @@ function render() {
     });
   }
 
-  if (state.view === "upgrade") body = ui.upgrade();
+  if (state.view === "upgrade") {
+    body = ui.upgrade();
+  }
 
   if (state.view === "favorites") {
     const favs = state.store.getFavorites();
@@ -318,6 +375,16 @@ function render() {
     const chain = resolved.chain;
     const meters = computeMeters(blueprint, state.decisions);
 
+    const insights = computeInsights({ blueprint, decisions: state.decisions, meters });
+
+    viewSigNow = JSON.stringify({
+      view: "blueprint",
+      g: currentGenre?.id,
+      i: instrument?.id,
+      l: state.selection.level,
+      d: state.decisions,
+    });
+
     body = ui.blueprint({
       genre: currentGenre,
       instrument,
@@ -326,6 +393,7 @@ function render() {
       decisions: state.decisions,
       meters,
       resolvedChain: chain,
+      insights,
       onBack: () => navTo(`#/browse?g=${state.selection.genreId}`),
       onSetLevel: (lvl) => {
         state.selection.level = lvl;
@@ -379,7 +447,6 @@ function render() {
     });
   }
 
-  // ✅ view wrapper para animação (sem mexer na UI existente)
   const viewWrap = document.createElement("div");
   viewWrap.className = "view-wrap";
   viewWrap.dataset.view = state.view;
@@ -390,11 +457,18 @@ function render() {
   root.appendChild(viewWrap);
   root.appendChild(ui.footer());
 
-  // transição só quando muda de view
+  // view transition
   if (state._lastView !== state.view) {
     applyViewTransition(viewWrap);
     state._lastView = state.view;
   }
+
+  // engine feel animate (only blueprint really)
+  const sig = viewSigNow || `${state.view}`;
+  const shouldPulse = state._decisionSig && sig && state._decisionSig !== sig;
+  if (sig) state._decisionSig = sig;
+
+  animateEngineFeel(viewWrap, shouldPulse);
 }
 
 async function init() {
@@ -406,7 +480,7 @@ async function init() {
 
   window.addEventListener("hashchange", route);
 
-  // SW continua desativado (evita cache quebrado em produção enquanto evolui)
+  // SW desativado temporariamente (evita cache quebrado em produção)
   if ("serviceWorker" in navigator) {
     try {
       const regs = await navigator.serviceWorker.getRegistrations();
