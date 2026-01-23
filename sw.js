@@ -1,5 +1,5 @@
 
-const CACHE = "mastering_vale_premium_shell_v4_fix1";
+const CACHE = "mixblueprint_pro_v2_shell_v1";
 const SHELL = [
   "./",
   "./index.html",
