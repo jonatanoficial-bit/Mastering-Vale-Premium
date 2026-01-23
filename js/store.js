@@ -1,4 +1,3 @@
-
 export class Store{
   constructor(ns){
     this.ns = ns;
@@ -87,18 +86,17 @@ export class Store{
       }
     }
   }
-}
 
-
-// progress tracking
-getProgress(){
-  return JSON.parse(localStorage.getItem(this._m("progress")) || "{}");
-}
-setProgress(key, value=true){
-  const p = this.getProgress();
-  p[key] = { value, ts: Date.now() };
-  localStorage.setItem(this._m("progress"), JSON.stringify(p));
-}
-hasProgress(key){
-  return !!this.getProgress()[key]?.value;
+  // progress tracking (agora DENTRO da classe ✅)
+  getProgress(){
+    return JSON.parse(localStorage.getItem(this._m("progress")) || "{}");
+  }
+  setProgress(key, value=true){
+    const p = this.getProgress();
+    p[key] = { value, ts: Date.now() };
+    localStorage.setItem(this._m("progress"), JSON.stringify(p));
+  }
+  hasProgress(key){
+    return !!this.getProgress()[key]?.value;
+  }
 }
